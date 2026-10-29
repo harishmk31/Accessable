@@ -34,6 +34,7 @@ const DiscoveryPage = () => {
   const currentFilters = {
     q: searchParams.get('q') || '',
     category: searchParams.get('category') || '',
+    region: searchParams.get('region') || '',
     district: searchParams.get('district') || '',
     locality: searchParams.get('locality') || '',
     city: searchParams.get('city') || '',
@@ -248,6 +249,7 @@ const DiscoveryPage = () => {
             {/* Quick reset if any filter is active */}
             {(currentFilters.q ||
               currentFilters.category ||
+              currentFilters.region ||
               currentFilters.district ||
               currentFilters.locality ||
               currentFilters.lat ||
@@ -268,6 +270,65 @@ const DiscoveryPage = () => {
               </button>
             )}
           </div>
+
+          {/* Active Filter Tags */}
+          {(currentFilters.region || currentFilters.district || currentFilters.locality || currentFilters.category) && (
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="text-xs text-slate-500 font-bold uppercase tracking-wider">Active:</span>
+              {currentFilters.region && (
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-teal-50 border border-teal-200 text-teal-800 rounded-lg text-xs font-bold">
+                  Region: {currentFilters.region}
+                  <button
+                    type="button"
+                    onClick={() => updateFilters('region', '')}
+                    className="hover:text-teal-900"
+                    aria-label={`Remove region ${currentFilters.region}`}
+                  >
+                    <X className="w-3 h-3" />
+                  </button>
+                </span>
+              )}
+              {currentFilters.district && (
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-slate-100 border border-slate-300 text-slate-800 rounded-lg text-xs font-bold">
+                  District: {currentFilters.district}
+                  <button
+                    type="button"
+                    onClick={() => updateFilters('district', '')}
+                    className="hover:text-slate-900"
+                    aria-label={`Remove district ${currentFilters.district}`}
+                  >
+                    <X className="w-3 h-3" />
+                  </button>
+                </span>
+              )}
+              {currentFilters.locality && (
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-slate-100 border border-slate-300 text-slate-800 rounded-lg text-xs font-bold">
+                  Area: {currentFilters.locality}
+                  <button
+                    type="button"
+                    onClick={() => updateFilters('locality', '')}
+                    className="hover:text-slate-900"
+                    aria-label={`Remove locality ${currentFilters.locality}`}
+                  >
+                    <X className="w-3 h-3" />
+                  </button>
+                </span>
+              )}
+              {currentFilters.category && (
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-slate-100 border border-slate-300 text-slate-800 rounded-lg text-xs font-bold">
+                  Category: {currentFilters.category}
+                  <button
+                    type="button"
+                    onClick={() => updateFilters('category', '')}
+                    className="hover:text-slate-900"
+                    aria-label={`Remove category ${currentFilters.category}`}
+                  >
+                    <X className="w-3 h-3" />
+                  </button>
+                </span>
+              )}
+            </div>
+          )}
 
           {/* Error Message */}
           {error && (

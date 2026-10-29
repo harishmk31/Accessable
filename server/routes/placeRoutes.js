@@ -16,7 +16,10 @@ const {
   getReportsAdmin,
   updateReportStatus,
   getPlaceStats,
-  getProviderStatus
+  getProviderStatus,
+  getRegions,
+  getCoverage,
+  triggerIngest
 } = require('../controllers/placeController');
 const { protect, optionalAuth } = require('../middleware/auth');
 const { adminOnly } = require('../middleware/admin');
@@ -26,7 +29,10 @@ router.get('/nearby', getNearbyPlaces);
 router.get('/search', searchPlaces);
 router.get('/categories', getCategories);
 router.get('/districts', getDistricts);
+router.get('/regions', getRegions);
+router.get('/coverage', getCoverage);
 router.get('/provider/status', getProviderStatus);
+router.post('/ingest', protect, adminOnly, triggerIngest);
 router.get('/stats/overview', protect, adminOnly, getPlaceStats);
 router.get('/admin/reports', protect, adminOnly, getReportsAdmin);
 router.patch('/admin/reports/:id', protect, adminOnly, updateReportStatus);

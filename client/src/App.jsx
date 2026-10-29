@@ -8,6 +8,7 @@ import Footer from './components/Footer';
 // Pages
 import HomePage from './pages/HomePage';
 import DiscoveryPage from './pages/DiscoveryPage';
+import TamilNaduHubPage from './pages/TamilNaduHubPage';
 import PlaceDetailsPage from './pages/PlaceDetailsPage';
 import AddPlacePage from './pages/AddPlacePage';
 import EditPlacePage from './pages/EditPlacePage';
@@ -28,6 +29,7 @@ function App() {
               <Routes>
                 <Route path="/" element={<HomePage />} />
                 <Route path="/discover" element={<DiscoveryPage />} />
+                <Route path="/regions" element={<TamilNaduHubPage />} />
                 <Route path="/saved" element={<SavedPlacesPage />} />
                 <Route path="/places/new" element={<AddPlacePage />} />
                 <Route path="/places/:id" element={<PlaceDetailsPage />} />

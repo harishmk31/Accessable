@@ -113,3 +113,41 @@ test('POST /api/places/:id/reports should submit an inaccuracy report', async ()
   assert.equal(data.data.issueCategory, 'incorrect_accessibility');
   assert.equal(data.data.status, 'pending');
 });
+
+test('GET /api/places/regions should return regional aggregations with place counts and districts', async () => {
+  const res = await fetch(`${baseUrl}/api/places/regions`);
+  const data = await res.json();
+  assert.equal(res.status, 200);
+  assert.equal(data.success, true);
+  assert.ok(Array.isArray(data.regions));
+  assert.ok(data.regions.length >= 4);
+
+  const western = data.regions.find((r) => r.region === 'Western Tamil Nadu');
+  assert.ok(western, 'Western Tamil Nadu should be present in regions');
+  assert.ok(western.totalPlaces >= 1);
+  assert.ok(Array.isArray(western.districts));
+});
+
+test('GET /api/places/coverage should return live coverage statistics across Tamil Nadu', async () => {
+  const res = await fetch(`${baseUrl}/api/places/coverage`);
+  const data = await res.json();
+  assert.equal(res.status, 200);
+  assert.equal(data.success, true);
+  assert.ok(data.totalPlaces > 0);
+  assert.ok(data.districtsCoveredCount > 0);
+  assert.ok(Array.isArray(data.districts));
+  assert.ok(data.facilities);
+  assert.ok(typeof data.facilities.wheelchairRampsAvailable === 'number');
+});
+
+test('GET /api/places?region=Western+Tamil+Nadu should filter places by region', async () => {
+  const res = await fetch(`${baseUrl}/api/places?region=Western+Tamil+Nadu`);
+  const data = await res.json();
+  assert.equal(res.status, 200);
+  assert.equal(data.success, true);
+  assert.ok(Array.isArray(data.data));
+  assert.ok(data.data.length > 0);
+  data.data.forEach((p) => {
+    assert.equal(p.region, 'Western Tamil Nadu');
+  });
+});

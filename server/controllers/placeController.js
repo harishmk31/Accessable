@@ -2,6 +2,7 @@ const Place = require('../models/Place');
 const Review = require('../models/Review');
 const Report = require('../models/Report');
 const googlePlacesAdapter = require('../services/googlePlacesAdapter');
+const placeIngestionService = require('../services/placeIngestionService');
 const { calculateDistanceKm, REGIONAL_CENTERS } = require('../services/geoService');
 
 const VALID_FACILITY_VALUES = ['Available', 'Unavailable', 'Unknown'];
@@ -38,6 +39,7 @@ const getPlaces = async (req, res, next) => {
     const {
       q,
       category,
+      region,
       district,
       locality,
       city,
@@ -67,6 +69,11 @@ const getPlaces = async (req, res, next) => {
       }
     } else {
       filter.status = 'verified';
+    }
+
+    // Region filter
+    if (region && region !== 'All') {
+      filter.region = { $regex: new RegExp(`^${region}$`, 'i') };
     }
 
     // Category filter
@@ -343,6 +350,87 @@ const getDistricts = async (req, res, next) => {
         count: d.count,
         localities: d.localities.filter(Boolean)
       }))
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+// @desc    Get Tamil Nadu regions and their district breakdowns
+// @route   GET /api/places/regions
+// @access  Public
+const getRegions = async (req, res, next) => {
+  try {
+    const regions = await Place.aggregate([
+      { $match: { status: 'verified' } },
+      {
+        $group: {
+          _id: '$region',
+          count: { $sum: 1 },
+          districts: { $addToSet: '$district' },
+          categories: { $addToSet: '$category' }
+        }
+      },
+      { $sort: { count: -1 } }
+    ]);
+
+    const formatted = regions.map((r) => ({
+      region: r._id || 'Western Tamil Nadu',
+      count: r.count,
+      totalPlaces: r.count,
+      districts: r.districts.filter(Boolean),
+      categories: r.categories.filter(Boolean)
+    }));
+
+    res.json({
+      success: true,
+      data: formatted,
+      regions: formatted
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+// @desc    Get real statewide coverage statistics
+// @route   GET /api/places/coverage
+// @access  Public
+const getCoverage = async (req, res, next) => {
+  try {
+    const stats = await placeIngestionService.getCoverageStats();
+    res.json({
+      success: true,
+      data: stats,
+      ...stats
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+// @desc    Admin endpoint to trigger or refresh data ingestion
+// @route   POST /api/places/ingest
+// @access  Private/Admin
+const triggerIngest = async (req, res, next) => {
+  try {
+    const { mode = 'catalogue', city, category } = req.body;
+    let result;
+
+    if (mode === 'city' && city) {
+      result = await placeIngestionService.ingestByCityOrDistrict(city);
+    } else if (mode === 'category' && category) {
+      result = await placeIngestionService.ingestByCategory(category);
+    } else {
+      result = await placeIngestionService.ingestVerifiedCatalogue();
+    }
+
+    const coverage = await placeIngestionService.getCoverageStats();
+
+    res.json({
+      success: true,
+      message: 'Ingestion pipeline executed successfully',
+      result,
+      coverage
     });
   } catch (error) {
     next(error);
@@ -870,5 +958,8 @@ module.exports = {
   getReportsAdmin,
   updateReportStatus,
   getPlaceStats,
-  getProviderStatus
+  getProviderStatus,
+  getRegions,
+  getCoverage,
+  triggerIngest
 };

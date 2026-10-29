@@ -18,7 +18,10 @@ import {
   Flag,
   Globe,
   MapPin,
-  AlertTriangle
+  AlertTriangle,
+  Database,
+  DownloadCloud,
+  CheckCircle2
 } from 'lucide-react';
 import { placeService, reviewService } from '../services/api';
 import { useAuth } from '../context/AuthContext';
@@ -27,25 +30,31 @@ import LoadingSpinner from '../components/LoadingSpinner';
 const AdminDashboardPage = () => {
   const { user, isAdmin } = useAuth();
 
-  const [activeTab, setActiveTab] = useState('places'); // 'places' | 'reports' | 'reviews' | 'metrics'
+  const [activeTab, setActiveTab] = useState('places'); // 'places' | 'reports' | 'reviews' | 'metrics' | 'ingestion'
   const [stats, setStats] = useState(null);
   const [places, setPlaces] = useState([]);
   const [reviews, setReviews] = useState([]);
   const [reports, setReports] = useState([]);
   const [providerStatus, setProviderStatus] = useState(null);
+  const [coverageStats, setCoverageStats] = useState(null);
   const [loading, setLoading] = useState(true);
   const [actionLoading, setActionLoading] = useState(false);
+  const [ingestLoading, setIngestLoading] = useState(false);
+  const [ingestResult, setIngestResult] = useState(null);
+  const [ingestCity, setIngestCity] = useState('');
+  const [ingestCategory, setIngestCategory] = useState('');
   const [msg, setMsg] = useState('');
 
   const loadDashboardData = async () => {
     try {
       setLoading(true);
-      const [statsRes, placesRes, reviewsRes, reportsRes, providerRes] = await Promise.all([
+      const [statsRes, placesRes, reviewsRes, reportsRes, providerRes, coverageRes] = await Promise.all([
         placeService.getPlaceStats(),
         placeService.getPlaces({ status: 'all', limit: 100 }),
         reviewService.getAllReviewsAdmin(),
         placeService.getAdminReports().catch(() => ({ data: { reports: [] } })),
-        placeService.getProviderStatus().catch(() => ({ data: { provider: 'mock_fallback' } }))
+        placeService.getProviderStatus().catch(() => ({ data: { provider: 'mock_fallback' } })),
+        placeService.getCoverage().catch(() => ({ data: null }))
       ]);
 
       setStats(statsRes.data.stats);
@@ -53,6 +62,7 @@ const AdminDashboardPage = () => {
       setReviews(reviewsRes.data.data);
       setReports(reportsRes.data.reports || []);
       setProviderStatus(providerRes.data);
+      setCoverageStats(coverageRes?.data || null);
     } catch (err) {
       console.error('Error loading admin data:', err.message);
     } finally {
@@ -152,6 +162,22 @@ const AdminDashboardPage = () => {
       alert(`Report update failed: ${err.message}`);
     } finally {
       setActionLoading(false);
+    }
+  };
+
+  const handleTriggerIngest = async (payload) => {
+    try {
+      setIngestLoading(true);
+      setIngestResult(null);
+      const res = await placeService.triggerIngest(payload);
+      setIngestResult(res.data);
+      const summary = res.data.summary || {};
+      setMsg(`Ingestion success: ${summary.processed || 0} processed (${summary.added || 0} added, ${summary.updated || 0} updated, ${summary.errors || 0} errors).`);
+      await loadDashboardData();
+    } catch (err) {
+      alert(`Data ingestion failed: ${err.message}`);
+    } finally {
+      setIngestLoading(false);
     }
   };
 
@@ -325,6 +351,21 @@ const AdminDashboardPage = () => {
           aria-selected={activeTab === 'metrics'}
         >
           Accessibility Metrics
+        </button>
+
+        <button
+          type="button"
+          onClick={() => setActiveTab('ingestion')}
+          className={`py-3 px-5 text-xs font-bold border-b-2 transition-colors shrink-0 flex items-center gap-1.5 ${
+            activeTab === 'ingestion'
+              ? 'border-teal-600 text-teal-800'
+              : 'border-transparent text-slate-500 hover:text-slate-800'
+          }`}
+          role="tab"
+          aria-selected={activeTab === 'ingestion'}
+        >
+          <Database className="w-3.5 h-3.5 text-teal-600" />
+          <span>Statewide Ingestion & Coverage</span>
         </button>
       </div>
 
@@ -630,6 +671,190 @@ const AdminDashboardPage = () => {
               ))}
             </div>
           </div>
+        </div>
+      )}
+
+      {/* Tab 5: Statewide Data Ingestion & Coverage Engine */}
+      {activeTab === 'ingestion' && (
+        <div className="space-y-6">
+          {/* Engine Header */}
+          <div className="bg-gradient-to-r from-teal-900 to-slate-900 text-white p-6 sm:p-8 rounded-3xl shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-6">
+            <div className="space-y-2 max-w-xl">
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-teal-500/20 text-teal-300 text-xs font-bold border border-teal-400/30">
+                <Database className="w-3.5 h-3.5" />
+                <span>Geospatial Ingestion Engine</span>
+              </div>
+              <h2 className="text-xl sm:text-2xl font-black">
+                Tamil Nadu Verified Ingestion Pipeline
+              </h2>
+              <p className="text-xs text-slate-300 leading-relaxed">
+                Ingest genuine, field-audited public places with strict coordinate bounds validation, multi-district normalization, and idempotent deduplication. Preserves all user reviews and ratings.
+              </p>
+            </div>
+
+            <div className="text-right">
+              <button
+                type="button"
+                onClick={() => handleTriggerIngest({ mode: 'catalogue' })}
+                disabled={ingestLoading}
+                className="inline-flex items-center gap-2 px-5 py-3 bg-teal-500 hover:bg-teal-400 text-slate-950 font-black text-xs rounded-xl shadow-md transition-colors"
+              >
+                <DownloadCloud className={`w-4 h-4 ${ingestLoading ? 'animate-bounce' : ''}`} />
+                <span>{ingestLoading ? 'Syncing Catalogue...' : 'Sync Master Catalogue'}</span>
+              </button>
+            </div>
+          </div>
+
+          {/* Ingestion Result Banner */}
+          {ingestResult && (
+            <div className="p-5 bg-teal-50 border border-teal-200 rounded-2xl shadow-2xs space-y-3">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2 text-teal-900 font-bold text-xs uppercase tracking-wider">
+                  <CheckCircle2 className="w-4 h-4 text-teal-700" />
+                  <span>Pipeline Execution Summary</span>
+                </div>
+                <span className="text-[11px] text-teal-700 font-semibold">
+                  {new Date().toLocaleTimeString()}
+                </span>
+              </div>
+
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center">
+                <div className="p-3 bg-white rounded-xl border border-teal-100">
+                  <span className="text-xs text-slate-500 font-medium block">Total Processed</span>
+                  <span className="text-lg font-black text-slate-900">{ingestResult.summary?.processed || 0}</span>
+                </div>
+                <div className="p-3 bg-white rounded-xl border border-teal-100">
+                  <span className="text-xs text-slate-500 font-medium block">Newly Added</span>
+                  <span className="text-lg font-black text-emerald-700">{ingestResult.summary?.added || 0}</span>
+                </div>
+                <div className="p-3 bg-white rounded-xl border border-teal-100">
+                  <span className="text-xs text-slate-500 font-medium block">Updated / Preserved</span>
+                  <span className="text-lg font-black text-blue-700">{ingestResult.summary?.updated || 0}</span>
+                </div>
+                <div className="p-3 bg-white rounded-xl border border-teal-100">
+                  <span className="text-xs text-slate-500 font-medium block">Validation Errors</span>
+                  <span className="text-lg font-black text-rose-700">{ingestResult.summary?.errors || 0}</span>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Targeted Ingestion Controls */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* By District */}
+            <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs space-y-4">
+              <div className="flex items-center gap-2 text-slate-800 font-bold text-sm">
+                <MapPin className="w-4 h-4 text-teal-600" />
+                <h3>Targeted City / District Import</h3>
+              </div>
+              <p className="text-xs text-slate-500">
+                Filter and synchronize verified locations for a single city or district (e.g. Coimbatore, Chennai, Madurai, Salem, Nilgiris).
+              </p>
+              <div className="flex gap-2">
+                <input
+                  type="text"
+                  placeholder="e.g. Coimbatore, Chennai, Madurai"
+                  value={ingestCity}
+                  onChange={(e) => setIngestCity(e.target.value)}
+                  className="flex-1 px-3 py-2 text-xs border border-slate-300 rounded-xl focus:border-teal-500 focus:outline-none"
+                />
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (!ingestCity.trim()) return alert('Please enter a district or city name.');
+                    handleTriggerIngest({ mode: 'city', district: ingestCity.trim() });
+                  }}
+                  disabled={ingestLoading}
+                  className="px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold rounded-xl transition-colors shrink-0"
+                >
+                  Sync District
+                </button>
+              </div>
+            </div>
+
+            {/* By Category */}
+            <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs space-y-4">
+              <div className="flex items-center gap-2 text-slate-800 font-bold text-sm">
+                <Building2 className="w-4 h-4 text-teal-600" />
+                <h3>Targeted Category Import</h3>
+              </div>
+              <p className="text-xs text-slate-500">
+                Synchronize places matching a specific public category (e.g. Hospital, Transit/Station, Tourist Attraction).
+              </p>
+              <div className="flex gap-2">
+                <select
+                  value={ingestCategory}
+                  onChange={(e) => setIngestCategory(e.target.value)}
+                  className="flex-1 px-3 py-2 text-xs border border-slate-300 rounded-xl focus:border-teal-500 focus:outline-none bg-white"
+                >
+                  <option value="">Select Category...</option>
+                  <option value="Hospital">Hospital</option>
+                  <option value="Transit/Station">Transit/Station</option>
+                  <option value="College/University">College/University</option>
+                  <option value="Shopping/Mall">Shopping/Mall</option>
+                  <option value="Tourist Attraction">Tourist Attraction</option>
+                  <option value="Parks & Gardens">Parks & Gardens</option>
+                </select>
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (!ingestCategory) return alert('Please select a category.');
+                    handleTriggerIngest({ mode: 'category', category: ingestCategory });
+                  }}
+                  disabled={ingestLoading}
+                  className="px-4 py-2 bg-teal-700 hover:bg-teal-800 text-white text-xs font-bold rounded-xl transition-colors shrink-0"
+                >
+                  Sync Category
+                </button>
+              </div>
+            </div>
+          </div>
+
+          {/* Statewide Coverage & District Breakdown */}
+          {coverageStats && (
+            <div className="bg-white rounded-2xl border border-slate-200 shadow-xs overflow-hidden space-y-4 p-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h3 className="text-sm font-bold text-slate-900 uppercase tracking-wider">
+                    Live Statewide Coverage Distribution ({coverageStats.totalPlaces} Places)
+                  </h3>
+                  <p className="text-xs text-slate-500 mt-0.5">
+                    Verified venues across {coverageStats.districtsCoveredCount || (coverageStats.districts || []).length} Tamil Nadu districts.
+                  </p>
+                </div>
+              </div>
+
+              <div className="overflow-x-auto max-h-96">
+                <table className="w-full text-left text-xs text-slate-700">
+                  <thead className="bg-slate-50 text-slate-600 font-bold uppercase tracking-wider border-b border-slate-200 sticky top-0">
+                    <tr>
+                      <th className="py-2.5 px-4">District</th>
+                      <th className="py-2.5 px-4">Geographic Zone</th>
+                      <th className="py-2.5 px-4 text-right">Verified Venues</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-slate-100">
+                    {(coverageStats.districts || []).map((d) => (
+                      <tr key={d.district} className="hover:bg-slate-50">
+                        <td className="py-2 px-4 font-bold text-slate-800 flex items-center gap-2">
+                          <MapPin className="w-3.5 h-3.5 text-teal-600" />
+                          <span>{d.district}</span>
+                        </td>
+                        <td className="py-2 px-4 text-slate-600">
+                          {d.region || 'Tamil Nadu'}
+                        </td>
+                        <td className="py-2 px-4 text-right">
+                          <span className="font-bold text-slate-900 bg-slate-100 px-2 py-0.5 rounded-full">
+                            {d.count} venues
+                          </span>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          )}
         </div>
       )}
     </div>

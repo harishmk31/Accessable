@@ -196,8 +196,8 @@ const HomePage = () => {
           {/* Quick Metrics */}
           <div className="pt-8 grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-3xl mx-auto text-slate-300 text-xs border-t border-white/10">
             <div>
-              <div className="text-2xl font-black text-white">31+ Locations</div>
-              <div className="text-slate-400">Coimbatore & TN Districts</div>
+              <div className="text-2xl font-black text-white">110+ Venues</div>
+              <div className="text-slate-400">31+ Districts in Tamil Nadu</div>
             </div>
             <div>
               <div className="text-2xl font-black text-white">5-State Logic</div>
@@ -311,16 +311,25 @@ const HomePage = () => {
       {/* Tamil Nadu Regional Coverage */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" aria-labelledby="tn-regions-heading">
         <div className="bg-slate-900 text-white rounded-3xl p-8 sm:p-10 shadow-lg">
-          <div className="max-w-2xl mb-6">
-            <span className="text-xs font-bold uppercase tracking-wider text-teal-400">
-              Statewide Coverage
-            </span>
-            <h2 id="tn-regions-heading" className="text-2xl font-black mt-1">
-              {t('tamilNaduDestinations')}
-            </h2>
-            <p className="text-xs sm:text-sm text-slate-300 mt-1">
-              Explore barrier-free public facilities, heritage sites, beaches, and health centers across Tamil Nadu.
-            </p>
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-6 gap-4">
+            <div className="max-w-2xl">
+              <span className="text-xs font-bold uppercase tracking-wider text-teal-400">
+                Statewide Coverage
+              </span>
+              <h2 id="tn-regions-heading" className="text-2xl font-black mt-1">
+                {t('tamilNaduDestinations')}
+              </h2>
+              <p className="text-xs sm:text-sm text-slate-300 mt-1">
+                Explore barrier-free public facilities, heritage sites, beaches, and health centers across Tamil Nadu.
+              </p>
+            </div>
+            <Link
+              to="/regions"
+              className="inline-flex items-center gap-1.5 px-4 py-2 bg-teal-600 hover:bg-teal-500 text-white text-xs font-bold rounded-xl shadow-xs transition-colors shrink-0"
+            >
+              <span>Explore All 4 Regional Zones</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </Link>
           </div>
 
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3">

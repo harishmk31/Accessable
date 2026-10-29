@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { getRegionForDistrict } = require('../services/geoService');
 
 const LEGACY_FACILITY_ENUM = ['Available', 'Unavailable', 'Unknown'];
 
@@ -134,6 +135,18 @@ const placeSchema = new mongoose.Schema(
     district: {
       type: String,
       default: 'Coimbatore',
+      trim: true
+    },
+    region: {
+      type: String,
+      enum: [
+        'Western Tamil Nadu',
+        'Northern Tamil Nadu',
+        'Central Tamil Nadu',
+        'Southern Tamil Nadu',
+        'Other Destinations'
+      ],
+      default: 'Western Tamil Nadu',
       trim: true
     },
     state: {
@@ -330,6 +343,11 @@ const placeSchema = new mongoose.Schema(
 
 // Synchronize coordinates and legacy facilities before saving
 placeSchema.pre('save', function (next) {
+  // Auto-derive region from district if not explicitly provided or if default
+  if (this.district && (!this.region || this.isModified('district'))) {
+    this.region = getRegionForDistrict(this.district);
+  }
+
   // Sync slug
   if (this.name && !this.slug) {
     this.slug = this.name
@@ -449,6 +467,7 @@ placeSchema.index({
 });
 
 placeSchema.index({ district: 1, locality: 1, category: 1 });
+placeSchema.index({ region: 1, district: 1 });
 placeSchema.index({ status: 1 });
 
 const Place = mongoose.model('Place', placeSchema);

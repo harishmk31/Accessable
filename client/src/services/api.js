@@ -57,6 +57,11 @@ export const placeService = {
   getPlaceStats: () => api.get('/places/stats/overview'),
   getProviderStatus: () => api.get('/places/provider/status'),
 
+  // Tamil Nadu Regional & Coverage API
+  getRegions: () => api.get('/places/regions'),
+  getCoverage: () => api.get('/places/coverage'),
+  triggerIngest: (payload) => api.post('/places/ingest', payload),
+
   // Report inaccuracy
   submitReport: (placeId, reportData) => api.post(`/places/${placeId}/reports`, reportData),
   getAdminReports: () => api.get('/places/admin/reports'),

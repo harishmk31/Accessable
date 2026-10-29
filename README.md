@@ -66,12 +66,14 @@ Built as an academic mini project for Full Stack Web Development, this platform 
 
 ## 📍 Real Coimbatore & Tamil Nadu Venue Coverage
 
-The platform provides verified listings across Coimbatore localities and major Tamil Nadu districts:
+The platform provides verified listings across **31 administrative districts in Tamil Nadu**, categorized into 4 geographic zones plus the Coimbatore metropolitan cluster:
 
-- **Coimbatore Localities**: Gandhipuram, RS Puram, Peelamedu, Saibaba Colony, Town Hall, Race Course, Avinashi Road, Vadavalli, Pollachi Road.
-- **Tamil Nadu Districts**: Coimbatore, Chennai, Madurai, Tiruchirappalli, Salem, Tiruppur, Erode, Nilgiris (Ooty), Thanjavur, Kanyakumari.
+- **Western Tamil Nadu (Kongu & Hills)**: Coimbatore (Gandhipuram, RS Puram, Peelamedu, Saibaba Colony, Town Hall, Race Course, Avinashi Rd, Vadavalli, Pollachi Rd), Tiruppur, Erode, Salem, Nilgiris (Ooty & Coonoor), Pollachi, Namakkal, Karur.
+- **Northern Tamil Nadu (Capital & Coast)**: Chennai (Central, Egmore, T. Nagar, Adyar, Guindy, Marina, Velachery, Anna Nagar, Mylapore), Chengalpattu, Tiruvallur, Kanchipuram, Vellore, Tiruvannamalai, Villupuram, Mahabalipuram.
+- **Central Tamil Nadu (Delta & Heritage)**: Tiruchirappalli (Trichy), Thanjavur, Kumbakonam, Pudukkottai, Ariyalur, Perambalur, Mayiladuthurai.
+- **Southern Tamil Nadu (Cultural Gateway)**: Madurai, Tirunelveli, Thoothukudi, Kanyakumari, Nagercoil, Dindigul, Sivakasi, Virudhunagar, Ramanathapuram, Kodaikanal, Rameswaram, Courtallam.
 
-Every listing contains real coordinates and audited barrier-free facilities.
+Every listing contains real GPS coordinates within Tamil Nadu geographic bounds (`lat: 8.0 to 13.6, lng: 76.1 to 80.4`), audited barrier-free facilities, and authentic photographs.
 
 ---
 
@@ -305,16 +307,19 @@ npm run seed
 - `GET /api/auth/saved-places` — Get full details of bookmarked venues (protected).
 
 ### Places & Geospatial Discovery
-- `GET /api/places` — Query places with filtering by `q`, `category`, `district`, `locality`, `city`, `wheelchairRamp`, `elevatorLift`, `accessibleToilet`, `minRating`, `sortBy`, `page`.
+- `GET /api/places` — Query places with filtering by `q`, `category`, `region`, `district`, `locality`, `city`, `wheelchairRamp`, `elevatorLift`, `accessibleToilet`, `minRating`, `sortBy`, `page`.
 - `GET /api/places/nearby` — Geospatial radius discovery (`lat`, `lng`, `radius` in km). Returns venues sorted by `distanceKm`.
 - `GET /api/places/search` — Autocomplete search across names, localities, and categories.
+- `GET /api/places/regions` — Returns Tamil Nadu geographic zones (Western, Northern, Central, Southern), with venue counts and covered districts.
+- `GET /api/places/coverage` — Live statewide coverage statistics, district breakdown, and verified facility counts.
+- `POST /api/places/ingest` — Admin trigger for scalable data ingestion pipeline (modes: `catalogue`, `city`, `category`) with safe deduplication.
 - `GET /api/places/districts` — Lists all covered districts and localities in Tamil Nadu.
 - `GET /api/places/categories` — Aggregate count of places by category.
 - `GET /api/places/:id` — Retrieve single place details and verified community reviews.
 - `POST /api/places` — Create a new venue listing (protected).
 - `PUT /api/places/:id` — Update listing (owner or admin).
 - `DELETE /api/places/:id` — Delete venue listing (owner or admin).
-- `PUT /api/places/:id/verify` — Admin status verification (`verified` / `rejected`).
+- `PATCH /api/places/:id/verify` — Admin status verification (`verified` / `rejected`).
 - `GET /api/places/stats/overview` — Admin overview metrics and facility counts.
 
 ### Inaccuracy Reports
@@ -353,8 +358,11 @@ Expected output:
 ✔ GET /api/places/search should find places by locality name
 ✔ GET /api/places/provider/status should report Google Places provider state
 ✔ POST /api/places/:id/reports should submit an inaccuracy report
-ℹ tests 13
-ℹ pass 13
+✔ GET /api/places/regions should return regional aggregations with place counts and districts
+✔ GET /api/places/coverage should return live coverage statistics across Tamil Nadu
+✔ GET /api/places?region=Western+Tamil+Nadu should filter places by region
+ℹ tests 16
+ℹ pass 16
 ℹ fail 0
 ```
 

@@ -15,16 +15,42 @@ const COIMBATORE_LOCALITIES = [
   'Saravanampatti'
 ];
 
+const TAMIL_NADU_REGIONS = [
+  'All',
+  'Western Tamil Nadu',
+  'Northern Tamil Nadu',
+  'Central Tamil Nadu',
+  'Southern Tamil Nadu'
+];
+
 const TAMIL_NADU_DISTRICTS = [
   'All',
   'Coimbatore',
   'Chennai',
   'Madurai',
-  'Nilgiris',
-  'Thanjavur',
   'Tiruchirappalli',
   'Salem',
-  'Kanyakumari'
+  'Tiruppur',
+  'Erode',
+  'Nilgiris',
+  'Thanjavur',
+  'Kanyakumari',
+  'Tirunelveli',
+  'Thoothukudi',
+  'Dindigul',
+  'Vellore',
+  'Kanchipuram',
+  'Cuddalore',
+  'Villupuram',
+  'Ramanathapuram',
+  'Theni',
+  'Virudhunagar',
+  'Sivaganga',
+  'Karur',
+  'Namakkal',
+  'Pudukkottai',
+  'Nagapattinam',
+  'Mayiladuthurai'
 ];
 
 const CATEGORIES = [
@@ -188,6 +214,33 @@ const FilterDrawer = ({
                 aria-pressed={isSelected}
               >
                 {loc}
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Tamil Nadu Regions */}
+      <div>
+        <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
+          {t('regionLabel') || 'Region'}
+        </label>
+        <div className="flex flex-wrap gap-1.5">
+          {TAMIL_NADU_REGIONS.map((reg) => {
+            const isSelected = (!filters.region && reg === 'All') || filters.region === reg;
+            return (
+              <button
+                key={reg}
+                type="button"
+                onClick={() => onChange('region', reg === 'All' ? '' : reg)}
+                className={`px-2.5 py-1 text-xs rounded-lg font-semibold transition-all ${
+                  isSelected
+                    ? 'bg-teal-800 text-white shadow-xs'
+                    : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+                }`}
+                aria-pressed={isSelected}
+              >
+                {reg === 'All' ? (t('allRegions') || 'All Regions') : reg}
               </button>
             );
           })}

@@ -28,6 +28,15 @@ export const TRANSLATIONS = {
     explorePlaces: 'Search Directory',
     coimbatoreFocus: 'Explore Coimbatore Areas',
     tamilNaduDestinations: 'Tamil Nadu Destinations',
+    regionalHub: 'Tamil Nadu Regional Hub',
+    westernTN: 'Western Tamil Nadu',
+    northernTN: 'Northern Tamil Nadu',
+    centralTN: 'Central Tamil Nadu',
+    southernTN: 'Southern Tamil Nadu',
+    otherDestinations: 'Other Destinations',
+    regionLabel: 'Region',
+    allRegions: 'All Regions',
+    coverageStats: 'Statewide Coverage',
 
     // Discovery & Filters
     directoryTitle: 'Tamil Nadu Accessibility Directory',
@@ -141,6 +150,15 @@ export const TRANSLATIONS = {
     explorePlaces: 'தேடுக',
     coimbatoreFocus: 'கோயம்புத்தூர் பகுதிகள்',
     tamilNaduDestinations: 'தமிழ்நாடு மாவட்டங்கள்',
+    regionalHub: 'தமிழ்நாடு மண்டல வழிகாட்டி',
+    westernTN: 'மேற்கு தமிழ்நாடு',
+    northernTN: 'வடக்கு தமிழ்நாடு',
+    centralTN: 'மத்திய தமிழ்நாடு',
+    southernTN: 'தெற்கு தமிழ்நாடு',
+    otherDestinations: 'பிற இடங்கள்',
+    regionLabel: 'மண்டலம்',
+    allRegions: 'அனைத்து மண்டலங்களும்',
+    coverageStats: 'மாநில கவரேஜ்',
 
     // Discovery & Filters
     directoryTitle: 'தமிழ்நாடு அணுகல்தன்மை அடைவு',
@@ -254,6 +272,15 @@ export const TRANSLATIONS = {
     explorePlaces: 'खोजें',
     coimbatoreFocus: 'कोयंबटूर के प्रमुख क्षेत्र',
     tamilNaduDestinations: 'तमिलनाडु के जिले',
+    regionalHub: 'तमिलनाडु क्षेत्रीय केंद्र',
+    westernTN: 'पश्चिमी तमिलनाडु',
+    northernTN: 'उत्तरी तमिलनाडु',
+    centralTN: 'मध्य तमिलनाडु',
+    southernTN: 'दक्षिणी तमिलनाडु',
+    otherDestinations: 'अन्य गंतव्य',
+    regionLabel: 'क्षेत्र',
+    allRegions: 'सभी क्षेत्र',
+    coverageStats: 'राज्यव्यापी कवरेज',
 
     // Discovery & Filters
     directoryTitle: 'तमिलनाडु सुलभता निर्देशिका',

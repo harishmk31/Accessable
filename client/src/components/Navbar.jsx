@@ -9,7 +9,8 @@ import {
   Bookmark,
   ShieldCheck,
   LogOut,
-  Info
+  Info,
+  MapPin
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { useTranslation } from '../context/LanguageContext';
@@ -74,6 +75,10 @@ const Navbar = () => {
             <NavLink to="/discover" className={navLinkClass}>
               <Compass className="w-4 h-4" aria-hidden="true" />
               {t('discover')}
+            </NavLink>
+            <NavLink to="/regions" className={navLinkClass}>
+              <MapPin className="w-4 h-4" aria-hidden="true" />
+              {t('regionalHub') || 'TN Hub'}
             </NavLink>
             <NavLink to="/saved" className={navLinkClass}>
               <Bookmark className="w-4 h-4" aria-hidden="true" />
@@ -181,6 +186,13 @@ const Navbar = () => {
               className="block px-3 py-2 text-sm font-semibold text-slate-800 hover:bg-teal-50 rounded-lg"
             >
               {t('discover')}
+            </Link>
+            <Link
+              to="/regions"
+              onClick={() => setMobileMenuOpen(false)}
+              className="block px-3 py-2 text-sm font-semibold text-teal-800 hover:bg-teal-50 rounded-lg"
+            >
+              {t('regionalHub') || 'Tamil Nadu Hub'}
             </Link>
             <Link
               to="/saved"
