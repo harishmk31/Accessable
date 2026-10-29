@@ -1,0 +1,28 @@
+{
+  "name": "accessable-platform",
+  "version": "1.0.0",
+  "description": "AccessAble - Accessibility Discovery Platform for Public Places",
+  "main": "server/server.js",
+  "scripts": {
+    "install:all": "npm install && cd server && npm install && cd ../client && npm install",
+    "server": "cd server && npm run dev",
+    "client": "cd client && npm run dev",
+    "dev": "concurrently -n \"SERVER,CLIENT\" -c \"blue,magenta\" \"npm run server\" \"npm run client\"",
+    "seed": "cd server && npm run seed",
+    "test": "cd server && npm test",
+    "build": "cd client && npm run build"
+  },
+  "keywords": [
+    "accessibility",
+    "inclusive-design",
+    "react",
+    "express",
+    "mongodb",
+    "fullstack"
+  ],
+  "author": "AccessAble Team",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
