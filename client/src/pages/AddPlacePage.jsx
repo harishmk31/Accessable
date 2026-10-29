@@ -22,7 +22,8 @@ const CATEGORIES = [
   'Office/Government',
   'Transit/Station',
   'Shopping/Mall',
-  'Park/Recreation',
+  'Parks & Gardens',
+  'Tourist Attraction',
   'Other'
 ];
 
@@ -68,9 +69,13 @@ const AddPlacePage = () => {
     category: 'Hospital',
     description: '',
     address: '',
-    city: '',
-    state: '',
+    locality: '',
+    city: 'Coimbatore',
+    district: 'Coimbatore',
+    state: 'Tamil Nadu',
     postalCode: '',
+    latitude: '',
+    longitude: '',
     contactNumber: '',
     website: '',
     image: '',
@@ -171,8 +176,10 @@ const AddPlacePage = () => {
         category: formData.category,
         description: formData.description.trim(),
         address: formData.address.trim(),
+        locality: formData.locality.trim(),
         city: formData.city.trim(),
-        state: formData.state.trim(),
+        district: formData.district.trim() || formData.city.trim(),
+        state: formData.state.trim() || 'Tamil Nadu',
         postalCode: formData.postalCode.trim(),
         contactNumber: formData.contactNumber.trim(),
         website: formData.website.trim(),
@@ -180,6 +187,13 @@ const AddPlacePage = () => {
         facilityNotes: formData.facilityNotes,
         images: formData.image ? [formData.image.trim()] : []
       };
+
+      if (formData.latitude && formData.longitude) {
+        payload.coordinates = {
+          lat: parseFloat(formData.latitude),
+          lng: parseFloat(formData.longitude)
+        };
+      }
 
       const res = await placeService.createPlace(payload);
       const newPlace = res.data.data;
@@ -301,6 +315,39 @@ const AddPlacePage = () => {
               />
             </div>
 
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label htmlFor="locality" className="block text-xs font-bold text-slate-700 uppercase mb-1">
+                  Area / Locality
+                </label>
+                <input
+                  id="locality"
+                  type="text"
+                  name="locality"
+                  value={formData.locality}
+                  onChange={handleChange}
+                  placeholder="e.g. RS Puram, Gandhipuram, Peelamedu"
+                  className="w-full p-3 bg-slate-50 border border-slate-300 rounded-xl text-sm text-slate-900 focus:bg-white focus:border-teal-500 focus:ring-1 focus:ring-teal-500 focus:outline-none"
+                />
+              </div>
+
+              <div>
+                <label htmlFor="district" className="block text-xs font-bold text-slate-700 uppercase mb-1">
+                  District *
+                </label>
+                <input
+                  id="district"
+                  type="text"
+                  name="district"
+                  required
+                  value={formData.district}
+                  onChange={handleChange}
+                  placeholder="e.g. Coimbatore, Chennai, Madurai"
+                  className="w-full p-3 bg-slate-50 border border-slate-300 rounded-xl text-sm text-slate-900 focus:bg-white focus:border-teal-500 focus:ring-1 focus:ring-teal-500 focus:outline-none"
+                />
+              </div>
+            </div>
+
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               <div>
                 <label htmlFor="city" className="block text-xs font-bold text-slate-700 uppercase mb-1">
@@ -313,7 +360,7 @@ const AddPlacePage = () => {
                   required
                   value={formData.city}
                   onChange={handleChange}
-                  placeholder="e.g. Metropolis"
+                  placeholder="e.g. Coimbatore"
                   className="w-full p-3 bg-slate-50 border border-slate-300 rounded-xl text-sm text-slate-900 focus:bg-white focus:border-teal-500 focus:ring-1 focus:ring-teal-500 focus:outline-none"
                 />
               </div>
@@ -329,7 +376,7 @@ const AddPlacePage = () => {
                   required
                   value={formData.state}
                   onChange={handleChange}
-                  placeholder="e.g. Capital Region"
+                  placeholder="e.g. Tamil Nadu"
                   className="w-full p-3 bg-slate-50 border border-slate-300 rounded-xl text-sm text-slate-900 focus:bg-white focus:border-teal-500 focus:ring-1 focus:ring-teal-500 focus:outline-none"
                 />
               </div>
@@ -344,7 +391,39 @@ const AddPlacePage = () => {
                   name="postalCode"
                   value={formData.postalCode}
                   onChange={handleChange}
-                  placeholder="e.g. 110001"
+                  placeholder="e.g. 641018"
+                  className="w-full p-3 bg-slate-50 border border-slate-300 rounded-xl text-sm text-slate-900 focus:bg-white focus:border-teal-500 focus:ring-1 focus:ring-teal-500 focus:outline-none"
+                />
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label htmlFor="latitude" className="block text-xs font-bold text-slate-700 uppercase mb-1">
+                  GPS Latitude (Optional)
+                </label>
+                <input
+                  id="latitude"
+                  type="text"
+                  name="latitude"
+                  value={formData.latitude}
+                  onChange={handleChange}
+                  placeholder="e.g. 11.0168"
+                  className="w-full p-3 bg-slate-50 border border-slate-300 rounded-xl text-sm text-slate-900 focus:bg-white focus:border-teal-500 focus:ring-1 focus:ring-teal-500 focus:outline-none"
+                />
+              </div>
+
+              <div>
+                <label htmlFor="longitude" className="block text-xs font-bold text-slate-700 uppercase mb-1">
+                  GPS Longitude (Optional)
+                </label>
+                <input
+                  id="longitude"
+                  type="text"
+                  name="longitude"
+                  value={formData.longitude}
+                  onChange={handleChange}
+                  placeholder="e.g. 76.9558"
                   className="w-full p-3 bg-slate-50 border border-slate-300 rounded-xl text-sm text-slate-900 focus:bg-white focus:border-teal-500 focus:ring-1 focus:ring-teal-500 focus:outline-none"
                 />
               </div>

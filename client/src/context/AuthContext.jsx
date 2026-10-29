@@ -56,6 +56,22 @@ export const AuthProvider = ({ children }) => {
     setUser((prev) => (prev ? { ...prev, ...updatedFields } : null));
   };
 
+  const toggleSavePlace = async (placeId) => {
+    if (!user) {
+      throw new Error('Please sign in to save places to your bookmarks');
+    }
+    const res = await authService.toggleSavePlace(placeId);
+    const updatedPlaces = res.data.savedPlaces || [];
+    const updatedIds = updatedPlaces.map((p) => (typeof p === 'string' ? p : p._id));
+    setUser((prev) => (prev ? { ...prev, savedPlaces: updatedIds } : null));
+    return res.data.isSaved;
+  };
+
+  const isPlaceSaved = (placeId) => {
+    if (!user || !user.savedPlaces) return false;
+    return user.savedPlaces.some((id) => (typeof id === 'string' ? id : id._id) === placeId);
+  };
+
   const isAdmin = user?.role === 'admin';
 
   return (
@@ -68,7 +84,9 @@ export const AuthProvider = ({ children }) => {
         login,
         register,
         logout,
-        updateUser
+        updateUser,
+        toggleSavePlace,
+        isPlaceSaved
       }}
     >
       {children}

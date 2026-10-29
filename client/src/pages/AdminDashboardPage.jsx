@@ -14,7 +14,11 @@ import {
   Ban,
   BarChart3,
   RefreshCw,
-  ExternalLink
+  ExternalLink,
+  Flag,
+  Globe,
+  MapPin,
+  AlertTriangle
 } from 'lucide-react';
 import { placeService, reviewService } from '../services/api';
 import { useAuth } from '../context/AuthContext';
@@ -23,10 +27,12 @@ import LoadingSpinner from '../components/LoadingSpinner';
 const AdminDashboardPage = () => {
   const { user, isAdmin } = useAuth();
 
-  const [activeTab, setActiveTab] = useState('places'); // 'places' | 'reviews' | 'metrics'
+  const [activeTab, setActiveTab] = useState('places'); // 'places' | 'reports' | 'reviews' | 'metrics'
   const [stats, setStats] = useState(null);
   const [places, setPlaces] = useState([]);
   const [reviews, setReviews] = useState([]);
+  const [reports, setReports] = useState([]);
+  const [providerStatus, setProviderStatus] = useState(null);
   const [loading, setLoading] = useState(true);
   const [actionLoading, setActionLoading] = useState(false);
   const [msg, setMsg] = useState('');
@@ -34,15 +40,19 @@ const AdminDashboardPage = () => {
   const loadDashboardData = async () => {
     try {
       setLoading(true);
-      const [statsRes, placesRes, reviewsRes] = await Promise.all([
+      const [statsRes, placesRes, reviewsRes, reportsRes, providerRes] = await Promise.all([
         placeService.getPlaceStats(),
-        placeService.getPlaces({ status: 'all', limit: 50 }),
-        reviewService.getAllReviewsAdmin()
+        placeService.getPlaces({ status: 'all', limit: 100 }),
+        reviewService.getAllReviewsAdmin(),
+        placeService.getAdminReports().catch(() => ({ data: { reports: [] } })),
+        placeService.getProviderStatus().catch(() => ({ data: { provider: 'mock_fallback' } }))
       ]);
 
       setStats(statsRes.data.stats);
       setPlaces(placesRes.data.data);
       setReviews(reviewsRes.data.data);
+      setReports(reportsRes.data.reports || []);
+      setProviderStatus(providerRes.data);
     } catch (err) {
       console.error('Error loading admin data:', err.message);
     } finally {
@@ -130,9 +140,26 @@ const AdminDashboardPage = () => {
     }
   };
 
+  const handleUpdateReportStatus = async (reportId, newStatus) => {
+    const adminNotes = window.prompt(`Enter resolution notes for setting status to "${newStatus}":`, 'Verified by on-site audit');
+    if (adminNotes === null) return;
+    try {
+      setActionLoading(true);
+      await placeService.updateReportStatus(reportId, { status: newStatus, adminNotes });
+      setMsg(`Report status updated to ${newStatus}.`);
+      await loadDashboardData();
+    } catch (err) {
+      alert(`Report update failed: ${err.message}`);
+    } finally {
+      setActionLoading(false);
+    }
+  };
+
   if (loading) {
     return <LoadingSpinner message="Loading platform administration data..." />;
   }
+
+  const pendingReportsCount = reports.filter((r) => r.status === 'pending').length;
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
@@ -141,7 +168,7 @@ const AdminDashboardPage = () => {
         <div>
           <div className="flex items-center gap-2 text-purple-700 font-bold text-xs uppercase tracking-wider mb-1">
             <ShieldCheck className="w-4 h-4" />
-            <span>Central Administration & Moderation</span>
+            <span>Central Administration & Ground Audits</span>
           </div>
           <h1 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
             Admin Management Dashboard
@@ -165,6 +192,29 @@ const AdminDashboardPage = () => {
           <button type="button" onClick={() => setMsg('')} className="text-emerald-700 hover:underline">
             Dismiss
           </button>
+        </div>
+      )}
+
+      {/* Geospatial & Provider Adapter Status Banner */}
+      {providerStatus && (
+        <div className="p-4 bg-slate-900 text-white rounded-2xl flex flex-col md:flex-row md:items-center justify-between gap-3 text-xs">
+          <div className="flex items-center gap-3">
+            <div className="p-2 bg-teal-500/20 text-teal-400 rounded-xl">
+              <Globe className="w-5 h-5" />
+            </div>
+            <div>
+              <span className="font-bold text-slate-200 block">
+                Geospatial & Map Integration Provider
+              </span>
+              <span className="text-slate-400">
+                Active Adapter: <strong className="text-teal-300 uppercase">{providerStatus.provider}</strong> • Status: {providerStatus.configured ? 'Configured' : 'Offline / Standalone Fallback'}
+              </span>
+            </div>
+          </div>
+          <div className="flex items-center gap-2 text-slate-300">
+            <MapPin className="w-4 h-4 text-teal-400" />
+            <span>Primary Focus: <strong>Coimbatore & Tamil Nadu</strong></span>
+          </div>
         </div>
       )}
 
@@ -193,11 +243,11 @@ const AdminDashboardPage = () => {
 
           <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs flex items-center gap-4">
             <div className="w-12 h-12 bg-amber-50 text-amber-700 rounded-xl flex items-center justify-center shrink-0">
-              <Clock className="w-6 h-6" />
+              <Flag className="w-6 h-6" />
             </div>
             <div>
-              <span className="text-2xl font-black text-slate-900">{stats.pendingPlaces}</span>
-              <span className="block text-xs text-slate-500 font-medium">Pending Moderation</span>
+              <span className="text-2xl font-black text-slate-900">{pendingReportsCount}</span>
+              <span className="block text-xs text-slate-500 font-medium">Pending Inaccuracy Reports</span>
             </div>
           </div>
 
@@ -214,11 +264,11 @@ const AdminDashboardPage = () => {
       )}
 
       {/* Tab Navigation */}
-      <div className="flex border-b border-slate-200 gap-2" role="tablist">
+      <div className="flex border-b border-slate-200 gap-2 overflow-x-auto" role="tablist">
         <button
           type="button"
           onClick={() => setActiveTab('places')}
-          className={`py-3 px-5 text-xs font-bold border-b-2 transition-colors ${
+          className={`py-3 px-5 text-xs font-bold border-b-2 transition-colors shrink-0 ${
             activeTab === 'places'
               ? 'border-teal-600 text-teal-800'
               : 'border-transparent text-slate-500 hover:text-slate-800'
@@ -226,13 +276,33 @@ const AdminDashboardPage = () => {
           role="tab"
           aria-selected={activeTab === 'places'}
         >
-          Place Listings & Verification ({places.length})
+          Place Listings & Audits ({places.length})
+        </button>
+
+        <button
+          type="button"
+          onClick={() => setActiveTab('reports')}
+          className={`py-3 px-5 text-xs font-bold border-b-2 transition-colors shrink-0 flex items-center gap-1.5 ${
+            activeTab === 'reports'
+              ? 'border-teal-600 text-teal-800'
+              : 'border-transparent text-slate-500 hover:text-slate-800'
+          }`}
+          role="tab"
+          aria-selected={activeTab === 'reports'}
+        >
+          <Flag className="w-3.5 h-3.5 text-amber-600" />
+          <span>Inaccuracy Reports ({reports.length})</span>
+          {pendingReportsCount > 0 && (
+            <span className="px-1.5 py-0.2 bg-amber-500 text-slate-950 font-black text-[10px] rounded-full">
+              {pendingReportsCount}
+            </span>
+          )}
         </button>
 
         <button
           type="button"
           onClick={() => setActiveTab('reviews')}
-          className={`py-3 px-5 text-xs font-bold border-b-2 transition-colors ${
+          className={`py-3 px-5 text-xs font-bold border-b-2 transition-colors shrink-0 ${
             activeTab === 'reviews'
               ? 'border-teal-600 text-teal-800'
               : 'border-transparent text-slate-500 hover:text-slate-800'
@@ -240,13 +310,13 @@ const AdminDashboardPage = () => {
           role="tab"
           aria-selected={activeTab === 'reviews'}
         >
-          Review Moderation Queue ({reviews.length})
+          Review Moderation ({reviews.length})
         </button>
 
         <button
           type="button"
           onClick={() => setActiveTab('metrics')}
-          className={`py-3 px-5 text-xs font-bold border-b-2 transition-colors ${
+          className={`py-3 px-5 text-xs font-bold border-b-2 transition-colors shrink-0 ${
             activeTab === 'metrics'
               ? 'border-teal-600 text-teal-800'
               : 'border-transparent text-slate-500 hover:text-slate-800'
@@ -254,7 +324,7 @@ const AdminDashboardPage = () => {
           role="tab"
           aria-selected={activeTab === 'metrics'}
         >
-          Accessibility Metrics Breakdown
+          Accessibility Metrics
         </button>
       </div>
 
@@ -279,7 +349,7 @@ const AdminDashboardPage = () => {
                 <tr>
                   <th className="py-3 px-4">Place Name</th>
                   <th className="py-3 px-4">Category</th>
-                  <th className="py-3 px-4">Location</th>
+                  <th className="py-3 px-4">District / Area</th>
                   <th className="py-3 px-4">Status</th>
                   <th className="py-3 px-4">Rating</th>
                   <th className="py-3 px-4 text-right">Actions</th>
@@ -295,7 +365,9 @@ const AdminDashboardPage = () => {
                       </Link>
                     </td>
                     <td className="py-3.5 px-4">{p.category}</td>
-                    <td className="py-3.5 px-4">{p.city}, {p.state}</td>
+                    <td className="py-3.5 px-4">
+                      {p.district || p.city} {p.locality ? `(${p.locality})` : ''}
+                    </td>
                     <td className="py-3.5 px-4">
                       <span
                         className={`inline-block px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider ${
@@ -357,12 +429,108 @@ const AdminDashboardPage = () => {
         </div>
       )}
 
-      {/* Tab 2: Reviews Moderation */}
+      {/* Tab 2: Inaccuracy Reports Moderation */}
+      {activeTab === 'reports' && (
+        <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-xs">
+          <div className="p-4 bg-slate-50 border-b border-slate-200 flex items-center justify-between">
+            <h2 className="text-xs font-bold text-slate-700 uppercase tracking-wider">
+              Inaccuracy Reports Queue
+            </h2>
+            <span className="text-xs text-slate-500 font-semibold">
+              {reports.length} total reports
+            </span>
+          </div>
+
+          {reports.length === 0 ? (
+            <div className="p-8 text-center text-slate-500 text-xs">
+              No inaccurate data reports submitted yet.
+            </div>
+          ) : (
+            <div className="divide-y divide-slate-100">
+              {reports.map((rep) => (
+                <div key={rep._id} className="p-5 flex flex-col md:flex-row md:items-start justify-between gap-4">
+                  <div className="space-y-1.5 max-w-2xl">
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <span className="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-slate-100 text-slate-800">
+                        {rep.issueCategory.replace('_', ' ')}
+                      </span>
+                      <span
+                        className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase ${
+                          rep.status === 'resolved'
+                            ? 'bg-emerald-100 text-emerald-800'
+                            : rep.status === 'investigating'
+                            ? 'bg-blue-100 text-blue-800'
+                            : rep.status === 'dismissed'
+                            ? 'bg-slate-100 text-slate-600'
+                            : 'bg-amber-100 text-amber-800'
+                        }`}
+                      >
+                        {rep.status}
+                      </span>
+                      <span className="text-xs text-slate-500">
+                        Venue:{' '}
+                        <Link to={`/places/${rep.place?._id}`} className="font-bold text-teal-700 hover:underline">
+                          {rep.place?.name || 'View Place'}
+                        </Link>
+                      </span>
+                    </div>
+
+                    <p className="text-xs text-slate-800 font-medium">"{rep.description}"</p>
+
+                    {rep.evidence && (
+                      <p className="text-[11px] text-slate-500">
+                        <strong>Evidence:</strong> {rep.evidence}
+                      </p>
+                    )}
+
+                    <div className="text-[11px] text-slate-400">
+                      Reported by: {rep.reporterName || 'Anonymous'} {rep.reporterEmail ? `(${rep.reporterEmail})` : ''} •{' '}
+                      {new Date(rep.createdAt).toLocaleDateString()}
+                    </div>
+
+                    {rep.adminNotes && (
+                      <div className="p-2 bg-slate-50 border border-slate-200 rounded-lg text-[11px] text-slate-600">
+                        <strong>Admin Note:</strong> {rep.adminNotes}
+                      </div>
+                    )}
+                  </div>
+
+                  <div className="flex items-center gap-1.5 shrink-0 self-start">
+                    <button
+                      type="button"
+                      onClick={() => handleUpdateReportStatus(rep._id, 'investigating')}
+                      className="px-2.5 py-1.5 bg-blue-50 text-blue-700 hover:bg-blue-100 rounded-lg text-xs font-bold"
+                    >
+                      Investigate
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => handleUpdateReportStatus(rep._id, 'resolved')}
+                      className="px-2.5 py-1.5 bg-emerald-50 text-emerald-700 hover:bg-emerald-100 rounded-lg text-xs font-bold"
+                    >
+                      Resolve
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => handleUpdateReportStatus(rep._id, 'dismissed')}
+                      className="px-2.5 py-1.5 bg-slate-100 text-slate-600 hover:bg-slate-200 rounded-lg text-xs font-bold"
+                    >
+                      Dismiss
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* Tab 3: Reviews Moderation */}
       {activeTab === 'reviews' && (
         <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-xs">
           <div className="p-4 bg-slate-50 border-b border-slate-200">
             <h2 className="text-xs font-bold text-slate-700 uppercase tracking-wider">
-              Moderate Reviews & Community Reports
+              Moderate Reviews & Community Ratings
             </h2>
           </div>
 
@@ -421,7 +589,7 @@ const AdminDashboardPage = () => {
         </div>
       )}
 
-      {/* Tab 3: Metrics & Facilities Analytics */}
+      {/* Tab 4: Metrics & Facilities Analytics */}
       {activeTab === 'metrics' && stats && (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs space-y-4">

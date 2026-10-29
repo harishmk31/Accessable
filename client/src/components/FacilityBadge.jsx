@@ -7,80 +7,92 @@ import {
   XCircle,
   Car,
   Binary,
-  Volume2
+  Volume2,
+  Footprints,
+  AlertCircle,
+  Clock
 } from 'lucide-react';
+import { useTranslation } from '../context/LanguageContext';
 
 const FACILITY_METADATA = {
-  wheelchairRamp: {
-    label: 'Wheelchair Ramp',
-    icon: Accessibility
-  },
-  elevatorLift: {
-    label: 'Elevator / Lift',
-    icon: ArrowUpDown
-  },
-  accessibleToilet: {
-    label: 'Accessible Restroom',
-    icon: Accessibility
-  },
-  accessibleParking: {
-    label: 'Accessible Parking',
-    icon: Car
-  },
-  brailleSignage: {
-    label: 'Braille Signage',
-    icon: Binary
-  },
-  audioAssistance: {
-    label: 'Audio Assistance',
-    icon: Volume2
-  }
+  wheelchairRamp: { labelKey: 'wheelchairRamp', icon: Accessibility },
+  ramp: { labelKey: 'wheelchairRamp', icon: Accessibility },
+  elevatorLift: { labelKey: 'elevatorLift', icon: ArrowUpDown },
+  lift: { labelKey: 'elevatorLift', icon: ArrowUpDown },
+  accessibleToilet: { labelKey: 'accessibleToilet', icon: Accessibility },
+  accessibleParking: { labelKey: 'accessibleParking', icon: Car },
+  brailleSignage: { labelKey: 'brailleSignage', icon: Binary },
+  audioAssistance: { labelKey: 'audioAssistance', icon: Volume2 },
+  tactilePaving: { labelKey: 'tactilePaving', icon: Footprints },
+  stepFreeEntrance: { labelKey: 'stepFreeEntrance', icon: CheckCircle2 }
+};
+
+const normalizeStatus = (status = '') => {
+  if (status === 'Verified Available' || status === 'Available') return 'Verified Available';
+  if (status === 'Verified Unavailable' || status === 'Unavailable') return 'Verified Unavailable';
+  if (status === 'Conflicting Reports') return 'Conflicting Reports';
+  if (status === 'User Reported Pending Verification') return 'User Reported Pending Verification';
+  return 'Unknown';
 };
 
 const STATUS_CONFIGS = {
-  Available: {
-    bg: 'bg-emerald-50 text-emerald-800 border-emerald-300',
+  'Verified Available': {
+    bg: 'bg-emerald-50 text-emerald-900 border-emerald-300',
     indicator: 'bg-emerald-600',
     icon: CheckCircle2,
-    badgeText: 'Available',
-    ariaText: 'Facility is available'
+    badgeTextKey: 'statusAvailable',
+    shortLabel: 'Available'
   },
-  Unavailable: {
-    bg: 'bg-rose-50 text-rose-800 border-rose-300',
+  'Verified Unavailable': {
+    bg: 'bg-rose-50 text-rose-900 border-rose-300',
     indicator: 'bg-rose-600',
     icon: XCircle,
-    badgeText: 'Unavailable',
-    ariaText: 'Facility is unavailable'
+    badgeTextKey: 'statusUnavailable',
+    shortLabel: 'Unavailable'
   },
-  Unknown: {
-    bg: 'bg-amber-50 text-amber-800 border-amber-300',
+  'Unknown': {
+    bg: 'bg-amber-50 text-amber-900 border-amber-300',
     indicator: 'bg-amber-500',
     icon: CircleHelp,
-    badgeText: 'Unknown',
-    ariaText: 'Facility status unknown or unverified'
+    badgeTextKey: 'statusUnknown',
+    shortLabel: 'Unknown'
+  },
+  'Conflicting Reports': {
+    bg: 'bg-orange-50 text-orange-900 border-orange-300',
+    indicator: 'bg-orange-600',
+    icon: AlertCircle,
+    badgeTextKey: 'statusConflicting',
+    shortLabel: 'Conflicting'
+  },
+  'User Reported Pending Verification': {
+    bg: 'bg-sky-50 text-sky-900 border-sky-300',
+    indicator: 'bg-sky-600',
+    icon: Clock,
+    badgeTextKey: 'statusUserReported',
+    shortLabel: 'Pending'
   }
 };
 
-const FacilityBadge = ({ facilityKey, status = 'Unknown', note = '', compact = false }) => {
-  const meta = FACILITY_METADATA[facilityKey] || {
-    label: facilityKey,
-    icon: Accessibility
-  };
+const FacilityBadge = ({ facilityKey, status = 'Unknown', note = '', compact = false, evidenceSource = '' }) => {
+  const { t } = useTranslation();
+  const meta = FACILITY_METADATA[facilityKey] || { labelKey: facilityKey, icon: Accessibility };
+  const label = t(meta.labelKey) || facilityKey;
 
-  const validStatus = STATUS_CONFIGS[status] ? status : 'Unknown';
-  const config = STATUS_CONFIGS[validStatus];
+  const validStatus = normalizeStatus(status);
+  const config = STATUS_CONFIGS[validStatus] || STATUS_CONFIGS['Unknown'];
   const FacilityIcon = meta.icon;
   const StatusIcon = config.icon;
+  const statusLabel = t(config.badgeTextKey);
 
   if (compact) {
     return (
       <div
-        className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-medium border ${config.bg}`}
-        title={`${meta.label}: ${config.badgeText}${note ? ` - ${note}` : ''}`}
-        aria-label={`${meta.label} is ${config.badgeText}`}
+        className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md text-[11px] font-semibold border ${config.bg}`}
+        title={`${label}: ${statusLabel}${note ? ` — ${note}` : ''}`}
+        aria-label={`${label} is ${statusLabel}`}
       >
         <FacilityIcon className="w-3.5 h-3.5 shrink-0" aria-hidden="true" />
-        <span className="truncate max-w-[110px]">{meta.label}</span>
+        <span className="truncate max-w-[105px]">{label}</span>
         <StatusIcon className="w-3.5 h-3.5 shrink-0" aria-hidden="true" />
       </div>
     );
@@ -88,31 +100,37 @@ const FacilityBadge = ({ facilityKey, status = 'Unknown', note = '', compact = f
 
   return (
     <div
-      className={`flex items-start gap-3 p-3 rounded-lg border ${config.bg} transition-all`}
+      className={`flex items-start gap-3 p-3.5 rounded-xl border ${config.bg} transition-all`}
       role="group"
-      aria-label={`${meta.label}: ${config.badgeText}`}
+      aria-label={`${label}: ${statusLabel}`}
     >
-      <div className="p-2 rounded-md bg-white/80 shrink-0 shadow-sm">
-        <FacilityIcon className="w-5 h-5 text-slate-700" aria-hidden="true" />
+      <div className="p-2 rounded-lg bg-white/90 shrink-0 shadow-xs">
+        <FacilityIcon className="w-5 h-5 text-slate-800" aria-hidden="true" />
       </div>
 
       <div className="flex-1 min-w-0">
         <div className="flex items-center justify-between gap-2 flex-wrap">
-          <span className="font-semibold text-sm text-slate-900">{meta.label}</span>
-          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-semibold bg-white/90 border border-current shadow-xs">
+          <span className="font-bold text-sm text-slate-900">{label}</span>
+          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold bg-white/95 border border-current shadow-xs">
             <StatusIcon className="w-3.5 h-3.5" aria-hidden="true" />
-            {config.badgeText}
+            {statusLabel}
           </span>
         </div>
 
         {note ? (
-          <p className="mt-1 text-xs text-slate-700 leading-relaxed">{note}</p>
+          <p className="mt-1 text-xs text-slate-700 leading-relaxed font-normal">{note}</p>
         ) : (
           <p className="mt-0.5 text-xs text-slate-500 italic">
             {validStatus === 'Unknown'
-              ? 'Status not yet verified by an on-site audit.'
+              ? 'Condition not yet verified by on-site audit.'
               : `Standard facility condition recorded as ${validStatus.toLowerCase()}.`}
           </p>
+        )}
+
+        {evidenceSource && evidenceSource !== 'Not audited yet' && (
+          <div className="mt-1.5 pt-1.5 border-t border-current/15 text-[10px] text-slate-600 font-medium">
+            <span className="font-bold">Source:</span> {evidenceSource}
+          </div>
         )}
       </div>
     </div>

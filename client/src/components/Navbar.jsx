@@ -6,17 +6,19 @@ import {
   X,
   PlusCircle,
   Compass,
+  Bookmark,
   ShieldCheck,
   LogOut,
-  User,
-  Info,
-  LogIn
+  Info
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import { useTranslation } from '../context/LanguageContext';
+import LanguageSelector from './LanguageSelector';
 import AccessibilityStatementModal from './AccessibilityStatementModal';
 
 const Navbar = () => {
   const { user, isAdmin, logout } = useAuth();
+  const { t } = useTranslation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
@@ -42,13 +44,13 @@ const Navbar = () => {
 
       <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200">
         <nav
-          className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between"
+          className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-2"
           aria-label="Main Navigation"
         >
           {/* Logo & Platform Name */}
           <Link
             to="/"
-            className="flex items-center gap-2.5 focus-visible:ring-2 focus-visible:ring-teal-600 focus-visible:outline-none rounded-lg p-1"
+            className="flex items-center gap-2.5 focus-visible:ring-2 focus-visible:ring-teal-600 focus-visible:outline-none rounded-lg p-1 shrink-0"
             aria-label="AccessAble Platform Homepage"
           >
             <div className="w-10 h-10 bg-teal-600 text-white rounded-xl flex items-center justify-center shadow-md">
@@ -59,42 +61,49 @@ const Navbar = () => {
                 Access<span className="text-teal-600">Able</span>
               </span>
               <span className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider block">
-                Accessibility Discovery
+                Tamil Nadu
               </span>
             </div>
           </Link>
 
           {/* Desktop Navigation Links */}
-          <div className="hidden md:flex items-center gap-1">
+          <div className="hidden lg:flex items-center gap-1">
             <NavLink to="/" end className={navLinkClass}>
-              Home
+              {t('home')}
             </NavLink>
             <NavLink to="/discover" className={navLinkClass}>
               <Compass className="w-4 h-4" aria-hidden="true" />
-              Discover Places
+              {t('discover')}
+            </NavLink>
+            <NavLink to="/saved" className={navLinkClass}>
+              <Bookmark className="w-4 h-4" aria-hidden="true" />
+              {t('savedPlaces')}
             </NavLink>
             <NavLink to="/places/new" className={navLinkClass}>
               <PlusCircle className="w-4 h-4" aria-hidden="true" />
-              List a Place
+              {t('listPlace')}
             </NavLink>
             {isAdmin && (
               <NavLink to="/admin" className={navLinkClass}>
                 <ShieldCheck className="w-4 h-4 text-purple-600" aria-hidden="true" />
-                Admin Dashboard
+                {t('adminDashboard')}
               </NavLink>
             )}
           </div>
 
           {/* Right Header Controls */}
-          <div className="hidden md:flex items-center gap-3">
+          <div className="hidden md:flex items-center gap-2.5">
+            {/* Regional Language Switcher */}
+            <LanguageSelector />
+
             <button
               type="button"
               onClick={() => setIsModalOpen(true)}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-lg transition-colors focus-visible:ring-2 focus-visible:ring-teal-600 focus-visible:outline-none"
+              className="inline-flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-lg transition-colors focus-visible:ring-2 focus-visible:ring-teal-600 focus-visible:outline-none"
               aria-label="Open accessibility standards information"
             >
               <Info className="w-3.5 h-3.5 text-teal-600" aria-hidden="true" />
-              Accessibility Guide
+              <span className="hidden xl:inline">{t('accessibilityGuide')}</span>
             </button>
 
             {user ? (
@@ -104,7 +113,7 @@ const Navbar = () => {
                     {user.name}
                   </span>
                   <span className="text-[10px] text-teal-700 font-semibold uppercase">
-                    {user.role === 'admin' ? 'Administrator' : 'Member'}
+                    {user.role === 'admin' ? t('admin') : t('member')}
                   </span>
                 </div>
 
@@ -122,30 +131,23 @@ const Navbar = () => {
               <div className="flex items-center gap-2">
                 <Link
                   to="/login"
-                  className="px-3.5 py-1.5 text-xs font-semibold text-slate-700 hover:text-teal-700 hover:bg-slate-100 rounded-lg transition-colors focus-visible:ring-2 focus-visible:ring-teal-600 focus-visible:outline-none"
+                  className="px-3 py-1.5 text-xs font-semibold text-slate-700 hover:text-teal-700 hover:bg-slate-100 rounded-lg transition-colors focus-visible:ring-2 focus-visible:ring-teal-600 focus-visible:outline-none"
                 >
-                  Sign In
+                  {t('signIn')}
                 </Link>
                 <Link
                   to="/register"
-                  className="px-4 py-1.5 text-xs font-bold text-white bg-teal-600 hover:bg-teal-700 rounded-lg shadow-xs transition-colors focus-visible:ring-2 focus-visible:ring-teal-600 focus-visible:outline-none"
+                  className="px-3.5 py-1.5 text-xs font-bold text-white bg-teal-600 hover:bg-teal-700 rounded-lg shadow-xs transition-colors focus-visible:ring-2 focus-visible:ring-teal-600 focus-visible:outline-none"
                 >
-                  Register
+                  {t('register')}
                 </Link>
               </div>
             )}
           </div>
 
-          {/* Mobile menu hamburger button */}
+          {/* Mobile navigation header */}
           <div className="md:hidden flex items-center gap-2">
-            <button
-              type="button"
-              onClick={() => setIsModalOpen(true)}
-              className="p-2 text-slate-600 hover:text-slate-900 rounded-lg focus-visible:ring-2 focus-visible:ring-teal-600 focus-visible:outline-none"
-              aria-label="Open accessibility guide"
-            >
-              <Info className="w-5 h-5 text-teal-600" />
-            </button>
+            <LanguageSelector />
 
             <button
               type="button"
@@ -171,21 +173,28 @@ const Navbar = () => {
               onClick={() => setMobileMenuOpen(false)}
               className="block px-3 py-2 text-sm font-semibold text-slate-800 hover:bg-teal-50 rounded-lg"
             >
-              Home
+              {t('home')}
             </Link>
             <Link
               to="/discover"
               onClick={() => setMobileMenuOpen(false)}
               className="block px-3 py-2 text-sm font-semibold text-slate-800 hover:bg-teal-50 rounded-lg"
             >
-              Discover Places
+              {t('discover')}
+            </Link>
+            <Link
+              to="/saved"
+              onClick={() => setMobileMenuOpen(false)}
+              className="block px-3 py-2 text-sm font-semibold text-slate-800 hover:bg-teal-50 rounded-lg"
+            >
+              {t('savedPlaces')}
             </Link>
             <Link
               to="/places/new"
               onClick={() => setMobileMenuOpen(false)}
               className="block px-3 py-2 text-sm font-semibold text-slate-800 hover:bg-teal-50 rounded-lg"
             >
-              List a Place
+              {t('listPlace')}
             </Link>
             {isAdmin && (
               <Link
@@ -193,9 +202,20 @@ const Navbar = () => {
                 onClick={() => setMobileMenuOpen(false)}
                 className="block px-3 py-2 text-sm font-semibold text-purple-700 hover:bg-purple-50 rounded-lg"
               >
-                Admin Dashboard
+                {t('adminDashboard')}
               </Link>
             )}
+
+            <button
+              type="button"
+              onClick={() => {
+                setMobileMenuOpen(false);
+                setIsModalOpen(true);
+              }}
+              className="w-full text-left px-3 py-2 text-sm font-semibold text-teal-700 hover:bg-teal-50 rounded-lg"
+            >
+              {t('accessibilityGuide')}
+            </button>
 
             <div className="pt-3 border-t border-slate-200 space-y-2">
               {user ? (
@@ -209,7 +229,7 @@ const Navbar = () => {
                     onClick={handleLogout}
                     className="text-xs font-bold text-rose-600 hover:underline"
                   >
-                    Sign Out
+                    {t('signOut')}
                   </button>
                 </div>
               ) : (
@@ -219,14 +239,14 @@ const Navbar = () => {
                     onClick={() => setMobileMenuOpen(false)}
                     className="text-center px-4 py-2 text-xs font-bold text-slate-800 bg-slate-100 rounded-lg"
                   >
-                    Sign In
+                    {t('signIn')}
                   </Link>
                   <Link
                     to="/register"
                     onClick={() => setMobileMenuOpen(false)}
                     className="text-center px-4 py-2 text-xs font-bold text-white bg-teal-600 rounded-lg"
                   >
-                    Register
+                    {t('register')}
                   </Link>
                 </div>
               )}

@@ -12,7 +12,8 @@ const CATEGORIES = [
   'Office/Government',
   'Transit/Station',
   'Shopping/Mall',
-  'Park/Recreation',
+  'Parks & Gardens',
+  'Tourist Attraction',
   'Other'
 ];
 
@@ -50,17 +51,24 @@ const EditPlacePage = () => {
           return;
         }
 
+        const lat = p.coordinates?.lat || p.location?.coordinates?.[1] || '';
+        const lng = p.coordinates?.lng || p.location?.coordinates?.[0] || '';
+
         setFormData({
           name: p.name || '',
           category: p.category || 'Hospital',
           description: p.description || '',
           address: p.address || '',
+          locality: p.locality || '',
+          district: p.district || p.city || 'Coimbatore',
           city: p.city || '',
-          state: p.state || '',
+          state: p.state || 'Tamil Nadu',
           postalCode: p.postalCode || '',
+          latitude: lat ? lat.toString() : '',
+          longitude: lng ? lng.toString() : '',
           contactNumber: p.contactNumber || '',
           website: p.website || '',
-          image: p.images && p.images.length > 0 ? p.images[0] : '',
+          image: p.photos && p.photos.length > 0 ? p.photos[0].url : p.images && p.images.length > 0 ? p.images[0] : '',
           status: p.status || 'verified',
           verificationNote: p.verificationNote || '',
           facilities: {
@@ -146,8 +154,10 @@ const EditPlacePage = () => {
         category: formData.category,
         description: formData.description.trim(),
         address: formData.address.trim(),
+        locality: formData.locality.trim(),
+        district: formData.district.trim() || formData.city.trim(),
         city: formData.city.trim(),
-        state: formData.state.trim(),
+        state: formData.state.trim() || 'Tamil Nadu',
         postalCode: formData.postalCode.trim(),
         contactNumber: formData.contactNumber.trim(),
         website: formData.website.trim(),
@@ -155,6 +165,13 @@ const EditPlacePage = () => {
         facilityNotes: formData.facilityNotes,
         images: formData.image ? [formData.image.trim()] : []
       };
+
+      if (formData.latitude && formData.longitude) {
+        payload.coordinates = {
+          lat: parseFloat(formData.latitude),
+          lng: parseFloat(formData.longitude)
+        };
+      }
 
       if (isAdmin) {
         payload.status = formData.status;
@@ -307,8 +324,8 @@ const EditPlacePage = () => {
             <h2 className="text-sm font-bold text-slate-900 border-b border-slate-100 pb-2">
               2. Address & Contacts
             </h2>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-              <div className="sm:col-span-3">
+            <div className="space-y-4">
+              <div>
                 <label htmlFor="address" className="block text-xs font-bold text-slate-700 uppercase mb-1">
                   Street Address
                 </label>
@@ -322,46 +339,112 @@ const EditPlacePage = () => {
                   className="w-full p-3 bg-slate-50 border border-slate-300 rounded-xl text-sm text-slate-900"
                 />
               </div>
-              <div>
-                <label htmlFor="city" className="block text-xs font-bold text-slate-700 uppercase mb-1">
-                  City
-                </label>
-                <input
-                  id="city"
-                  type="text"
-                  name="city"
-                  required
-                  value={formData.city}
-                  onChange={handleChange}
-                  className="w-full p-3 bg-slate-50 border border-slate-300 rounded-xl text-sm text-slate-900"
-                />
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label htmlFor="locality" className="block text-xs font-bold text-slate-700 uppercase mb-1">
+                    Area / Locality
+                  </label>
+                  <input
+                    id="locality"
+                    type="text"
+                    name="locality"
+                    value={formData.locality}
+                    onChange={handleChange}
+                    placeholder="e.g. RS Puram, Peelamedu"
+                    className="w-full p-3 bg-slate-50 border border-slate-300 rounded-xl text-sm text-slate-900"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="district" className="block text-xs font-bold text-slate-700 uppercase mb-1">
+                    District
+                  </label>
+                  <input
+                    id="district"
+                    type="text"
+                    name="district"
+                    required
+                    value={formData.district}
+                    onChange={handleChange}
+                    placeholder="e.g. Coimbatore, Chennai"
+                    className="w-full p-3 bg-slate-50 border border-slate-300 rounded-xl text-sm text-slate-900"
+                  />
+                </div>
               </div>
-              <div>
-                <label htmlFor="state" className="block text-xs font-bold text-slate-700 uppercase mb-1">
-                  State
-                </label>
-                <input
-                  id="state"
-                  type="text"
-                  name="state"
-                  required
-                  value={formData.state}
-                  onChange={handleChange}
-                  className="w-full p-3 bg-slate-50 border border-slate-300 rounded-xl text-sm text-slate-900"
-                />
+
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div>
+                  <label htmlFor="city" className="block text-xs font-bold text-slate-700 uppercase mb-1">
+                    City
+                  </label>
+                  <input
+                    id="city"
+                    type="text"
+                    name="city"
+                    required
+                    value={formData.city}
+                    onChange={handleChange}
+                    className="w-full p-3 bg-slate-50 border border-slate-300 rounded-xl text-sm text-slate-900"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="state" className="block text-xs font-bold text-slate-700 uppercase mb-1">
+                    State
+                  </label>
+                  <input
+                    id="state"
+                    type="text"
+                    name="state"
+                    required
+                    value={formData.state}
+                    onChange={handleChange}
+                    className="w-full p-3 bg-slate-50 border border-slate-300 rounded-xl text-sm text-slate-900"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="postalCode" className="block text-xs font-bold text-slate-700 uppercase mb-1">
+                    Postal Code
+                  </label>
+                  <input
+                    id="postalCode"
+                    type="text"
+                    name="postalCode"
+                    value={formData.postalCode}
+                    onChange={handleChange}
+                    className="w-full p-3 bg-slate-50 border border-slate-300 rounded-xl text-sm text-slate-900"
+                  />
+                </div>
               </div>
-              <div>
-                <label htmlFor="postalCode" className="block text-xs font-bold text-slate-700 uppercase mb-1">
-                  Postal Code
-                </label>
-                <input
-                  id="postalCode"
-                  type="text"
-                  name="postalCode"
-                  value={formData.postalCode}
-                  onChange={handleChange}
-                  className="w-full p-3 bg-slate-50 border border-slate-300 rounded-xl text-sm text-slate-900"
-                />
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label htmlFor="latitude" className="block text-xs font-bold text-slate-700 uppercase mb-1">
+                    Latitude
+                  </label>
+                  <input
+                    id="latitude"
+                    type="text"
+                    name="latitude"
+                    value={formData.latitude}
+                    onChange={handleChange}
+                    placeholder="e.g. 11.0168"
+                    className="w-full p-3 bg-slate-50 border border-slate-300 rounded-xl text-sm text-slate-900"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="longitude" className="block text-xs font-bold text-slate-700 uppercase mb-1">
+                    Longitude
+                  </label>
+                  <input
+                    id="longitude"
+                    type="text"
+                    name="longitude"
+                    value={formData.longitude}
+                    onChange={handleChange}
+                    placeholder="e.g. 76.9558"
+                    className="w-full p-3 bg-slate-50 border border-slate-300 rounded-xl text-sm text-slate-900"
+                  />
+                </div>
               </div>
             </div>
 

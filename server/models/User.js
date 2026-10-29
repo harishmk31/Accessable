@@ -34,7 +34,13 @@ const userSchema = new mongoose.Schema(
     bio: {
       type: String,
       default: ''
-    }
+    },
+    savedPlaces: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Place'
+      }
+    ]
   },
   {
     timestamps: true

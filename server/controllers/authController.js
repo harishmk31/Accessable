@@ -39,7 +39,6 @@ const register = async (req, res, next) => {
       });
     }
 
-    // Role safety: Only allow creating 'admin' if explicitly specified in local seed or requested by first user
     const assignedRole = role === 'admin' ? 'admin' : 'user';
 
     const user = await User.create({
@@ -59,7 +58,8 @@ const register = async (req, res, next) => {
         id: user._id,
         name: user.name,
         email: user.email,
-        role: user.role
+        role: user.role,
+        savedPlaces: user.savedPlaces || []
       }
     });
   } catch (error) {
@@ -108,7 +108,8 @@ const login = async (req, res, next) => {
         name: user.name,
         email: user.email,
         role: user.role,
-        bio: user.bio
+        bio: user.bio,
+        savedPlaces: user.savedPlaces || []
       }
     });
   } catch (error) {
@@ -137,6 +138,7 @@ const getMe = async (req, res, next) => {
         email: user.email,
         role: user.role,
         bio: user.bio,
+        savedPlaces: user.savedPlaces || [],
         createdAt: user.createdAt
       }
     });
@@ -173,8 +175,71 @@ const updateProfile = async (req, res, next) => {
         name: user.name,
         email: user.email,
         role: user.role,
-        bio: user.bio
+        bio: user.bio,
+        savedPlaces: user.savedPlaces || []
       }
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+// @desc    Toggle Bookmark/Save Place
+// @route   POST /api/auth/save-place/:placeId
+// @access  Private
+const toggleSavePlace = async (req, res, next) => {
+  try {
+    const { placeId } = req.params;
+    const user = await User.findById(req.user.id);
+
+    if (!user) {
+      return res.status(404).json({ success: false, message: 'User not found' });
+    }
+
+    const index = user.savedPlaces.indexOf(placeId);
+    let isSaved = false;
+
+    if (index > -1) {
+      // Remove
+      user.savedPlaces.splice(index, 1);
+      isSaved = false;
+    } else {
+      // Add
+      user.savedPlaces.push(placeId);
+      isSaved = true;
+    }
+
+    await user.save();
+
+    res.json({
+      success: true,
+      isSaved,
+      savedPlaces: user.savedPlaces,
+      message: isSaved ? 'Place saved to your bookmarks' : 'Place removed from your bookmarks'
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+// @desc    Get user's saved places
+// @route   GET /api/auth/saved-places
+// @access  Private
+const getSavedPlaces = async (req, res, next) => {
+  try {
+    const user = await User.findById(req.user.id).populate({
+      path: 'savedPlaces',
+      populate: { path: 'createdBy', select: 'name email role' }
+    });
+
+    if (!user) {
+      return res.status(404).json({ success: false, message: 'User not found' });
+    }
+
+    res.json({
+      success: true,
+      count: user.savedPlaces?.length || 0,
+      data: user.savedPlaces || []
     });
   } catch (error) {
     next(error);
@@ -185,5 +250,7 @@ module.exports = {
   register,
   login,
   getMe,
-  updateProfile
+  updateProfile,
+  toggleSavePlace,
+  getSavedPlaces
 };

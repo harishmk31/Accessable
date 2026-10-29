@@ -31,23 +31,36 @@ api.interceptors.response.use(
   }
 );
 
-// Auth endpoints
+// Auth endpoints & bookmarks
 export const authService = {
   login: (credentials) => api.post('/auth/login', credentials),
   register: (userData) => api.post('/auth/register', userData),
   getMe: () => api.get('/auth/me'),
-  updateProfile: (profileData) => api.put('/auth/profile', profileData)
+  updateProfile: (profileData) => api.put('/auth/profile', profileData),
+  toggleSavePlace: (placeId) => api.post(`/auth/save-place/${placeId}`),
+  getSavedPlaces: () => api.get('/auth/saved-places')
 };
 
-// Place endpoints
+// Place endpoints with geospatial and Tamil Nadu regional queries
 export const placeService = {
   getPlaces: (params = {}) => api.get('/places', { params }),
+  getNearbyPlaces: (params = {}) => api.get('/places/nearby', { params }),
+  searchPlaces: (q) => api.get('/places/search', { params: { q } }),
+  getCategories: () => api.get('/places/categories'),
+  getDistricts: () => api.get('/places/districts'),
   getPlaceById: (id) => api.get(`/places/${id}`),
+  getPlaceAccessibility: (id) => api.get(`/places/${id}/accessibility`),
   createPlace: (placeData) => api.post('/places', placeData),
   updatePlace: (id, placeData) => api.put(`/places/${id}`, placeData),
   deletePlace: (id) => api.delete(`/places/${id}`),
   verifyPlace: (id, payload) => api.patch(`/places/${id}/verify`, payload),
-  getPlaceStats: () => api.get('/places/stats/overview')
+  getPlaceStats: () => api.get('/places/stats/overview'),
+  getProviderStatus: () => api.get('/places/provider/status'),
+
+  // Report inaccuracy
+  submitReport: (placeId, reportData) => api.post(`/places/${placeId}/reports`, reportData),
+  getAdminReports: () => api.get('/places/admin/reports'),
+  updateReportStatus: (id, payload) => api.patch(`/places/admin/reports/${id}`, payload)
 };
 
 // Review endpoints
