@@ -301,6 +301,36 @@ const FilterDrawer = ({
         </div>
       </div>
 
+      {/* Verification Status Filter */}
+      <div>
+        <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
+          Verification Status
+        </label>
+        <div className="grid grid-cols-2 gap-1.5 text-xs">
+          {[
+            { value: '', label: 'Verified Audits' },
+            { value: 'all', label: 'All Places' }
+          ].map(({ value, label }) => {
+            const isSelected = (filters.status || '') === value;
+            return (
+              <button
+                key={value}
+                type="button"
+                onClick={() => onChange('status', value)}
+                className={`py-1.5 px-2 rounded-lg text-center font-bold text-[11px] transition-all ${
+                  isSelected
+                    ? 'bg-teal-700 text-white shadow-2xs'
+                    : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+                }`}
+                aria-pressed={isSelected}
+              >
+                {label}
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
       {/* Accessibility Facilities 3-State Requirements */}
       <div className="pt-4 border-t border-slate-100 space-y-3">
         <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider">

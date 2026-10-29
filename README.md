@@ -328,6 +328,7 @@ npm run seed
 - `PUT /api/places/admin/reports/:reportId` — Update report status (`investigating`, `resolved`, `dismissed`) with admin notes.
 
 ### Reviews
+- `GET /api/reviews/recent` — Public endpoint returning recent moderated community reviews across places.
 - `POST /api/reviews/place/:id` — Post accessibility review and facility feedback (protected).
 - `DELETE /api/reviews/:id` — Delete review (author or admin).
 - `GET /api/reviews/admin/all` — Admin review moderation queue.

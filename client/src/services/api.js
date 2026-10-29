@@ -70,6 +70,7 @@ export const placeService = {
 
 // Review endpoints
 export const reviewService = {
+  getRecentReviews: () => api.get('/reviews/recent'),
   getPlaceReviews: (placeId) => api.get(`/reviews/place/${placeId}`),
   addReview: (placeId, reviewData) => api.post(`/reviews/place/${placeId}`, reviewData),
   deleteReview: (id) => api.delete(`/reviews/${id}`),

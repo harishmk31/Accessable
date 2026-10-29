@@ -157,10 +157,8 @@ const InteractiveMap = ({
           if (!lat || !lng) return null;
 
           const isSelected = selectedPlaceId && selectedPlaceId === place._id;
-          const displayImage =
-            place.photos?.[0]?.url ||
-            place.images?.[0] ||
-            'https://images.unsplash.com/photo-1577495508048-b635879837f1?auto=format&fit=crop&w=600&q=80';
+          const candidatePhoto = (place.photos?.[0]?.url || place.images?.[0] || '');
+          const hasValidPhoto = candidatePhoto && !candidatePhoto.includes('images.unsplash.com');
 
           return (
             <Marker
@@ -175,12 +173,22 @@ const InteractiveMap = ({
             >
               <Popup className="accessable-map-popup" minWidth={240} maxWidth={280}>
                 <div className="p-1 space-y-2">
-                  <div className="relative h-28 w-full rounded-lg overflow-hidden bg-slate-100">
-                    <img
-                      src={displayImage}
-                      alt={place.name}
-                      className="w-full h-full object-cover"
-                    />
+                  <div className="relative h-28 w-full rounded-lg overflow-hidden bg-slate-100 flex items-center justify-center text-slate-400">
+                    {hasValidPhoto ? (
+                      <img
+                        src={candidatePhoto}
+                        alt={place.name}
+                        className="w-full h-full object-cover"
+                        onError={(e) => {
+                          e.target.style.display = 'none';
+                        }}
+                      />
+                    ) : (
+                      <div className="text-center p-2">
+                        <span className="text-[11px] font-semibold text-slate-500 block">Photo unavailable</span>
+                        <span className="text-[9px] text-slate-400 block">{place.category}</span>
+                      </div>
+                    )}
                     <span className="absolute top-1.5 left-1.5 px-2 py-0.5 bg-slate-900/80 backdrop-blur-xs text-white text-[10px] font-bold rounded-md">
                       {place.category}
                     </span>

@@ -39,8 +39,8 @@ export const TRANSLATIONS = {
     coverageStats: 'Statewide Coverage',
 
     // Discovery & Filters
-    directoryTitle: 'Tamil Nadu Accessibility Directory',
-    directorySubtitle: 'Discover audited venues with verified wheelchair ramps, elevators, tactile signage, and barrier-free access.',
+    directoryTitle: 'Explore Places',
+    directorySubtitle: 'Discover audited public places across Coimbatore and Tamil Nadu with verified wheelchair ramps, elevators, and accessible facilities.',
     filters: 'Filters',
     resetFilters: 'Reset',
     sortResultsBy: 'Sort Results By',
@@ -161,7 +161,7 @@ export const TRANSLATIONS = {
     coverageStats: 'மாநில கவரேஜ்',
 
     // Discovery & Filters
-    directoryTitle: 'தமிழ்நாடு அணுகல்தன்மை அடைவு',
+    directoryTitle: 'இடங்களை ஆராய்க (Explore Places)',
     directorySubtitle: 'சக்கர நாற்காலி சாய்தளங்கள், மின்தூக்கிகள் மற்றும் தொடுவழிகளுடன் கூடிய இடங்களைக் கண்டறியுங்கள்.',
     filters: 'வடிகட்டிகள்',
     resetFilters: 'மீட்டமைக்க',
@@ -283,7 +283,7 @@ export const TRANSLATIONS = {
     coverageStats: 'राज्यव्यापी कवरेज',
 
     // Discovery & Filters
-    directoryTitle: 'तमिलनाडु सुलभता निर्देशिका',
+    directoryTitle: 'स्थान खोजें (Explore Places)',
     directorySubtitle: 'व्हीलचेयर रैंप, लिफ्ट और स्पर्शनीय साइनेज वाले सत्यापित स्थानों की खोज करें।',
     filters: 'फ़िल्टर',
     resetFilters: 'रीसेट',

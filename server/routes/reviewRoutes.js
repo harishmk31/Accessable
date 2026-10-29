@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const {
   getPlaceReviews,
+  getRecentReviews,
   addReview,
   deleteReview,
   getAllReviewsAdmin,
@@ -9,6 +10,9 @@ const {
 } = require('../controllers/reviewController');
 const { protect } = require('../middleware/auth');
 const { adminOnly } = require('../middleware/admin');
+
+// Recent community reviews
+router.get('/recent', getRecentReviews);
 
 // Place reviews
 router.get('/place/:placeId', getPlaceReviews);

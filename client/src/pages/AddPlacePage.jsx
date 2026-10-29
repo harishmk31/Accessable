@@ -470,7 +470,7 @@ const AddPlacePage = () => {
                   name="image"
                   value={formData.image}
                   onChange={handleChange}
-                  placeholder="https://images.unsplash.com/..."
+                  placeholder="https://upload.wikimedia.org/... or official venue photo URL"
                   className="w-full p-3 bg-slate-50 border border-slate-300 rounded-xl text-sm text-slate-900 focus:bg-white focus:border-teal-500 focus:ring-1 focus:ring-teal-500 focus:outline-none"
                 />
               </div>

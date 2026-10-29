@@ -38,6 +38,7 @@ const DiscoveryPage = () => {
     district: searchParams.get('district') || '',
     locality: searchParams.get('locality') || '',
     city: searchParams.get('city') || '',
+    status: searchParams.get('status') || '',
     lat: searchParams.get('lat') || '',
     lng: searchParams.get('lng') || '',
     radius: searchParams.get('radius') || '',
@@ -52,6 +53,13 @@ const DiscoveryPage = () => {
     sortBy: searchParams.get('sortBy') || (searchParams.get('lat') ? 'distance' : 'newest'),
     page: parseInt(searchParams.get('page') || '1', 10)
   };
+
+  // Sync viewMode from URL param (e.g. /discover?view=map)
+  useEffect(() => {
+    const viewParam = searchParams.get('view');
+    if (viewParam === 'map') setViewMode('map');
+    else if (viewParam === 'split') setViewMode('split');
+  }, [searchParams]);
 
   const [searchInput, setSearchInput] = useState(currentFilters.q);
 

@@ -153,6 +153,27 @@ const getAllReviewsAdmin = async (req, res, next) => {
   }
 };
 
+// @desc    Get recent community accessibility reviews
+// @route   GET /api/reviews/recent
+// @access  Public
+const getRecentReviews = async (req, res, next) => {
+  try {
+    const reviews = await Review.find({ isModerated: true })
+      .populate('place', 'name address locality city district category photos images')
+      .populate('user', 'name role')
+      .sort({ createdAt: -1 })
+      .limit(30);
+
+    res.json({
+      success: true,
+      count: reviews.length,
+      data: reviews
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 // @desc    Toggle review moderation status (approve/hide)
 // @route   PATCH /api/reviews/:id/moderate
 // @access  Private (Admin only)
@@ -182,6 +203,7 @@ const toggleModerateReview = async (req, res, next) => {
 
 module.exports = {
   getPlaceReviews,
+  getRecentReviews,
   addReview,
   deleteReview,
   getAllReviewsAdmin,

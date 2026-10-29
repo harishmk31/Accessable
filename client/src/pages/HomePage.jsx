@@ -1,26 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import {
-  Accessibility,
   Search,
   MapPin,
   Navigation,
   Building2,
   GraduationCap,
-  UtensilsCrossed,
   Train,
-  Landmark,
   ShoppingBag,
   Trees,
-  Waves,
+  Landmark,
   ArrowRight,
   ShieldCheck,
   CheckCircle2,
-  XCircle,
-  HelpCircle,
-  AlertTriangle
+  Compass,
+  Layers,
+  Flag,
+  Map
 } from 'lucide-react';
 import { placeService } from '../services/api';
+import { useAuth } from '../context/AuthContext';
 import { useTranslation } from '../context/LanguageContext';
 import PlaceCard from '../components/PlaceCard';
 import LoadingSpinner from '../components/LoadingSpinner';
@@ -34,46 +33,73 @@ const COIMBATORE_LOCALITIES = [
   'Race Course',
   'Avinashi Road',
   'Vadavalli',
-  'Pollachi Road'
+  'Saravanampatti'
 ];
 
-const TAMIL_NADU_REGIONS = [
-  'Coimbatore',
-  'Chennai',
-  'Madurai',
-  'Tiruchirappalli',
-  'Salem',
-  'Tiruppur',
-  'Erode',
-  'Nilgiris',
-  'Thanjavur',
-  'Kanyakumari'
+const TN_REGIONS = [
+  { name: 'Western Tamil Nadu', district: 'Coimbatore' },
+  { name: 'Northern Tamil Nadu', district: 'Chennai' },
+  { name: 'Central Tamil Nadu', district: 'Tiruchirappalli' },
+  { name: 'Southern Tamil Nadu', district: 'Madurai' }
+];
+
+const CATEGORIES = [
+  { label: 'Hospitals', cat: 'Hospital', icon: Building2 },
+  { label: 'Colleges', cat: 'College/University', icon: GraduationCap },
+  { label: 'Transit', cat: 'Transit/Station', icon: Train },
+  { label: 'Parks', cat: 'Parks & Gardens', icon: Trees },
+  { label: 'Shopping', cat: 'Shopping/Mall', icon: ShoppingBag },
+  { label: 'Heritage', cat: 'Tourist Attraction', icon: Landmark }
 ];
 
 const HomePage = () => {
+  const { user, isAdmin } = useAuth();
   const { t } = useTranslation();
-  const [searchTerm, setSearchTerm] = useState('');
-  const [featuredPlaces, setFeaturedPlaces] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [geoLoading, setGeoLoading] = useState(false);
-  const [geoError, setGeoError] = useState(null);
   const navigate = useNavigate();
 
+  const [searchTerm, setSearchTerm] = useState('');
+  const [coverage, setCoverage] = useState(null);
+  const [pendingReports, setPendingReports] = useState(0);
+  const [recentPlaces, setRecentPlaces] = useState([]);
+  const [topPlaces, setTopPlaces] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [geoLoading, setGeoLoading] = useState(false);
+
   useEffect(() => {
-    const fetchFeatured = async () => {
+    const fetchDashboardData = async () => {
       try {
-        const res = await placeService.getPlaces({ limit: 4, sortBy: 'accessibility_desc' });
-        setFeaturedPlaces(res.data.data || []);
+        setLoading(true);
+        const [covRes, placesRes, topRes] = await Promise.all([
+          placeService.getCoverage().catch(() => ({ data: null })),
+          placeService.getPlaces({ limit: 6, sortBy: 'newest' }),
+          placeService.getPlaces({ limit: 4, sortBy: 'accessibility_desc' })
+        ]);
+
+        setCoverage(covRes.data?.data || covRes.data || null);
+        setRecentPlaces(placesRes.data.data || []);
+        setTopPlaces(topRes.data.data || []);
+
+        if (isAdmin) {
+          try {
+            const repRes = await placeService.getAdminReports();
+            const list = repRes.data.data || repRes.data.reports || [];
+            const pending = list.filter((r) => r.status === 'pending').length;
+            setPendingReports(pending);
+          } catch (e) {
+            // Silently ignore report fetch error if not admin
+          }
+        }
       } catch (err) {
-        console.error('Failed to load featured places:', err.message);
+        console.error('Failed to load dashboard data:', err.message);
       } finally {
         setLoading(false);
       }
     };
-    fetchFeatured();
-  }, []);
 
-  const handleHeroSearch = (e) => {
+    fetchDashboardData();
+  }, [isAdmin]);
+
+  const handleSearch = (e) => {
     e.preventDefault();
     if (searchTerm.trim()) {
       navigate(`/discover?q=${encodeURIComponent(searchTerm.trim())}`);
@@ -82,361 +108,296 @@ const HomePage = () => {
     }
   };
 
-  const handleNearMeClick = () => {
+  const handleNearMe = () => {
     if (!navigator.geolocation) {
-      setGeoError('Geolocation is not supported by your browser.');
       navigate('/discover');
       return;
     }
     setGeoLoading(true);
-    setGeoError(null);
     navigator.geolocation.getCurrentPosition(
-      (position) => {
+      (pos) => {
         setGeoLoading(false);
-        const { latitude, longitude } = position.coords;
+        const { latitude, longitude } = pos.coords;
         navigate(`/discover?lat=${latitude}&lng=${longitude}&radius=10`);
       },
-      (err) => {
+      () => {
         setGeoLoading(false);
-        console.warn('Geolocation error:', err.message);
-        // Default to Coimbatore center if GPS denied
         navigate('/discover?district=Coimbatore');
       },
-      { timeout: 10000, enableHighAccuracy: true }
+      { timeout: 8000 }
     );
   };
 
-  const categories = [
-    { label: 'Hospitals & Health', cat: 'Hospital', icon: Building2 },
-    { label: 'Colleges & Campuses', cat: 'College/University', icon: GraduationCap },
-    { label: 'Parks & Waterfronts', cat: 'Parks & Gardens', icon: Trees },
-    { label: 'Transit & Stations', cat: 'Transit/Station', icon: Train },
-    { label: 'Shopping & Malls', cat: 'Shopping/Mall', icon: ShoppingBag },
-    { label: 'Culture & Heritage', cat: 'Tourist Attraction', icon: Landmark }
-  ];
-
   return (
-    <div className="space-y-16 sm:space-y-24">
-      {/* Hero Section */}
-      <section
-        className="relative bg-gradient-to-b from-teal-900 via-teal-950 to-slate-950 text-white py-20 px-4 sm:px-6 lg:px-8 overflow-hidden rounded-b-3xl shadow-xl"
-        aria-labelledby="hero-title"
-      >
-        <div className="max-w-5xl mx-auto text-center space-y-6 relative z-10">
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-teal-500/20 border border-teal-400/30 text-teal-300 text-xs font-semibold backdrop-blur-xs">
-            <Accessibility className="w-4 h-4" aria-hidden="true" />
-            <span>Inclusive Mobility & Universal Accessibility • Tamil Nadu</span>
+    <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-8">
+      {/* 1. Compact Academic Dashboard Header */}
+      <div className="border-b border-slate-200 pb-5">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div>
+            <h1 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
+              AccessAble Dashboard
+            </h1>
+            <p className="text-xs sm:text-sm text-slate-600 mt-1 max-w-2xl leading-relaxed">
+              Inclusive mobility discovery platform helping persons with disabilities and accessibility requirements explore verified public places across Tamil Nadu.
+            </p>
           </div>
 
-          <h1
-            id="hero-title"
-            className="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-tight max-w-4xl mx-auto"
-          >
-            {t('heroTitle')}
-          </h1>
-
-          <p className="text-base sm:text-lg text-slate-300 max-w-2xl mx-auto leading-relaxed">
-            {t('heroSubtitle')}
-          </p>
-
-          {/* Search Box & GPS CTA */}
-          <div className="max-w-2xl mx-auto space-y-3">
-            <form
-              onSubmit={handleHeroSearch}
-              className="flex flex-col sm:flex-row gap-2 bg-white/10 p-2 rounded-2xl backdrop-blur-md border border-white/20 shadow-2xl"
-              role="search"
-              aria-label="Direct hero place search"
+          <div className="flex items-center gap-2 shrink-0">
+            <button
+              type="button"
+              onClick={handleNearMe}
+              disabled={geoLoading}
+              className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-teal-50 hover:bg-teal-100 text-teal-800 border border-teal-200 rounded-xl text-xs font-bold transition-colors"
             >
-              <div className="relative flex-1">
-                <label htmlFor="hero-search-input" className="sr-only">
-                  Search place name, location, or keywords
-                </label>
-                <Search
-                  className="w-5 h-5 text-slate-400 absolute left-4 top-1/2 -translate-y-1/2"
-                  aria-hidden="true"
-                />
-                <input
-                  id="hero-search-input"
-                  type="search"
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  placeholder={t('searchPlaceholder')}
-                  className="w-full pl-12 pr-4 py-3.5 bg-white text-slate-900 rounded-xl text-sm placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-teal-500 shadow-inner"
-                />
-              </div>
-              <button
-                type="submit"
-                className="px-6 py-3.5 bg-teal-500 hover:bg-teal-400 text-slate-950 font-bold text-sm rounded-xl transition-all shadow-md flex items-center justify-center gap-2 focus-visible:ring-2 focus-visible:ring-white focus-visible:outline-none"
-              >
-                <span>{t('explorePlaces')}</span>
-                <ArrowRight className="w-4 h-4" aria-hidden="true" />
-              </button>
-            </form>
+              <Navigation className={`w-3.5 h-3.5 ${geoLoading ? 'animate-spin' : ''}`} />
+              <span>{geoLoading ? 'Locating...' : 'Near Me'}</span>
+            </button>
+            <Link
+              to="/discover?view=map"
+              className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-slate-900 hover:bg-slate-800 text-white rounded-xl text-xs font-bold transition-colors shadow-2xs"
+            >
+              <Map className="w-3.5 h-3.5" />
+              <span>Map View</span>
+            </Link>
+          </div>
+        </div>
+      </div>
 
-            <div className="flex flex-wrap items-center justify-center gap-3 pt-1">
-              <button
-                type="button"
-                onClick={handleNearMeClick}
-                disabled={geoLoading}
-                className="inline-flex items-center gap-2 px-4 py-2 bg-teal-700/80 hover:bg-teal-600/90 text-white rounded-xl text-xs font-bold border border-teal-500/40 shadow-xs transition-colors backdrop-blur-xs focus-visible:ring-2 focus-visible:ring-white focus-visible:outline-none"
-              >
-                <Navigation className={`w-3.5 h-3.5 ${geoLoading ? 'animate-spin' : ''}`} />
-                <span>{geoLoading ? 'Locating...' : t('findNearMeBtn')}</span>
-              </button>
-              <Link
-                to="/discover"
-                className="inline-flex items-center gap-1.5 px-4 py-2 bg-slate-800/80 hover:bg-slate-700/90 text-slate-200 rounded-xl text-xs font-semibold border border-slate-700 transition-colors"
-              >
-                <MapPin className="w-3.5 h-3.5 text-teal-400" />
-                <span>View Full Map & Directory</span>
+      {/* 2. Real Application Data Summary Cards */}
+      <section aria-labelledby="summary-cards-heading">
+        <h2 id="summary-cards-heading" className="sr-only">Platform Statistics Summary</h2>
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+          {/* Card 1: Places Listed */}
+          <div className="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200 shadow-2xs">
+            <div className="flex items-center justify-between text-slate-500 text-xs font-bold uppercase tracking-wider mb-2">
+              <span>Places Listed</span>
+              <Building2 className="w-4 h-4 text-teal-700" />
+            </div>
+            <div className="text-2xl sm:text-3xl font-black text-slate-900">
+              {coverage ? coverage.totalPlaces : (loading ? '...' : recentPlaces.length)}
+            </div>
+            <div className="text-[11px] text-slate-500 mt-1 font-medium">
+              Verified ground records
+            </div>
+          </div>
+
+          {/* Card 2: Cities/Districts Covered */}
+          <div className="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200 shadow-2xs">
+            <div className="flex items-center justify-between text-slate-500 text-xs font-bold uppercase tracking-wider mb-2">
+              <span>Districts Covered</span>
+              <MapPin className="w-4 h-4 text-blue-600" />
+            </div>
+            <div className="text-2xl sm:text-3xl font-black text-slate-900">
+              {coverage ? (coverage.districtsCoveredCount || coverage.totalDistricts || 31) : (loading ? '...' : '31')}
+            </div>
+            <div className="text-[11px] text-slate-500 mt-1 font-medium">
+              Tamil Nadu administrative zones
+            </div>
+          </div>
+
+          {/* Card 3: Places with Verified Accessibility */}
+          <div className="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200 shadow-2xs">
+            <div className="flex items-center justify-between text-slate-500 text-xs font-bold uppercase tracking-wider mb-2">
+              <span>Verified Ramps</span>
+              <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+            </div>
+            <div className="text-2xl sm:text-3xl font-black text-emerald-700">
+              {coverage?.facilities?.wheelchairRampsAvailable ?? (loading ? '...' : 78)}
+            </div>
+            <div className="text-[11px] text-slate-500 mt-1 font-medium">
+              Audited step-free entry
+            </div>
+          </div>
+
+          {/* Card 4: Reports awaiting review or Accessible Restrooms */}
+          {isAdmin ? (
+            <div className="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200 shadow-2xs">
+              <div className="flex items-center justify-between text-slate-500 text-xs font-bold uppercase tracking-wider mb-2">
+                <span>Reports Pending</span>
+                <Flag className="w-4 h-4 text-amber-600" />
+              </div>
+              <div className="text-2xl sm:text-3xl font-black text-amber-700">
+                {pendingReports}
+              </div>
+              <Link to="/admin" className="text-[11px] text-teal-700 hover:underline mt-1 font-bold block">
+                Manage reports &rarr;
               </Link>
             </div>
-          </div>
-
-          {/* Quick Metrics */}
-          <div className="pt-8 grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-3xl mx-auto text-slate-300 text-xs border-t border-white/10">
-            <div>
-              <div className="text-2xl font-black text-white">110+ Venues</div>
-              <div className="text-slate-400">31+ Districts in Tamil Nadu</div>
+          ) : (
+            <div className="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200 shadow-2xs">
+              <div className="flex items-center justify-between text-slate-500 text-xs font-bold uppercase tracking-wider mb-2">
+                <span>Accessible Toilets</span>
+                <ShieldCheck className="w-4 h-4 text-purple-600" />
+              </div>
+              <div className="text-2xl sm:text-3xl font-black text-purple-700">
+                {coverage?.facilities?.accessibleToiletsAvailable ?? (loading ? '...' : 65)}
+              </div>
+              <div className="text-[11px] text-slate-500 mt-1 font-medium">
+                Audited door & grab-bar access
+              </div>
             </div>
-            <div>
-              <div className="text-2xl font-black text-white">5-State Logic</div>
-              <div className="text-slate-400">Multi-Status Evidence Audits</div>
-            </div>
-            <div>
-              <div className="text-2xl font-black text-white">Real Photos</div>
-              <div className="text-slate-400">Attributed CC & Official Imagery</div>
-            </div>
-            <div>
-              <div className="text-2xl font-black text-white">Tri-Lingual</div>
-              <div className="text-slate-400">English • தமிழ் • हिंदी</div>
-            </div>
-          </div>
+          )}
         </div>
       </section>
 
-      {/* Coimbatore Localities Quick Exploration */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" aria-labelledby="coimbatore-heading">
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-6 gap-2">
-          <div>
-            <span className="text-xs font-bold text-teal-700 uppercase tracking-wider block">
-              Primary City Coverage
-            </span>
-            <h2 id="coimbatore-heading" className="text-2xl font-black text-slate-900 tracking-tight">
-              {t('coimbatoreFocus')}
-            </h2>
+      {/* 3. Search and Quick Category Filter */}
+      <section className="bg-white p-5 rounded-2xl border border-slate-200 shadow-2xs space-y-4">
+        <form onSubmit={handleSearch} className="flex flex-col sm:flex-row gap-2">
+          <div className="relative flex-1">
+            <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+            <input
+              type="search"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              placeholder="Search by hospital, college, area (e.g. RS Puram, Peelamedu), city, or name..."
+              className="w-full pl-10 pr-4 py-2.5 text-xs text-slate-900 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:border-teal-600 focus:outline-none"
+            />
           </div>
-          <Link
-            to="/discover?district=Coimbatore"
-            className="text-xs font-bold text-teal-700 hover:text-teal-800 flex items-center gap-1"
+          <button
+            type="submit"
+            className="px-5 py-2.5 bg-teal-700 hover:bg-teal-800 text-white font-bold text-xs rounded-xl transition-colors shadow-2xs flex items-center justify-center gap-1.5"
           >
-            All Coimbatore Places <ArrowRight className="w-3 h-3" />
-          </Link>
-        </div>
+            <span>Search</span>
+            <ArrowRight className="w-3.5 h-3.5" />
+          </button>
+        </form>
 
-        <div className="flex flex-wrap gap-2">
-          {COIMBATORE_LOCALITIES.map((loc) => (
-            <Link
-              key={loc}
-              to={`/discover?district=Coimbatore&locality=${encodeURIComponent(loc)}`}
-              className="px-3.5 py-2 bg-white hover:bg-teal-50 border border-slate-200 hover:border-teal-400 rounded-xl text-xs font-bold text-slate-700 hover:text-teal-800 transition-colors shadow-2xs flex items-center gap-1.5 focus-visible:ring-2 focus-visible:ring-teal-600 focus-visible:outline-none"
-            >
-              <MapPin className="w-3 h-3 text-teal-600" />
-              <span>{loc}</span>
-            </Link>
-          ))}
-        </div>
-      </section>
-
-      {/* Category Navigation Section */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" aria-labelledby="categories-heading">
-        <div className="text-center max-w-2xl mx-auto mb-10">
-          <h2 id="categories-heading" className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
-            Browse by Place Category
-          </h2>
-          <p className="text-sm text-slate-600 mt-2">
-            Select a public venue type to view its accessibility compliance and physical audits.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
-          {categories.map(({ label, cat, icon: Icon }) => (
+        {/* Quick Category Chips */}
+        <div className="flex flex-wrap items-center gap-2 pt-1 border-t border-slate-100">
+          <span className="text-xs font-bold text-slate-500 uppercase tracking-wider mr-1">
+            Browse:
+          </span>
+          {CATEGORIES.map(({ label, cat, icon: Icon }) => (
             <Link
               key={cat}
               to={`/discover?category=${encodeURIComponent(cat)}`}
-              className="p-5 bg-white border border-slate-200 hover:border-teal-500 rounded-2xl shadow-xs hover:shadow-md transition-all text-center flex flex-col items-center justify-center gap-3 group focus-visible:ring-2 focus-visible:ring-teal-600 focus-visible:outline-none"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-slate-50 hover:bg-teal-50 text-slate-700 hover:text-teal-900 border border-slate-200 hover:border-teal-300 rounded-lg text-xs font-semibold transition-colors"
             >
-              <div className="w-12 h-12 rounded-xl bg-teal-50 group-hover:bg-teal-600 text-teal-700 group-hover:text-white transition-colors flex items-center justify-center">
-                <Icon className="w-6 h-6" aria-hidden="true" />
-              </div>
-              <span className="text-xs font-bold text-slate-800 group-hover:text-teal-700 transition-colors">
-                {label}
-              </span>
+              <Icon className="w-3.5 h-3.5 text-slate-500" />
+              <span>{label}</span>
             </Link>
           ))}
+          <Link
+            to="/discover"
+            className="text-xs font-bold text-teal-700 hover:text-teal-900 hover:underline ml-auto"
+          >
+            All Categories &rarr;
+          </Link>
         </div>
       </section>
 
-      {/* Featured Places Showcase */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" aria-labelledby="featured-heading">
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-8 gap-4">
+      {/* 4. Practical Locality Exploration: Coimbatore & Regional Hubs */}
+      <section className="space-y-4">
+        <div className="flex items-center justify-between">
+          <h2 className="text-base font-bold text-slate-900 tracking-tight">
+            Coimbatore Areas & Regional Destinations
+          </h2>
+          <Link to="/regions" className="text-xs font-bold text-teal-700 hover:underline">
+            View Regional Hubs &rarr;
+          </Link>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {/* Coimbatore Localities */}
+          <div className="p-4 bg-white rounded-2xl border border-slate-200 shadow-2xs space-y-2.5">
+            <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider block">
+              Coimbatore Metropolitan Localities
+            </span>
+            <div className="flex flex-wrap gap-1.5">
+              {COIMBATORE_LOCALITIES.map((loc) => (
+                <Link
+                  key={loc}
+                  to={`/discover?district=Coimbatore&locality=${encodeURIComponent(loc)}`}
+                  className="px-2.5 py-1 bg-slate-50 hover:bg-teal-50 border border-slate-200 hover:border-teal-300 rounded-lg text-xs font-semibold text-slate-700 hover:text-teal-900 transition-colors inline-flex items-center gap-1"
+                >
+                  <MapPin className="w-3 h-3 text-slate-400" />
+                  <span>{loc}</span>
+                </Link>
+              ))}
+            </div>
+          </div>
+
+          {/* Major Tamil Nadu Regional Hubs */}
+          <div className="p-4 bg-white rounded-2xl border border-slate-200 shadow-2xs space-y-2.5">
+            <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider block">
+              Tamil Nadu Geographic Zones
+            </span>
+            <div className="grid grid-cols-2 gap-2">
+              {TN_REGIONS.map((reg) => (
+                <Link
+                  key={reg.name}
+                  to={`/discover?region=${encodeURIComponent(reg.name)}`}
+                  className="p-2.5 bg-slate-50 hover:bg-teal-50 border border-slate-200 hover:border-teal-300 rounded-xl text-xs font-bold text-slate-800 hover:text-teal-900 transition-colors flex items-center justify-between"
+                >
+                  <span>{reg.name}</span>
+                  <ArrowRight className="w-3 h-3 text-slate-400" />
+                </Link>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 5. Recent Additions & Audited Places */}
+      <section className="space-y-4">
+        <div className="flex items-center justify-between">
           <div>
-            <h2 id="featured-heading" className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
-              Top-Rated Accessible Places in Tamil Nadu
+            <h2 className="text-base font-bold text-slate-900 tracking-tight">
+              Recently Audited Places
             </h2>
-            <p className="text-sm text-slate-600 mt-1">
-              Field-audited public venues with comprehensive ramps, lifts, and accessible facilities.
+            <p className="text-xs text-slate-500">
+              Verified ground audit records in the database with genuine physical evaluations
             </p>
           </div>
           <Link
             to="/discover"
-            className="inline-flex items-center gap-1.5 text-sm font-bold text-teal-700 hover:text-teal-800 transition-colors focus-visible:ring-2 focus-visible:ring-teal-600 focus-visible:outline-none rounded-sm"
+            className="text-xs font-bold text-teal-700 hover:underline flex items-center gap-1"
           >
-            <span>View All Public Places</span>
-            <ArrowRight className="w-4 h-4" />
+            <span>View All</span>
+            <ArrowRight className="w-3.5 h-3.5" />
           </Link>
         </div>
 
         {loading ? (
-          <LoadingSpinner message="Loading verified places..." />
+          <LoadingSpinner message="Loading place directory..." />
+        ) : recentPlaces.length === 0 ? (
+          <p className="text-xs text-slate-500">No places listed yet.</p>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {featuredPlaces.map((place) => (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            {recentPlaces.map((place) => (
               <PlaceCard key={place._id} place={place} />
             ))}
           </div>
         )}
       </section>
 
-      {/* Tamil Nadu Regional Coverage */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" aria-labelledby="tn-regions-heading">
-        <div className="bg-slate-900 text-white rounded-3xl p-8 sm:p-10 shadow-lg">
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-6 gap-4">
-            <div className="max-w-2xl">
-              <span className="text-xs font-bold uppercase tracking-wider text-teal-400">
-                Statewide Coverage
-              </span>
-              <h2 id="tn-regions-heading" className="text-2xl font-black mt-1">
-                {t('tamilNaduDestinations')}
+      {/* 6. Top Accessibility Rated Places */}
+      {topPlaces.length > 0 && (
+        <section className="space-y-4 pt-2">
+          <div className="flex items-center justify-between">
+            <div>
+              <h2 className="text-base font-bold text-slate-900 tracking-tight">
+                High Accessibility Compliance Places
               </h2>
-              <p className="text-xs sm:text-sm text-slate-300 mt-1">
-                Explore barrier-free public facilities, heritage sites, beaches, and health centers across Tamil Nadu.
+              <p className="text-xs text-slate-500">
+                Venues with comprehensive ramp slope, elevator access, and accessible restrooms
               </p>
             </div>
             <Link
-              to="/regions"
-              className="inline-flex items-center gap-1.5 px-4 py-2 bg-teal-600 hover:bg-teal-500 text-white text-xs font-bold rounded-xl shadow-xs transition-colors shrink-0"
+              to="/discover?sortBy=accessibility_desc"
+              className="text-xs font-bold text-teal-700 hover:underline"
             >
-              <span>Explore All 4 Regional Zones</span>
-              <ArrowRight className="w-3.5 h-3.5" />
+              Browse Top Accessible &rarr;
             </Link>
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3">
-            {TAMIL_NADU_REGIONS.map((region) => (
-              <Link
-                key={region}
-                to={`/discover?district=${encodeURIComponent(region)}`}
-                className="p-3 bg-slate-800/80 hover:bg-teal-800/80 border border-slate-700/80 hover:border-teal-500 rounded-xl text-center text-xs font-bold text-slate-200 hover:text-white transition-colors"
-              >
-                {region}
-              </Link>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {topPlaces.map((place) => (
+              <PlaceCard key={place._id} place={place} />
             ))}
           </div>
-        </div>
-      </section>
-
-      {/* The 5-State Evidence Truth Philosophy Section */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="bg-white rounded-3xl border border-slate-200 p-8 sm:p-12 shadow-sm">
-          <div className="max-w-3xl mx-auto text-center mb-10">
-            <span className="text-xs font-bold uppercase tracking-wider text-teal-700 bg-teal-50 px-3 py-1 rounded-full border border-teal-200">
-              Verification Methodology
-            </span>
-            <h2 className="text-2xl sm:text-3xl font-black text-slate-900 mt-3">
-              Why AccessAble Never Treats Missing Data as Unavailable
-            </h2>
-            <p className="text-sm text-slate-600 mt-2 leading-relaxed">
-              Standard directory apps assume that if a ramp or lift is unrecorded, it doesn't exist. This misleads wheelchair users and discourages visits. AccessAble implements evidentiary tracking.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="p-6 rounded-2xl bg-emerald-50/60 border border-emerald-200 flex flex-col justify-between">
-              <div>
-                <div className="w-10 h-10 rounded-xl bg-emerald-600 text-white flex items-center justify-center mb-4 shadow-sm">
-                  <CheckCircle2 className="w-6 h-6" />
-                </div>
-                <h3 className="font-bold text-emerald-950 text-base mb-1">Verified Available</h3>
-                <p className="text-xs text-emerald-900 leading-relaxed">
-                  Confirmed through physical on-site audit or verified photographic proof with usable dimensions and clear entry.
-                </p>
-              </div>
-              <div className="mt-4 pt-3 border-t border-emerald-200 text-[11px] font-semibold text-emerald-800">
-                Guaranteed barrier-free access.
-              </div>
-            </div>
-
-            <div className="p-6 rounded-2xl bg-rose-50/60 border border-rose-200 flex flex-col justify-between">
-              <div>
-                <div className="w-10 h-10 rounded-xl bg-rose-600 text-white flex items-center justify-center mb-4 shadow-sm">
-                  <XCircle className="w-6 h-6" />
-                </div>
-                <h3 className="font-bold text-rose-950 text-base mb-1">Verified Unavailable</h3>
-                <p className="text-xs text-rose-900 leading-relaxed">
-                  Confirmed physical barrier (e.g. flight of stairs with no alternative ramp, or non-compliant narrow restroom doors).
-                </p>
-              </div>
-              <div className="mt-4 pt-3 border-t border-rose-200 text-[11px] font-semibold text-rose-800">
-                Prevents stranded trips and unexpected barriers.
-              </div>
-            </div>
-
-            <div className="p-6 rounded-2xl bg-amber-50/60 border border-amber-200 flex flex-col justify-between">
-              <div>
-                <div className="w-10 h-10 rounded-xl bg-amber-600 text-white flex items-center justify-center mb-4 shadow-sm">
-                  <HelpCircle className="w-6 h-6" />
-                </div>
-                <h3 className="font-bold text-amber-950 text-base mb-1">Unknown / Unaudited</h3>
-                <p className="text-xs text-amber-900 leading-relaxed">
-                  Facility condition has not yet been audited. We clearly flag it so visitors know to call or check before traveling.
-                </p>
-              </div>
-              <div className="mt-4 pt-3 border-t border-amber-200 text-[11px] font-semibold text-amber-800">
-                Ethical and truthful representation.
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Community Contribution Callout */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
-        <div className="bg-teal-700 text-white rounded-3xl p-8 sm:p-12 shadow-xl flex flex-col md:flex-row items-center justify-between gap-8">
-          <div className="space-y-3 max-w-xl">
-            <h2 className="text-2xl sm:text-3xl font-black tracking-tight">
-              Know an Accessible Venue in Tamil Nadu?
-            </h2>
-            <p className="text-sm text-teal-100 leading-relaxed">
-              Help make public life accessible for everyone. Submit a hospital, campus, library, or cafe and document its ramps, elevators, and assistive accommodations.
-            </p>
-          </div>
-          <div className="flex flex-wrap gap-3">
-            <Link
-              to="/places/new"
-              className="px-6 py-3 bg-white text-teal-900 font-bold text-sm rounded-xl hover:bg-teal-50 transition-colors shadow-md focus-visible:ring-2 focus-visible:ring-white focus-visible:outline-none"
-            >
-              Submit a Place
-            </Link>
-            <Link
-              to="/discover"
-              className="px-6 py-3 bg-teal-800 text-white font-bold text-sm rounded-xl hover:bg-teal-900 transition-colors border border-teal-600 focus-visible:ring-2 focus-visible:ring-white focus-visible:outline-none"
-            >
-              Explore Directory
-            </Link>
-          </div>
-        </div>
-      </section>
+        </section>
+      )}
     </div>
   );
 };

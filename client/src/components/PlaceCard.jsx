@@ -11,6 +11,7 @@ import {
 } from 'lucide-react';
 import StarRating from './StarRating';
 import FacilityBadge from './FacilityBadge';
+import PlacePhoto from './PlacePhoto';
 import { useAuth } from '../context/AuthContext';
 import { authService } from '../services/api';
 import { useTranslation } from '../context/LanguageContext';
@@ -45,13 +46,6 @@ const PlaceCard = ({ place, onBookmarkToggle = null }) => {
   );
   const [savingBookmark, setSavingBookmark] = useState(false);
 
-  const defaultImage =
-    'https://images.unsplash.com/photo-1577495508048-b635879837f1?auto=format&fit=crop&w=800&q=80';
-  
-  const displayPhoto = photos?.[0] || null;
-  const displayImageUrl = displayPhoto?.url || images?.[0] || defaultImage;
-  const photoAttribution = displayPhoto?.attribution || null;
-
   const handleSaveToggle = async (e) => {
     e.preventDefault();
     e.stopPropagation();
@@ -82,28 +76,25 @@ const PlaceCard = ({ place, onBookmarkToggle = null }) => {
       className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-xs hover:shadow-md transition-all flex flex-col focus-within:ring-2 focus-within:ring-teal-600 group"
       aria-labelledby={`place-heading-${_id}`}
     >
-      {/* Thumbnail Header with Real Photo & Badges */}
-      <div className="relative h-48 w-full bg-slate-900 overflow-hidden">
-        <img
-          src={displayImageUrl}
-          alt={`Exterior view of ${name}`}
-          className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-          loading="lazy"
-          onError={(e) => {
-            e.target.onerror = null;
-            e.target.src = defaultImage;
-          }}
+      {/* Thumbnail Header with Verified PlacePhoto & Badges */}
+      <div className="relative w-full overflow-hidden">
+        <PlacePhoto
+          photos={photos}
+          images={images}
+          placeName={name}
+          category={category}
+          className="w-full h-44"
+          showAttribution={true}
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-black/20" />
 
         {/* Top Badges */}
-        <div className="absolute top-3 left-3 right-3 flex items-center justify-between pointer-events-none">
+        <div className="absolute top-2.5 left-2.5 right-2.5 flex items-center justify-between pointer-events-none z-10">
           <div className="flex items-center gap-1.5 flex-wrap">
-            <span className="px-2.5 py-1 bg-slate-900/85 backdrop-blur-xs text-white text-[11px] font-bold rounded-lg shadow-xs pointer-events-auto">
+            <span className="px-2 py-0.5 bg-slate-900/85 backdrop-blur-xs text-white text-[10px] font-bold rounded-md shadow-xs pointer-events-auto">
               {category}
             </span>
             {status === 'verified' && (
-              <span className="inline-flex items-center gap-1 px-2 py-1 bg-teal-600/95 backdrop-blur-xs text-white text-[10px] font-bold rounded-lg shadow-xs pointer-events-auto">
+              <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-teal-600/95 backdrop-blur-xs text-white text-[10px] font-bold rounded-md shadow-xs pointer-events-auto">
                 <ShieldCheck className="w-3 h-3" />
                 Verified
               </span>
@@ -115,27 +106,17 @@ const PlaceCard = ({ place, onBookmarkToggle = null }) => {
             type="button"
             onClick={handleSaveToggle}
             disabled={savingBookmark}
-            className={`p-2 rounded-xl backdrop-blur-md transition-colors pointer-events-auto shadow-xs ${
+            className={`p-1.5 rounded-lg backdrop-blur-md transition-colors pointer-events-auto shadow-xs ${
               isSaved
                 ? 'bg-rose-500 text-white'
-                : 'bg-white/80 hover:bg-white text-slate-700 hover:text-rose-600'
+                : 'bg-white/90 hover:bg-white text-slate-700 hover:text-rose-600'
             }`}
             title={isSaved ? 'Remove from bookmarks' : 'Save place'}
             aria-label={isSaved ? 'Remove from saved places' : 'Save this place'}
           >
-            <Heart className={`w-4 h-4 ${isSaved ? 'fill-current' : ''}`} />
+            <Heart className={`w-3.5 h-3.5 ${isSaved ? 'fill-current' : ''}`} />
           </button>
         </div>
-
-        {/* Photo Attribution Pill if available */}
-        {photoAttribution && (
-          <div className="absolute bottom-2 left-3 right-3 flex items-center justify-between text-[10px] text-slate-300 pointer-events-none">
-            <span className="truncate bg-black/60 px-2 py-0.5 rounded-md backdrop-blur-xs inline-flex items-center gap-1">
-              <Camera className="w-2.5 h-2.5" />
-              {photoAttribution}
-            </span>
-          </div>
-        )}
       </div>
 
       {/* Main Body */}

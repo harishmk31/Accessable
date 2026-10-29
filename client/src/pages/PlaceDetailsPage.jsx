@@ -212,39 +212,36 @@ const PlaceDetailsPage = () => {
   const isOwner = user && createdBy && (user.id === createdBy._id || user._id === createdBy._id);
   const canManage = isOwner || isAdmin;
 
-  // Compile photo gallery
+  // Compile authentic photo gallery (filtering out any unverified stock photos)
   const allPhotos = [];
   if (photos && photos.length > 0) {
     photos.forEach((p) => {
-      allPhotos.push({
-        url: p.url,
-        caption: p.caption || name,
-        author: p.author || 'AccessAble Verification',
-        license: p.license || 'Verified',
-        source: p.source || 'Audit Team'
-      });
+      if (p.url && !p.url.includes('images.unsplash.com')) {
+        allPhotos.push({
+          url: p.url,
+          caption: p.caption || name,
+          author: p.author || p.authorName || 'AccessAble Field Record',
+          license: p.license || 'Verified Reference',
+          source: p.source || 'Audit Record'
+        });
+      }
     });
   } else if (images && images.length > 0) {
     images.forEach((imgUrl) => {
-      allPhotos.push({
-        url: imgUrl,
-        caption: name,
-        author: 'AccessAble Field Record',
-        license: 'Permitted Reference',
-        source: 'Ground Audit'
-      });
-    });
-  } else {
-    allPhotos.push({
-      url: 'https://images.unsplash.com/photo-1577495508048-b635879837f1?auto=format&fit=crop&w=1200&q=80',
-      caption: name,
-      author: 'Unsplash Community',
-      license: 'Unsplash Free License',
-      source: 'Stock'
+      if (typeof imgUrl === 'string' && !imgUrl.includes('images.unsplash.com')) {
+        allPhotos.push({
+          url: imgUrl,
+          caption: name,
+          author: 'AccessAble Field Record',
+          license: 'Permitted Reference',
+          source: 'Ground Audit'
+        });
+      }
     });
   }
 
-  const currentPhoto = allPhotos[activePhotoIdx] || allPhotos[0];
+  const hasPhoto = allPhotos.length > 0;
+  const currentPhoto = hasPhoto ? allPhotos[activePhotoIdx] || allPhotos[0] : null;
 
   const googleMapsDirectionsUrl = lat && lng
     ? `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}`
@@ -308,13 +305,30 @@ const PlaceDetailsPage = () => {
 
       {/* Main Header & Image Banner with Authentic Attribution */}
       <div className="bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-sm">
-        <div className="relative h-72 sm:h-96 w-full bg-slate-900 overflow-hidden">
-          <img
-            src={currentPhoto.url}
-            alt={currentPhoto.caption || name}
-            className="w-full h-full object-cover opacity-90 transition-opacity duration-300"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-black/20 to-black/30" />
+        <div className="relative h-64 sm:h-80 w-full bg-slate-900 overflow-hidden flex items-center justify-center">
+          {hasPhoto && currentPhoto ? (
+            <>
+              <img
+                src={currentPhoto.url}
+                alt={currentPhoto.caption || name}
+                className="w-full h-full object-cover opacity-90 transition-opacity duration-300"
+                onError={(e) => {
+                  e.target.style.display = 'none';
+                }}
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-black/20 to-black/30" />
+            </>
+          ) : (
+            <div className="w-full h-full bg-slate-800 flex flex-col items-center justify-center text-slate-300 p-6 text-center">
+              <div className="w-14 h-14 rounded-2xl bg-slate-700/80 text-teal-400 flex items-center justify-center mb-3 border border-slate-600 shadow-sm">
+                <Camera className="w-7 h-7 opacity-75" />
+              </div>
+              <p className="text-sm font-bold text-slate-200">Photograph Pending Ground Verification</p>
+              <p className="text-xs text-slate-400 mt-1 max-w-md">
+                AccessAble prioritizes genuine on-site photographic evidence. Stock photos are intentionally not displayed.
+              </p>
+            </div>
+          )}
 
           {/* Floating Category & Verification Badges */}
           <div className="absolute top-4 left-4 flex flex-wrap gap-2">
@@ -383,14 +397,16 @@ const PlaceDetailsPage = () => {
           </div>
 
           {/* Image Attribution Pill */}
-          <div className="absolute bottom-20 sm:bottom-24 right-4 max-w-xs text-right hidden sm:block">
-            <div className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-black/60 backdrop-blur-md rounded-lg text-[10px] text-slate-300 border border-white/10">
-              <Camera className="w-3 h-3 text-teal-400" />
-              <span className="truncate">
-                {currentPhoto.author} • {currentPhoto.license}
-              </span>
+          {hasPhoto && currentPhoto && (
+            <div className="absolute bottom-20 sm:bottom-24 right-4 max-w-xs text-right hidden sm:block">
+              <div className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-black/60 backdrop-blur-md rounded-lg text-[10px] text-slate-300 border border-white/10">
+                <Camera className="w-3 h-3 text-teal-400" />
+                <span className="truncate">
+                  {currentPhoto.author} • {currentPhoto.license}
+                </span>
+              </div>
             </div>
-          </div>
+          )}
 
           {/* Header Title inside banner bottom */}
           <div className="absolute bottom-5 left-5 right-5 text-white">
