@@ -27,6 +27,21 @@ if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
 
+// Ensure database is connected before processing data requests (essential for serverless runtimes like Vercel)
+app.use(async (req, res, next) => {
+  if (req.path === '/api/health') {
+    return next();
+  }
+  try {
+    if (mongoose.connection.readyState !== 1) {
+      await connectDB();
+    }
+    next();
+  } catch (error) {
+    next(error);
+  }
+});
+
 // Gentle rate limiting for public queries
 const apiLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
