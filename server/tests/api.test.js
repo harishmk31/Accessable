@@ -234,3 +234,46 @@ test('GET /api/places/stats/overview should restrict non-admin and permit admin'
   assert.equal(adminData.success, true);
   assert.ok(adminData.stats.totalPlaces >= 1);
 });
+
+test('Regression: All registered Express middleware and router layers must be functions', () => {
+  assert.ok(app._router, 'Express app._router must be initialized');
+  assert.ok(Array.isArray(app._router.stack), 'app._router.stack must be an array');
+  assert.ok(app._router.stack.length > 0, 'app._router.stack must not be empty');
+
+  // Verify top-level app stack layers
+  app._router.stack.forEach((layer, index) => {
+    assert.equal(
+      typeof layer.handle,
+      'function',
+      `Layer ${index} (${layer.name || 'anonymous'}) in app._router.stack must have a function handle`
+    );
+
+    // If layer has nested router stack (e.g. /api/auth, /api/places, /api/reviews)
+    if (layer.handle && layer.handle.stack) {
+      layer.handle.stack.forEach((subLayer, subIndex) => {
+        assert.equal(
+          typeof subLayer.handle,
+          'function',
+          `SubLayer ${subIndex} (${subLayer.name || 'anonymous'}) in router ${layer.name} stack must have a function handle`
+        );
+      });
+    }
+  });
+
+  // Test resolveMiddleware interop with simulated module shapes
+  const { resolveMiddleware } = app;
+  assert.equal(typeof resolveMiddleware, 'function', 'resolveMiddleware must be exported by server');
+
+  const dummyFn = (req, res, next) => next();
+  assert.equal(resolveMiddleware(dummyFn, 'directFn'), dummyFn);
+  assert.equal(resolveMiddleware({ default: dummyFn }, 'esmDefault'), dummyFn);
+  assert.equal(resolveMiddleware({ router: dummyFn }, 'namedRouter'), dummyFn);
+  assert.equal(resolveMiddleware({ errorHandler: dummyFn }, 'namedErrorHandler'), dummyFn);
+  assert.equal(resolveMiddleware({ customProp: dummyFn }, 'customProp'), dummyFn);
+
+  // Assert that resolving an invalid object throws TypeError instead of crashing Express Router.use
+  assert.throws(
+    () => resolveMiddleware({ invalidProp: 'not-a-function' }, 'invalidModule'),
+    TypeError
+  );
+});

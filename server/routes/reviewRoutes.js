@@ -25,4 +25,7 @@ router.delete('/:id', protect, deleteReview);
 router.get('/admin/all', protect, adminOnly, getAllReviewsAdmin);
 router.patch('/:id/moderate', protect, adminOnly, toggleModerateReview);
 
+// Interoperability exports: support direct CommonJS require, named export, and ES Module default import
 module.exports = router;
+module.exports.router = router;
+module.exports.default = router;

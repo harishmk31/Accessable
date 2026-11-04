@@ -53,4 +53,7 @@ const errorHandler = (err, req, res, next) => {
   });
 };
 
+// Interoperability exports: support direct CommonJS require, named export, and ES Module default import
 module.exports = errorHandler;
+module.exports.errorHandler = errorHandler;
+module.exports.default = errorHandler;

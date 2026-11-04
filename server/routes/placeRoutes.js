@@ -67,4 +67,7 @@ router.delete('/:id', protect, deletePlace);
 router.patch('/:id/verify', protect, adminOnly, verifyPlace);
 router.put('/:id/verify', protect, adminOnly, verifyPlace);
 
+// Interoperability exports: support direct CommonJS require, named export, and ES Module default import
 module.exports = router;
+module.exports.router = router;
+module.exports.default = router;
