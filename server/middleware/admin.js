@@ -8,9 +8,5 @@ const adminOnly = (req, res, next) => {
   });
 };
 
-// Interoperability exports: support both named destructured require and direct function export
-adminOnly.adminOnly = adminOnly;
-adminOnly.default = adminOnly;
-module.exports = adminOnly;
-module.exports.adminOnly = adminOnly;
-module.exports.default = adminOnly;
+module.exports = { adminOnly };
+

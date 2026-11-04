@@ -97,40 +97,41 @@ app.get('/api/health', (req, res) => {
 });
 
 /**
- * Safely resolves an Express router or middleware function across:
+ * Unwraps and validates an Express router or middleware function.
+ * Safely handles:
  * 1. Standard CommonJS function/router: module.exports = fn / router
- * 2. Transpiled ES Modules: { default: fn / router, __esModule: true }
- * 3. Named exports: { router: fn } or { errorHandler: fn }
+ * 2. Transpiled ES Modules namespace / CJS interop: { default: fn / router }
+ * 3. Named exports fallback: { router: fn } or { errorHandler: fn }
  *
- * Prevents "TypeError: Router.use() requires a middleware function but got a Object"
- * on serverless and bundled runtimes like Vercel.
+ * Guarantees that the returned value is a genuine Express Router or middleware function
+ * before calling app.use().
  */
-function resolveMiddleware(mod, name) {
-  if (typeof mod === 'function') {
-    return mod;
+function unwrapMiddleware(mod, name) {
+  let resolved = mod;
+  if (resolved && typeof resolved === 'object') {
+    if (typeof resolved.default === 'function') {
+      resolved = resolved.default;
+    } else if (typeof resolved.router === 'function') {
+      resolved = resolved.router;
+    } else if (typeof resolved.errorHandler === 'function') {
+      resolved = resolved.errorHandler;
+    } else if (name && typeof resolved[name] === 'function') {
+      resolved = resolved[name];
+    }
   }
-  if (mod && typeof mod.default === 'function') {
-    return mod.default;
+  if (typeof resolved !== 'function') {
+    throw new TypeError(
+      `[Server Router] Registration failed for ${name || 'middleware'}: expected a function or Express Router, but got ${typeof resolved} (${Object.prototype.toString.call(resolved)})`
+    );
   }
-  if (mod && typeof mod.router === 'function') {
-    return mod.router;
-  }
-  if (mod && typeof mod.errorHandler === 'function') {
-    return mod.errorHandler;
-  }
-  if (name && mod && typeof mod[name] === 'function') {
-    return mod[name];
-  }
-  throw new TypeError(
-    `[Server Router] Registration failed for ${name || 'middleware'}: expected a function or Express Router, but got ${typeof mod} (${Object.prototype.toString.call(mod)})`
-  );
+  return resolved;
 }
 
 // Defensively resolve routers and error handler across CJS and ESM bundling boundaries
-const authRoutes = resolveMiddleware(require('./routes/authRoutes'), 'authRoutes');
-const placeRoutes = resolveMiddleware(require('./routes/placeRoutes'), 'placeRoutes');
-const reviewRoutes = resolveMiddleware(require('./routes/reviewRoutes'), 'reviewRoutes');
-const resolvedErrorHandler = resolveMiddleware(errorHandler, 'errorHandler');
+const authRoutes = unwrapMiddleware(require('./routes/authRoutes'), 'authRoutes');
+const placeRoutes = unwrapMiddleware(require('./routes/placeRoutes'), 'placeRoutes');
+const reviewRoutes = unwrapMiddleware(require('./routes/reviewRoutes'), 'reviewRoutes');
+const resolvedErrorHandler = unwrapMiddleware(errorHandler, 'errorHandler');
 
 // Mount API routes
 app.use('/api/auth', authRoutes);
@@ -174,4 +175,5 @@ module.exports = app;
 module.exports.default = app;
 module.exports.app = app;
 module.exports.startServer = startServer;
-module.exports.resolveMiddleware = resolveMiddleware;
+module.exports.unwrapMiddleware = unwrapMiddleware;
+module.exports.resolveMiddleware = unwrapMiddleware;

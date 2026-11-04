@@ -19,7 +19,6 @@ router.put('/profile', protect, updateProfile);
 router.post('/save-place/:placeId', protect, toggleSavePlace);
 router.get('/saved-places', protect, getSavedPlaces);
 
-// Interoperability exports: support direct CommonJS require, named export, and ES Module default import
+// Clean, unambiguous CommonJS export
 module.exports = router;
-module.exports.router = router;
-module.exports.default = router;
+

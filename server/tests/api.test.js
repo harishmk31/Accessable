@@ -260,9 +260,9 @@ test('Regression: All registered Express middleware and router layers must be fu
     }
   });
 
-  // Test resolveMiddleware interop with simulated module shapes
-  const { resolveMiddleware } = app;
-  assert.equal(typeof resolveMiddleware, 'function', 'resolveMiddleware must be exported by server');
+  // Test resolveMiddleware / unwrapMiddleware interop with simulated module shapes
+  const resolveMiddleware = app.resolveMiddleware || app.unwrapMiddleware;
+  assert.equal(typeof resolveMiddleware, 'function', 'unwrapMiddleware/resolveMiddleware must be exported by server');
 
   const dummyFn = (req, res, next) => next();
   assert.equal(resolveMiddleware(dummyFn, 'directFn'), dummyFn);
@@ -270,6 +270,19 @@ test('Regression: All registered Express middleware and router layers must be fu
   assert.equal(resolveMiddleware({ router: dummyFn }, 'namedRouter'), dummyFn);
   assert.equal(resolveMiddleware({ errorHandler: dummyFn }, 'namedErrorHandler'), dummyFn);
   assert.equal(resolveMiddleware({ customProp: dummyFn }, 'customProp'), dummyFn);
+
+  // Assert that direct require of all route modules yields genuine functions
+  const directPlaceRoutes = require('../routes/placeRoutes');
+  assert.equal(typeof directPlaceRoutes, 'function', 'require("../routes/placeRoutes") must be a function');
+  assert.equal(typeof directPlaceRoutes.use, 'function', 'placeRoutes must have Express Router .use method');
+
+  const directAuthRoutes = require('../routes/authRoutes');
+  assert.equal(typeof directAuthRoutes, 'function', 'require("../routes/authRoutes") must be a function');
+  assert.equal(typeof directAuthRoutes.use, 'function', 'authRoutes must have Express Router .use method');
+
+  const directReviewRoutes = require('../routes/reviewRoutes');
+  assert.equal(typeof directReviewRoutes, 'function', 'require("../routes/reviewRoutes") must be a function');
+  assert.equal(typeof directReviewRoutes.use, 'function', 'reviewRoutes must have Express Router .use method');
 
   // Assert that resolving an invalid object throws TypeError instead of crashing Express Router.use
   assert.throws(
