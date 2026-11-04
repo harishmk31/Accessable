@@ -1,407 +1,330 @@
-# AccessAble – Accessibility Discovery Platform (Tamil Nadu & Coimbatore)
+# AccessAble — Accessibility Discovery Platform (Tamil Nadu)
 
-**AccessAble** is a full-stack web application designed to help people with disabilities, wheelchair users, caregivers, elderly citizens, and inclusive mobility advocates discover real public venues across **Coimbatore and Tamil Nadu** based on audited accessibility infrastructure and multi-status evidentiary tracking.
+**AccessAble** is an open full-stack web application designed to help persons with disabilities, elderly citizens, caregivers, and mobility advocates discover accessible public venues across **Coimbatore and Tamil Nadu, India**.
 
-Built as an academic mini project for Full Stack Web Development, this platform implements strict **5-Status Multi-Domain Evidentiary Facility Modeling** (**Verified Available**, **Verified Unavailable**, **Unknown / Unaudited**, **Conflicting Reports**, and **User Reported Pending Verification**) to eliminate misinformation and guarantee truthful, verified mobility planning.
-
----
-
-## 📑 Table of Contents
-
-- [Key Features](#-key-features)
-- [Real Coimbatore & Tamil Nadu Venue Coverage](#-real-coimbatore--tamil-nadu-venue-coverage)
-- [Evidentiary Accessibility & Multi-Status Logic](#-evidentiary-accessibility--multi-status-logic)
-- [Interactive Map & Provider Architecture](#-interactive-map--provider-architecture)
-- [Regional Languages (English, Tamil, Hindi)](#-regional-languages-english-tamil-hindi)
-- [Technology Stack](#-technology-stack)
-- [System Architecture & Folder Structure](#-system-architecture--folder-structure)
-- [Prerequisites](#-prerequisites)
-- [PowerShell Quick Start (Running Frontend & Backend)](#-powershell-quick-start-running-frontend--backend)
-- [Environment Configuration](#-environment-configuration)
-- [Google Maps Platform Setup Guide (Optional)](#-google-maps-platform-setup-guide-optional)
-- [Database Seeding & Demonstration Accounts](#-database-seeding--demonstration-accounts)
-- [REST API Documentation](#-rest-api-documentation)
-- [Automated Testing](#-automated-testing)
-- [External Examiner & Reviewer Evaluation Guide](#-external-examiner--reviewer-evaluation-guide)
+Developed for academic evaluation as a Full Stack Web Development Mini Project, the platform focuses on verifiable accessibility infrastructure (wheelchair ramps, step-free access, elevators, accessible restrooms, reserved parking, and audio/tactile signage) with transparent scoring and zero assumptions.
 
 ---
 
-## 🌟 Key Features
+## 🎓 College Evaluation Rubric Alignment (100 Marks Total)
 
-1. **Real Places Across Coimbatore & Tamil Nadu**:
-   - Seeded with 32+ genuine establishments: major hospitals (PSG, Ganga, KMCH, CMCH), transit terminals (Coimbatore Junction, Gandhipuram Bus Stand, Chennai Central), colleges (TNAU, PSG Tech), parks (Race Course Promenade, VOC Park, Valankulam Lake), shopping centers (Brookefields, Prozone), and heritage sites (Marina Beach Accessible Wooden Ramp, Thanjavur Big Temple, Meenakshi Temple, Kanyakumari Promenade).
-   - Real GPS coordinates, verified phone numbers, and operational information.
-
-2. **Interactive Map with View Switching**:
-   - Toggle between **List View**, **Full Map View**, and **Split View**.
-   - Custom accessible SVG pins indicating verification status.
-   - Click pins to view photos, facility summary, distance from user, and one-click Google Maps directions.
-
-3. **Geospatial "Places Near Me" Discovery**:
-   - Browser geolocation GPS detection (`navigator.geolocation`).
-   - Radius filtering: 5 km, 10 km, 25 km, 50 km with GeoJSON 2dsphere indexing and Haversine distance calculations (`distanceKm`).
-
-4. **Multi-Status Evidentiary Accessibility Profile**:
-   - Tracks 8 accessibility domains: Wheelchair Ramps, Elevators/Lifts, Accessible Restrooms, Accessible Parking, Braille Signage, Audio Assistance, Tactile Paving, and Step-Free Entrances.
-   - 5 structured statuses with supporting audit evidence source, verification method, and last verified timestamp.
-   - Backward-compatible with 3-state fields (`Available`, `Unavailable`, `Unknown`).
-
-5. **Saved Places (Bookmarks)**:
-   - Authenticated users can save accessible venues with one click to their personal collection (`/saved`).
-
-6. **Inaccuracy Reporting Mechanism**:
-   - Users can report inaccuracies (broken ramps, out-of-order lifts, changed hours) through the venue detail modal.
-   - Admin moderation tab to investigate, resolve, or dismiss reports with admin audit notes.
-
-7. **Regional Language Support (i18n)**:
-   - Full tri-lingual interface supporting **English**, **Tamil (தமிழ்)**, and **Hindi (हिंदी)**.
-
-8. **Authentic Photography & Attribution**:
-   - Displays real photos of venues with photographer and license attribution (e.g. Creative Commons / Wikimedia / Verified Field Audit).
-
-9. **WCAG 2.1 AA Compliance**:
-   - High-contrast color palette, skip-to-content links, clear focus indicators (`outline: 3px solid #0d9488`), and screen-reader accessibility labels.
+| Evaluation Component | Marks | Implementation in AccessAble |
+| :--- | :---: | :--- |
+| **1. Problem & Requirements** | **10** | Solves lack of truthful accessibility data for PwD in Tamil Nadu; addresses misleading binary assumptions by treating *Unknown* as distinct from *Unavailable*. |
+| **2. React Frontend** | **20** | Responsive SPA built with React 18, Vite, React Router 6, Tailwind CSS, Lucide icons, and interactive Leaflet maps. Mobile-first design (360px to 1440px). |
+| **3. Backend APIs** | **20** | RESTful Node.js + Express API with JWT authentication, role-based authorization (User vs Admin), input validation, geospatial queries, and centralized error handling. |
+| **4. MongoDB Connectivity** | **15** | Mongoose ORM models (`Place`, `User`, `Review`, `Report`), Geospatial `2dsphere` indexes, text search indexes, aggregation pipelines, and pre-save hooks. |
+| **5. Full-Stack Integration** | **20** | End-to-end integration: place submission with pending moderation, live review submission with rating recalculations, bookmarking, and inaccuracy reporting. |
+| **6. Deployment & Documentation** | **5** | Production Vite build, configurable environment variables (`.env.example`), test database isolation guards, and deployment readiness guide. |
+| **7. Demo & Viva** | **10** | Structured viva talking points, architecture walkthrough, scoring formula derivations, and step-by-step examiner demonstration script. |
 
 ---
 
-## 📍 Real Coimbatore & Tamil Nadu Venue Coverage
+## 📌 Problem Statement & Core Objectives
 
-The platform provides verified listings across **31 administrative districts in Tamil Nadu**, categorized into 4 geographic zones plus the Coimbatore metropolitan cluster:
+### The Problem
+Most public map and venue discovery platforms either:
+1. Ignore accessibility infrastructure entirely.
+2. Rely on a single binary checkbox ("Wheelchair Accessible: Yes/No") without specifying entrance ramps, interior elevators, or accessible restrooms.
+3. Treat unrecorded facilities as "Unavailable", giving unfair zero scores to places simply missing data.
 
-- **Western Tamil Nadu (Kongu & Hills)**: Coimbatore (Gandhipuram, RS Puram, Peelamedu, Saibaba Colony, Town Hall, Race Course, Avinashi Rd, Vadavalli, Pollachi Rd), Tiruppur, Erode, Salem, Nilgiris (Ooty & Coonoor), Pollachi, Namakkal, Karur.
-- **Northern Tamil Nadu (Capital & Coast)**: Chennai (Central, Egmore, T. Nagar, Adyar, Guindy, Marina, Velachery, Anna Nagar, Mylapore), Chengalpattu, Tiruvallur, Kanchipuram, Vellore, Tiruvannamalai, Villupuram, Mahabalipuram.
-- **Central Tamil Nadu (Delta & Heritage)**: Tiruchirappalli (Trichy), Thanjavur, Kumbakonam, Pudukkottai, Ariyalur, Perambalur, Mayiladuthurai.
-- **Southern Tamil Nadu (Cultural Gateway)**: Madurai, Tirunelveli, Thoothukudi, Kanyakumari, Nagercoil, Dindigul, Sivakasi, Virudhunagar, Ramanathapuram, Kodaikanal, Rameswaram, Courtallam.
-
-Every listing contains real GPS coordinates within Tamil Nadu geographic bounds (`lat: 8.0 to 13.6, lng: 76.1 to 80.4`), audited barrier-free facilities, and authentic photographs.
-
----
-
-## ♿ Evidentiary Accessibility & Multi-Status Logic
-
-Most platforms make a dangerous assumption: if accessibility information is missing, they label the facility as unavailable. AccessAble enforces strict multi-status evidentiary tracking:
-
-- 🟢 **Verified Available**: Physically confirmed barrier-free access with compliant slope, handrails, or door clearances.
-- 🔴 **Verified Unavailable**: Confirmed physical barrier (e.g., flight of stairs with no alternative ramp).
-- 🟡 **Unknown / Unaudited**: Condition has not yet been audited. Missing data is never treated as unavailable.
-- 🟠 **Conflicting Reports**: Multiple community reports dispute current accessibility status; flagged for re-audit.
-- 🔵 **User Reported Pending Verification**: Community member submitted an audit awaiting admin review.
+### Project Objectives
+- **Accurate Discovery**: Allow users to filter public places in Tamil Nadu by specific physical accessibility facilities.
+- **Evidentiary Integrity**: Distinctly model `Available`, `Unavailable`, and `Unknown` states. Never assume missing data means a venue is inaccessible.
+- **Fair Scoring**: Calculate accessibility scores dynamically using standard architectural weights, strictly excluding `Unknown` facilities from the denominator.
+- **Community Participation**: Allow authenticated users to submit new places (held in `pending` status until admin review), post reviews, and report inaccuracies.
+- **Demonstration Honesty**: Clearly label sample/demonstration records so they do not distort genuine community statistics.
 
 ---
 
-## 🗺 Interactive Map & Provider Architecture
+## 📐 Accessibility Readiness Formula
 
-- **Default Zero-API-Key Provider**: Uses **Leaflet 1.9** with **OpenStreetMap** tiles. Runs out of the box with zero external billing or API keys required.
-- **Pluggable Provider Adapter**: Includes server-side `googlePlacesAdapter.js` ready to connect to Google Places API (New) when credentials are provided in `.env`.
-- **Direct Directions**: Every venue card and detail page provides a 1-click navigation link to Google Maps navigation (`https://www.google.com/maps/dir/?api=1&destination=lat,lng`).
+The platform assesses six core physical accessibility facilities with weights totaling 100:
 
----
+| Facility Domain | Weight | Description |
+| :--- | :---: | :--- |
+| **Wheelchair Ramp / Step-Free Access** | **25** | Sloped ramp (1:12 slope) or flush step-free entrance for wheeled mobility |
+| **Elevator / Lift** | **20** | Working elevator with wide doors and accessible call buttons |
+| **Accessible Restroom** | **20** | Wide-entry stall with grab bars and wheelchair turning space |
+| **Disability-Reserved Parking** | **15** | Designated wide parking stall near entrance with clear access aisle |
+| **Tactile & Braille Signage** | **10** | Tactile floor paving and Braille room/directional signage |
+| **Audio Assistance** | **10** | Visual announcements paired with audible alerts or guided assistance |
+| **Total Weight** | **100** | Standard Architectural Readiness Baseline |
 
-## 🌐 Regional Languages (English, Tamil, Hindi)
+### Mathematical Formula
+$$\text{Score} = \text{round}\left( \frac{\sum \text{Weights of Confirmed Available Facilities}}{\sum \text{Weights of Assessed Facilities (Available + Unavailable)}} \times 100 \right)$$
 
-AccessAble includes a client-side `LanguageProvider` with language selection available from the top navigation bar on both desktop and mobile:
-- **English** (en)
-- **தமிழ்** (ta)
-- **हिंदी** (hi)
-
-Language preferences are persisted in `localStorage`.
-
----
-
-## 🛠 Technology Stack
-
-### Frontend (`client/`)
-- **React 18** & **Vite 5** (Fast SPA bundler)
-- **Tailwind CSS 3** (Accessible contrast typography and responsive layout)
-- **Leaflet 1.9 & React-Leaflet 4** (Zero-cost interactive maps)
-- **React Router DOM 6** (Client-side routing)
-- **Axios** (HTTP communication with JWT interceptors)
-- **Lucide React** (Accessible SVG iconography)
-
-### Backend (`server/`)
-- **Node.js & Express 4** (RESTful API architecture)
-- **Mongoose 8** (Object Data Modeling with GeoJSON 2dsphere indexing)
-- **express-rate-limit** (API rate limiting protection)
-- **bcryptjs** (Salted password hashing)
-- **jsonwebtoken (JWT)** (Stateless authorization)
-- **Node.js Test Runner (`node:test`)** (Integration tests)
-
-### Database
-- **Local MongoDB** (`mongodb://127.0.0.1:27017/accessable_db`) or **MongoDB Atlas**.
-- Automatic graceful fallback: If an Atlas connection is blocked by IP whitelisting, the backend automatically falls back to local MongoDB.
+### Rules:
+1. **Unknown Facilities are Excluded**: An unrecorded facility adds 0 points to the numerator and 0 points to the denominator. It is never treated as a barrier.
+2. **Minimum 2 Confirmed Facilities Required**: If fewer than 2 facilities have been audited, the place is assigned:
+   - `accessibilityScore = null` (never a misleading numeric 0)
+   - `accessibilityTier = 'Insufficient Data'`
+   - Frontend displays: `"Score unavailable"` / `"Insufficient data"`
+3. **Accessibility Tiers**:
+   - **High Accessibility (70–100)**: Multiple verified physical accessibility features.
+   - **Moderate Accessibility (40–69)**: Core entrance accessibility available with some gaps.
+   - **Limited Accessibility (0–39)**: Significant confirmed architectural barriers present (including 0 when all assessed facilities are confirmed unavailable).
+   - **Insufficient Data**: Fewer than 2 facilities confirmed (`accessibilityScore = null`).
 
 ---
 
-## 📁 System Architecture & Folder Structure
+## 🏗 System Architecture
 
 ```
-AccessAble/
-├── client/                          # React + Vite Frontend
-│   ├── src/
-│   │   ├── components/              # Reusable UI components
-│   │   │   ├── InteractiveMap.jsx   # Leaflet Map with custom accessible pins
-│   │   │   ├── PlaceCard.jsx        # Venue card with photo attribution & bookmarks
-│   │   │   ├── FacilityBadge.jsx    # 5-status accessibility badges
-│   │   │   ├── FilterDrawer.jsx     # Faceted filters, TN districts & GPS triggers
-│   │   │   ├── LanguageSelector.jsx # Tri-lingual switcher (EN / TA / HI)
-│   │   │   ├── ReportModal.jsx      # Inaccuracy reporting modal
-│   │   │   └── Navbar.jsx           # Responsive header navigation
-│   │   ├── context/
-│   │   │   ├── AuthContext.jsx      # Auth state, login/register, bookmarks
-│   │   │   └── LanguageContext.jsx  # Tri-lingual translation dictionary
-│   │   ├── pages/                   # Application views
-│   │   │   ├── HomePage.jsx         # Hero, GPS "Near Me", Coimbatore quick jumps
-│   │   │   ├── DiscoveryPage.jsx    # List, Map, and Split view directory
-│   │   │   ├── PlaceDetailsPage.jsx # Comprehensive audit breakdown, photos & reviews
-│   │   │   ├── SavedPlacesPage.jsx  # Bookmarked venues
-│   │   │   ├── AdminDashboardPage.jsx # Places, Reviews, and Inaccuracy Reports queue
-│   │   │   ├── AddPlacePage.jsx     # Register new venue with GPS coordinates
-│   │   │   └── EditPlacePage.jsx    # Update venue details
-│   │   └── services/
-│   │       └── api.js               # Axios API client
-├── server/                          # Node.js + Express Backend
-│   ├── config/
-│   │   └── db.js                    # DB connection with Atlas & local fallback
-│   ├── controllers/
-│   │   ├── authController.js        # Auth, profile, saved places endpoints
-│   │   ├── placeController.js       # Geospatial queries, CRUD, inaccuracy reports
-│   │   └── reviewController.js      # Community review submissions & moderation
-│   ├── models/
-│   │   ├── Place.js                 # GeoJSON coordinates, photos, accessibilityProfile
-│   │   ├── Report.js                # Inaccuracy reports schema
-│   │   ├── Review.js                # Ratings and facility feedback
-│   │   └── User.js                  # User credentials, roles, savedPlaces
-│   ├── routes/                      # Express route endpoints
-│   ├── seeds/
-│   │   └── seedTamilNaduPlaces.js   # 32 genuine Coimbatore & TN locations
-│   ├── services/
-│   │   ├── geoService.js            # Haversine distance calculator
-│   │   └── googlePlacesAdapter.js   # Google Places API integration adapter
-│   ├── tests/
-│   │   ├── api.test.js              # Core CRUD, auth, and reviews tests
-│   │   └── tamilNaduAndGeo.test.js  # Nearby, distance, inaccuracy reports tests
-│   └── server.js                    # Express app entrypoint & /api/health
-└── README.md
+                      +---------------------------------------+
+                      |             Web Browser               |
+                      |   React 18 + Vite SPA (Port 5173)     |
+                      +-------------------+-------------------+
+                                          |
+                                          | HTTP / REST (JSON)
+                                          | Bearer JWT Authorization
+                                          v
+                      +-------------------+-------------------+
+                      |         Node.js / Express Server      |
+                      |          (Port 5000 / Production)     |
+                      +-------------------+-------------------+
+                                          |
+                 +------------------------+------------------------+
+                 |                        |                        |
+                 v                        v                        v
+        +-----------------+      +-----------------+      +-----------------+
+        | PlaceController |      | AuthController  |      | ReviewController|
+        | - /api/places   |      | - /api/auth     |      | - /api/reviews  |
+        | - /api/places/map      | - JWT validation|      | - Moderation    |
+        +--------+--------+      +--------+--------+      +--------+--------+
+                 |                        |                        |
+                 +------------------------+------------------------+
+                                          |
+                                          v  Mongoose ODM (2dsphere + Text Index)
+                      +-------------------+-------------------+
+                      |               MongoDB                 |
+                      |   accessable_db (Production / Real)   |
+                      |   accessable_test (Isolated Testing)  |
+                      +---------------------------------------+
 ```
 
 ---
 
-## ⚡ Prerequisites
+## 🗄 MongoDB Collections & Schemas
 
-1. **Node.js**: v18.0.0 or later (v20+ recommended).
-2. **MongoDB**: Local MongoDB community service running on port 27017, or a MongoDB Atlas URI.
+1. **`places` Collection**:
+   - `name`, `slug`, `category` (Hospital, Transit, College, Park, Shopping, Heritage, Restaurant, Office).
+   - `address`, `locality`, `city`, `district`, `region` (Western, Northern, Central, Southern Tamil Nadu).
+   - `location`: GeoJSON Point `[longitude, latitude]` with `2dsphere` spatial index.
+   - `coordinates`: `{ lat, lng }` strictly validated within Tamil Nadu bounds (`8.0–13.6° N, 76.0–80.6° E`).
+   - `facilities`: `{ wheelchairRamp, elevatorLift, accessibleToilet, accessibleParking, brailleSignage, audioAssistance }` (enum: `'Available'`, `'Unavailable'`, `'Unknown'`).
+   - `accessibilityScore` (0–100) and `accessibilityTier`.
+   - `status`: `'pending'` (awaiting admin review), `'verified'` (publicly discoverable), `'rejected'`.
+   - `isSampleData`: Boolean flag to distinguish initial demonstration venues from live records.
+
+2. **`reviews` Collection**:
+   - `place`: ObjectId referencing `places`.
+   - `user`: ObjectId referencing `users`.
+   - `rating` (1–5) and `accessibilityRating` (1–5).
+   - `comment`: String (min 5 chars).
+   - `facilityFeedback`: User observations on specific features.
+   - `isModerated`: Boolean.
+   - Compound unique index on `{ place: 1, user: 1 }` prevents duplicate reviews.
+   - Post-save and post-delete hooks recompute `averageRating`, `averageAccessibilityRating`, and `totalReviews` on the place.
+
+3. **`users` Collection**:
+   - `name`, `email` (unique, lowercase), `password` (bcrypt hash with 10 salt rounds).
+   - `role`: `'user'` (default) or `'admin'`.
+   - `savedPlaces`: Array of ObjectIds referencing bookmarked `places`.
+
+4. **`reports` Collection**:
+   - `place`: ObjectId referencing `places`.
+   - `issueCategory`, `description`, `evidence`, `status` (`'pending'`, `'investigating'`, `'resolved'`, `'dismissed'`).
 
 ---
 
-## 💻 PowerShell Quick Start (Running Frontend & Backend)
+## 📡 REST API Route Summary
 
-Open **PowerShell** in the project directory (`E:\AccessAble`):
+### Authentication (`/api/auth`)
+| Method | Route | Access | Description |
+| :--- | :--- | :--- | :--- |
+| `POST` | `/register` | Public | Register user account (always defaults to `role: 'user'`) |
+| `POST` | `/login` | Public | Authenticate user credentials and return signed JWT |
+| `GET` | `/me` | Private | Retrieve logged-in user profile |
+| `PUT` | `/profile` | Private | Update user name and bio |
+| `POST` | `/save-place/:id` | Private | Toggle venue bookmark |
+| `GET` | `/saved-places` | Private | Retrieve user's bookmarked places |
 
-### Option A: Run Both Simultaneously from Root
+### Places (`/api/places`)
+| Method | Route | Access | Description |
+| :--- | :--- | :--- | :--- |
+| `GET` | `/` | Public | List verified places with category, district, score, and text filters |
+| `GET` | `/map` | Public | Retrieve verified places with valid Tamil Nadu coordinates for map markers |
+| `GET` | `/nearby` | Public | Geospatial radius search using `$geoWithin` center-sphere |
+| `GET` | `/search` | Public | Keyword search across name, address, locality, and city |
+| `GET` | `/categories` | Public | Aggregate category counts for verified venues |
+| `GET` | `/districts` | Public | List districts and localities with verified venue counts |
+| `GET` | `/regions` | Public | Regional aggregations across Tamil Nadu zones |
+| `GET` | `/coverage` | Public | Statewide coverage metrics |
+| `GET` | `/:id` | Public* | Retrieve venue details (*pending places accessible only to creator or admin) |
+| `POST` | `/` | Private | Submit a new place (defaults to `status: 'pending'` for users) |
+| `PUT` | `/:id` | Private | Edit place details (creator or admin) |
+| `DELETE` | `/:id` | Private | Remove place (creator or admin) |
+| `PATCH/PUT`| `/:id/verify` | Admin | Approve or reject place submission (`verified` or `rejected`) |
+| `GET` | `/stats/overview` | Admin | Administrative metrics (total, verified, pending, reports) |
+| `POST` | `/:id/reports` | Public | Submit inaccuracy report for a venue |
+| `GET` | `/admin/reports` | Admin | Review pending inaccuracy reports |
+| `PATCH` | `/admin/reports/:id`| Admin | Update report status (`investigating`, `resolved`, `dismissed`) |
 
+### Reviews (`/api/reviews`)
+| Method | Route | Access | Description |
+| :--- | :--- | :--- | :--- |
+| `GET` | `/recent` | Public | Paginated recent community reviews with total count |
+| `GET` | `/place/:placeId` | Public | All moderated reviews for a specific venue |
+| `POST` | `/place/:placeId` | Private | Submit or update venue review (recalculates venue ratings) |
+| `DELETE` | `/:id` | Private | Delete review (author or admin only; recalculates averages) |
+| `GET` | `/admin/all` | Admin | Review moderation list |
+| `PATCH` | `/:id/moderate` | Admin | Toggle moderation status |
+
+---
+
+## 🔒 Security & Database Isolation Guards
+
+To guarantee academic evaluation safety:
+1. **Role Escalation Protection**: `POST /api/auth/register` strictly sets `role: 'user'` and ignores any role payload injection. Admin accounts cannot be self-created via API.
+2. **Strict Test Database Isolation**: Every test file validates the resolved database name against an explicit allowlist. If the resolved URI path contains `accessable_db` or lacks `test`, execution aborts immediately before connecting:
+   ```javascript
+   const targetDbName = extractDatabaseName(process.env.MONGODB_URI);
+   if (!targetDbName.toLowerCase().includes('test') || targetDbName === 'accessable_db') {
+     throw new Error('[SECURITY GUARD] Test suite aborted: Resolved database name is not an isolated test target.');
+   }
+   ```
+3. **No Secret Leaks**: Test URI parsing never outputs credentials, passwords, or connection tokens to stdout or logs.
+4. **Pending Submission Quarantine**: Submissions created by normal users default to `status: 'pending'`. They are strictly excluded from public queries, search, nearby, category aggregates, and maps.
+
+---
+
+## 💻 Local Setup & Execution Guide
+
+### Prerequisites
+- Node.js (v18 or higher)
+- MongoDB Community Server running locally on `127.0.0.1:27017`
+
+### Step 1: Clone or Navigate to Project
 ```powershell
-# 1. Install root, backend, and frontend packages (first run only)
-npm run install:all
-
-# 2. Seed database with real Coimbatore & Tamil Nadu locations
-npm run seed
-
-# 3. Start both backend (port 5000) and frontend (port 5173)
-npm run dev
+cd E:\AccessAble
 ```
 
-### Option B: Run in Separate PowerShell Terminals
-
-**Terminal 1 — Backend (Express & MongoDB):**
+### Step 2: Configure Environment Variables
+Copy example files to `.env` (default settings connect to local MongoDB):
 ```powershell
+# Server configuration
+Copy-Item server\.env.example server\.env
+
+# Client configuration
+Copy-Item client\.env.example client\.env
+```
+
+### Step 3: Install Dependencies
+```powershell
+# Install server dependencies
 cd E:\AccessAble\server
 npm install
-npm run seed
-npm run dev
-```
-*Backend runs on `http://localhost:5000`.*
 
-**Terminal 2 — Frontend (React & Vite):**
-```powershell
+# Install client dependencies
 cd E:\AccessAble\client
 npm install
-npm run dev
-```
-*Frontend runs on `http://localhost:5173`.*
-
-Open your browser and navigate to `http://localhost:5173`.
-
----
-
-## 🔧 Environment Configuration
-
-### Backend (`server/.env`)
-A template is available at `server/.env.example`:
-```ini
-PORT=5000
-NODE_ENV=development
-MONGODB_URI=mongodb://127.0.0.1:27017/accessable_db
-JWT_SECRET=accessable_super_secret_jwt_key_2026
-JWT_EXPIRE=30d
-CLIENT_URL=http://localhost:5173
-
-# Optional Google Places API (New) key
-GOOGLE_MAPS_API_KEY=
 ```
 
-### Frontend (`client/.env`)
-```ini
-VITE_API_BASE_URL=http://localhost:5000/api
-```
-
----
-
-## 🔑 Google Maps Platform Setup Guide (Optional)
-
-The application defaults to OpenStreetMap/Leaflet, so **no paid Google API key is required**. If you wish to enable official Google Maps Platform services:
-
-1. Visit [Google Cloud Console](https://console.cloud.google.com/).
-2. Create a project and link a billing account.
-3. Enable the following APIs:
-   - **Places API (New)**
-   - **Maps JavaScript API**
-   - **Geocoding API**
-4. Create an API Key under **APIs & Services > Credentials**.
-5. Restrict the API key:
-   - Application restriction: HTTP referrers (e.g. `http://localhost:5173/*`)
-   - API restriction: Restrict key to Places API and Maps JavaScript API only.
-6. Paste the key into `server/.env`:
-   ```ini
-   GOOGLE_MAPS_API_KEY=AIzaSy...
-   ```
-7. Restart the backend server. The backend health endpoint (`GET /api/health`) will confirm the active adapter state.
-
----
-
-## 👥 Database Seeding & Demonstration Accounts
-
-Run the seeder:
+### Step 4: Run the Application
+In **Terminal 1** (Start Backend):
 ```powershell
-npm run seed
+cd E:\AccessAble\server
+npm run dev
+# Server listening on http://localhost:5000
 ```
 
-### Pre-Configured Test Accounts
+In **Terminal 2** (Start Frontend):
+```powershell
+cd E:\AccessAble\client
+npm run dev
+# Vite client running on http://localhost:5173
+```
 
-| Role | Email | Password | Permissions |
-| :--- | :--- | :--- | :--- |
-| **Administrator** | `admin@accessable.org` | `Admin@123` | Full CRUD, review moderation, verify listings, inaccuracy report management |
-| **Community Member** | `student@accessable.org` | `Student@123` | Submit venues, submit reviews, bookmark places, submit reports |
-
----
-
-## 📡 REST API Documentation
-
-### System Health
-- `GET /api/health` — Returns backend uptime, DB connection readyState (`cloud` or `local`), and Google Places adapter status.
-
-### Authentication & Bookmarks
-- `POST /api/auth/register` — Register a new user (`name`, `email`, `password`).
-- `POST /api/auth/login` — Sign in and receive JWT token.
-- `GET /api/auth/me` — Retrieve authenticated user profile and saved places.
-- `POST /api/auth/save-place/:id` — Toggle saving a place to bookmarks (protected).
-- `GET /api/auth/saved-places` — Get full details of bookmarked venues (protected).
-
-### Places & Geospatial Discovery
-- `GET /api/places` — Query places with filtering by `q`, `category`, `region`, `district`, `locality`, `city`, `wheelchairRamp`, `elevatorLift`, `accessibleToilet`, `minRating`, `sortBy`, `page`.
-- `GET /api/places/nearby` — Geospatial radius discovery (`lat`, `lng`, `radius` in km). Returns venues sorted by `distanceKm`.
-- `GET /api/places/search` — Autocomplete search across names, localities, and categories.
-- `GET /api/places/regions` — Returns Tamil Nadu geographic zones (Western, Northern, Central, Southern), with venue counts and covered districts.
-- `GET /api/places/coverage` — Live statewide coverage statistics, district breakdown, and verified facility counts.
-- `POST /api/places/ingest` — Admin trigger for scalable data ingestion pipeline (modes: `catalogue`, `city`, `category`) with safe deduplication.
-- `GET /api/places/districts` — Lists all covered districts and localities in Tamil Nadu.
-- `GET /api/places/categories` — Aggregate count of places by category.
-- `GET /api/places/:id` — Retrieve single place details and verified community reviews.
-- `POST /api/places` — Create a new venue listing (protected).
-- `PUT /api/places/:id` — Update listing (owner or admin).
-- `DELETE /api/places/:id` — Delete venue listing (owner or admin).
-- `PATCH /api/places/:id/verify` — Admin status verification (`verified` / `rejected`).
-- `GET /api/places/stats/overview` — Admin overview metrics and facility counts.
-
-### Inaccuracy Reports
-- `POST /api/places/:id/reports` — Submit an inaccuracy report for a venue (`issueCategory`, `description`, `evidence`, `reporterName`, `reporterEmail`).
-- `GET /api/places/admin/reports` — Admin listing of submitted inaccuracy reports.
-- `PUT /api/places/admin/reports/:reportId` — Update report status (`investigating`, `resolved`, `dismissed`) with admin notes.
-
-### Reviews
-- `GET /api/reviews/recent` — Public endpoint returning recent moderated community reviews across places.
-- `POST /api/reviews/place/:id` — Post accessibility review and facility feedback (protected).
-- `DELETE /api/reviews/:id` — Delete review (author or admin).
-- `GET /api/reviews/admin/all` — Admin review moderation queue.
-- `PUT /api/reviews/:id/moderate` — Toggle review visibility (admin).
+Open [http://localhost:5173](http://localhost:5173) in your browser.
 
 ---
 
 ## 🧪 Automated Testing
 
-AccessAble includes automated integration test suites executed with the built-in Node.js test runner (`node:test`):
+AccessAble includes a comprehensive Node.js native test runner suite (`node --test`) covering:
+- **Scoring Formula Suite**: All Unknown, All Available, All Unavailable, Mixed States with Unknown Exclusions, and Partial Evidence (< 2 facilities).
+- **Security & Authorization Suite**: Role escalation rejection, 403 on unauthorized verification, 401 on unauthenticated admin endpoints.
+- **Geospatial & Discovery Suite**: Tamil Nadu boundary validation, nearby radius discovery, category aggregation.
+- **Review Recalculation Suite**: Real-time aggregation post-save and post-delete.
 
+### Run Test Suite Safely (Targets `accessable_test`):
 ```powershell
-npm test
+npm test --prefix server
 ```
-
 Expected output:
 ```
-✔ GET /api/health should return ok status
-✔ POST /api/auth/register should register a new user and return token
-✔ POST /api/auth/login should authenticate user with correct credentials
+✔ Scoring Formula: All six facilities Unknown results in Insufficient Data (0/100)
+✔ Scoring Formula: All six facilities Available results in High Accessibility (100/100)
+✔ Scoring Formula: All six facilities Unavailable results in Limited Accessibility (0/100)
+✔ Scoring Formula: Mixture of Available, Unavailable, and Unknown excludes Unknown from denominator
+✔ Scoring Formula: Partial evidence (< 2 confirmed facilities) defaults to Insufficient Data (0/100)
+✔ Security Guard: POST /api/auth/register prevents self-assigned admin role
+✔ Security Guard: Non-admin users are rejected from admin place verification with 403
 ✔ POST /api/places should create a place with accessibility facilities
-✔ GET /api/places should filter places by category and facility
 ✔ POST /api/reviews/place/:id should add a review and update ratings
-✔ GET /api/places/stats/overview should restrict non-admin and permit admin
-✔ GET /api/places/categories should return category aggregates
-✔ GET /api/places/districts should return district and locality coverage
-✔ GET /api/places/nearby should return places near Coimbatore coordinates with distanceKm
-✔ GET /api/places/search should find places by locality name
-✔ GET /api/places/provider/status should report Google Places provider state
-✔ POST /api/places/:id/reports should submit an inaccuracy report
-✔ GET /api/places/regions should return regional aggregations with place counts and districts
-✔ GET /api/places/coverage should return live coverage statistics across Tamil Nadu
-✔ GET /api/places?region=Western+Tamil+Nadu should filter places by region
-ℹ tests 16
-ℹ pass 16
+ℹ pass 39
 ℹ fail 0
 ```
 
----
-
-## 🎓 External Examiner & Reviewer Evaluation Guide
-
-During project viva and code walkthroughs, evaluate the following workflow steps:
-
-1. **Home Page & Geolocation**:
-   - Open `http://localhost:5173`.
-   - Click **"Find Accessible Places Near Me"** to trigger GPS location discovery.
-   - Click any Coimbatore area tag (e.g., `RS Puram` or `Peelamedu`) to explore local venues.
-
-2. **Tri-Lingual Regional Support**:
-   - Click the language selector in the top navigation bar to toggle between **English**, **தமிழ் (Tamil)**, and **हिंदी (Hindi)**. Observe complete UI translation.
-
-3. **Map & Directory Views**:
-   - Navigate to `/discover`.
-   - Toggle between **List View**, **Interactive Map**, and **Split View**.
-   - Hover over pins on the map to see real venue cards with distance and directions.
-
-4. **Detailed Audit & Photo Attribution**:
-   - Click any place (e.g., **PSG Hospitals** or **Brookefields Mall**).
-   - View real photographs and photographic attribution pills.
-   - Inspect the **Accessibility Facility Breakdown** displaying verified multi-status conditions and audit sources.
-
-5. **Inaccuracy Reporting & Bookmarking**:
-   - Click the bookmark icon to save the venue; visit `/saved` to verify the collection.
-   - Click **"Report Inaccurate Info"** to submit a test report.
-
-6. **Admin Dashboard**:
-   - Sign in using `admin@accessable.org` / `Admin@123`.
-   - Navigate to `/admin`.
-   - Review the **Inaccuracy Reports Queue**, **Place Listings**, **Review Moderation**, and **Geospatial Provider Status**.
+### Run Production Frontend Build:
+```powershell
+npm run build --prefix client
+```
 
 ---
 
-## 📜 Academic Disclaimer
+## 🎤 Demonstration Script & Viva Talking Points
 
-AccessAble was developed as an academic project demonstrating full-stack engineering, geospatial information systems, and universal design. Field audit records reflect genuine public information and ground observations for Coimbatore and Tamil Nadu venues. Missing information is never treated as unavailable.
+When presenting this project to an examiner, demonstrate the features in this order:
+
+### 1. The Core Differentiator: Transparent Scoring Formula
+- **Action**: Navigate to any venue card or details page and click the Accessibility Score Badge (e.g. `85/100 (5/6 confirmed)`).
+- **Viva Point**: *"Unlike commercial maps that use subjective user ratings or binary yes/no flags, AccessAble uses an architectural facility formula where weights sum to 100. Unknown facilities are mathematically excluded from the denominator rather than assumed unavailable. If a place has fewer than 2 confirmed facilities, we assign 'Insufficient Data' rather than a misleading zero."*
+
+### 2. Map Truthfulness & Coordinate Validation
+- **Action**: Open the Dedicated Map (`/map`) or the Map View on Discover (`/discover`).
+- **Viva Point**: *"The map dynamically queries the database and displays only places with confirmed coordinates within Tamil Nadu bounds (lat 8.0 to 13.6, lng 76.0 to 80.6). The count is truthful and derived from real query results (e.g. '99 of 107 eligible places have map locations in Tamil Nadu')."*
+
+### 3. Place Submission & Admin Moderation Workflow
+- **Action**: Log in as a regular user, submit a new place at `/add-place`.
+- **Observation**: Show that the venue is created with `status: 'pending'`. The submitter sees `"Awaiting Administrative Review"`, but the venue does NOT appear in public discovery, search, or map markers.
+- **Action**: Log in as admin, navigate to `/admin`, approve the venue, and verify it now appears publicly.
+- **Viva Point**: *"This guarantees crowd-sourced contributions are vetted before public display, preventing spam and inaccurate accessibility claims."*
+
+### 4. Review Ratings & MongoDB Recalculations
+- **Action**: Submit a review on a place with 5-star accessibility rating.
+- **Viva Point**: *"The Review model uses Mongoose post-save and post-delete aggregation hooks. When a review is posted or removed, MongoDB executes an aggregation pipeline on that placeId to recalculate the exact averageRating and averageAccessibilityRating in real time."*
+
+### 5. Computer Vision & AI Transparency
+- **Action**: Open the photo scanner modal on a venue.
+- **Viva Point**: *"Our vision service analyzes photographic evidence for ramps and handrails using Google Gemini Vision (with an offline architectural heuristic fallback). Crucially, visual analysis is treated as advisory and provisional—it never automatically mutates verified MongoDB records, because legal accessibility compliance (e.g. ramp slope of 1:12 or 800mm door width) cannot be certified from a 2D photograph alone."*
+
+---
+
+## 📋 Technology Stack Summary
+
+- **Frontend**: React 18, Vite, React Router DOM 6, Tailwind CSS, Leaflet, React-Leaflet, Lucide React.
+- **Backend**: Node.js, Express 4, JSON Web Token (JWT), bcryptjs, Multer.
+- **Database**: MongoDB, Mongoose 8 (2dsphere geospatial indexing, compound indexes, aggregation pipelines).
+- **Testing**: Node.js Native Test Runner (`node --test`), `node:assert/strict`.
+- **Maps**: Leaflet + OpenStreetMap Carto tiles (100% free, zero external API keys required).
+
+---
+
+## 👥 Evaluation Team & Academic Context
+
+- **Project Title**: AccessAble — Real-World Accessibility Discovery Platform
+- **Geographic Focus**: Coimbatore & Tamil Nadu, India
+- **Course**: Full Stack Web Development (Mini Project)
+- **Year**: 2026

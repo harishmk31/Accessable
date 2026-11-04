@@ -65,6 +65,10 @@ const reviewSchema = new mongoose.Schema(
     isModerated: {
       type: Boolean,
       default: true // approved by default, admin can flag or unpublish
+    },
+    isSampleData: {
+      type: Boolean,
+      default: false
     }
   },
   {

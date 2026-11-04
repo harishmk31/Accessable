@@ -39,7 +39,9 @@ const register = async (req, res, next) => {
       });
     }
 
-    const assignedRole = role === 'admin' ? 'admin' : 'user';
+    // Standard registration always creates regular user accounts.
+    // Admin accounts must be bootstrapped via database seeder or server environment configuration.
+    const assignedRole = 'user';
 
     const user = await User.create({
       name: name.trim(),

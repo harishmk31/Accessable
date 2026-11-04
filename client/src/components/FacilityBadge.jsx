@@ -69,11 +69,18 @@ const STATUS_CONFIGS = {
     indicator: 'bg-sky-600',
     icon: Clock,
     badgeTextKey: 'statusUserReported',
-    shortLabel: 'Pending'
+    shortLabel: 'Reported, not verified'
   }
 };
 
-const FacilityBadge = ({ facilityKey, status = 'Unknown', note = '', compact = false, evidenceSource = '' }) => {
+const FacilityBadge = ({
+  facilityKey,
+  status = 'Unknown',
+  note = '',
+  compact = false,
+  evidenceSource = '',
+  lastVerifiedAt = null
+}) => {
   const { t } = useTranslation();
   const meta = FACILITY_METADATA[facilityKey] || { labelKey: facilityKey, icon: Accessibility };
   const label = t(meta.labelKey) || facilityKey;
@@ -127,11 +134,19 @@ const FacilityBadge = ({ facilityKey, status = 'Unknown', note = '', compact = f
           </p>
         )}
 
-        {evidenceSource && evidenceSource !== 'Not audited yet' && (
-          <div className="mt-1.5 pt-1.5 border-t border-current/15 text-[10px] text-slate-600 font-medium">
-            <span className="font-bold">Source:</span> {evidenceSource}
-          </div>
-        )}
+        <div className="mt-2 pt-1.5 border-t border-current/15 text-[10px] text-slate-600 flex flex-wrap items-center justify-between gap-1">
+          <span>
+            <strong className="font-semibold">Evidence: </strong>
+            {evidenceSource && evidenceSource !== 'Not audited yet'
+              ? evidenceSource
+              : (validStatus === 'Unknown' ? 'No evidence yet' : 'Database record')}
+          </span>
+          {lastVerifiedAt && (
+            <span className="text-slate-500">
+              {new Date(lastVerifiedAt).toLocaleDateString('en-GB')}
+            </span>
+          )}
+        </div>
       </div>
     </div>
   );

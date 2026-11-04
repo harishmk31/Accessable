@@ -1,7 +1,7 @@
 /**
  * AccessAble — Real Places Verified Dataset for Tamil Nadu
  * 
- * 100 genuine, identifiable public places across Western, Northern,
+ * Genuine, identifiable public places across Western, Northern,
  * Central, Southern Tamil Nadu and major tourism destinations.
  * 
  * Strict Photographic Policy:
@@ -9,6 +9,10 @@
  * - Empty photos array for venues awaiting ground photographic audit
  *   (rendered with a neutral, professional "Photo unavailable" placeholder).
  * - Zero random or generic Unsplash stock photos.
+ * 
+ * Accessibility Data Integrity:
+ * - Physical accessibility facility statuses require on-site ground audit
+ *   or official compliance declaration. Unaudited venues are marked "Unknown".
  */
 
 const TAMIL_NADU_VERIFIED_PLACES = [
@@ -165,10 +169,10 @@ const TAMIL_NADU_VERIFIED_PLACES = [
       },
       "audioAssistance": {
         "status": "Unknown",
-        "evidenceSource": "Not verified during last inspection",
+        "evidenceSource": "Pending on-site accessibility audit",
         "verificationMethod": "unverified",
         "lastVerifiedAt": null,
-        "notes": "Induction loop systems in seminar halls unverified."
+        "notes": "[Pending on-site audit] Induction loop systems in seminar halls unverified."
       }
     }
   },
@@ -247,32 +251,53 @@ const TAMIL_NADU_VERIFIED_PLACES = [
     "photos": [],
     "accessibilityProfile": {
       "stepFreeEntrance": {
-        "status": "Verified Available",
-        "notes": "Direct grade entrance at emergency casualty wing."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Direct grade entrance at emergency casualty wing."
       },
       "ramp": {
-        "status": "Verified Available",
-        "notes": "Exterior ramps connecting ground and first floor wards."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Exterior ramps connecting ground and first floor wards."
       },
       "lift": {
-        "status": "Verified Available",
-        "notes": "Lifts active in newer multi-storey surgical blocks."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Lifts active in newer multi-storey surgical blocks."
       },
       "accessibleParking": {
         "status": "Unknown",
-        "notes": "High traffic general parking; dedicated bays unverified."
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] High traffic general parking; dedicated bays unverified."
       },
       "accessibleToilet": {
-        "status": "Verified Available",
-        "notes": "Ground floor accessible restroom near casualty."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Ground floor accessible restroom near casualty."
       },
       "brailleSignage": {
-        "status": "Verified Unavailable",
-        "notes": "Tactile braille signage not currently installed in older wings."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Tactile braille signage not currently installed in older wings."
       },
       "audioAssistance": {
-        "status": "Verified Available",
-        "notes": "Bilingual Tamil/English public address system."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Bilingual Tamil/English public address system."
       }
     }
   },
@@ -406,7 +431,17 @@ const TAMIL_NADU_VERIFIED_PLACES = [
     },
     "provider": "accessable_verified",
     "providerPlaceId": "tn_cbe_race_course",
-    "photos": [],
+    "photos": [
+      {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/0/02/Coimbatore_Race_Course%2C_illuminated_pathway.jpg",
+        "caption": "Coimbatore Race Course, illuminated pathway",
+        "attribution": "Wikimedia Commons / CC BY-SA 4.0 / Rangan Datta Wiki",
+        "authorName": "Rangan Datta Wiki",
+        "license": "CC BY-SA 4.0",
+        "wikimediaPage": "https://commons.wikimedia.org/wiki/File:Coimbatore_Race_Course,_illuminated_pathway.jpg",
+        "isVerified": true
+      }
+    ],
     "openingHours": {
       "weekdayDescriptions": [
         "Open 24 hours daily",
@@ -425,7 +460,10 @@ const TAMIL_NADU_VERIFIED_PLACES = [
       },
       "lift": {
         "status": "Unknown",
-        "notes": "Single-level outdoor public walkway."
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Single-level outdoor public walkway."
       },
       "accessibleParking": {
         "status": "Verified Available",
@@ -441,7 +479,10 @@ const TAMIL_NADU_VERIFIED_PLACES = [
       },
       "audioAssistance": {
         "status": "Unknown",
-        "notes": "Outdoor park without fixed audio loop systems."
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Outdoor park without fixed audio loop systems."
       }
     }
   },
@@ -465,7 +506,17 @@ const TAMIL_NADU_VERIFIED_PLACES = [
     },
     "provider": "accessable_verified",
     "providerPlaceId": "tn_cbe_railway_junction",
-    "photos": [],
+    "photos": [
+      {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/5/52/Coimbatore_Junction_railway_station_facade.jpg",
+        "caption": "Coimbatore Junction railway station facade",
+        "attribution": "Wikimedia Commons / CC BY-SA 4.0 / deadrat",
+        "authorName": "deadrat",
+        "license": "CC BY-SA 4.0",
+        "wikimediaPage": "https://commons.wikimedia.org/wiki/File:Coimbatore_Junction_railway_station_facade.jpg",
+        "isVerified": true
+      }
+    ],
     "accessibilityProfile": {
       "stepFreeEntrance": {
         "status": "Verified Available",
@@ -520,32 +571,53 @@ const TAMIL_NADU_VERIFIED_PLACES = [
     "photos": [],
     "accessibilityProfile": {
       "stepFreeEntrance": {
-        "status": "Verified Available",
-        "notes": "Level entrance from Cross Cut Road."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Level entrance from Cross Cut Road."
       },
       "ramp": {
-        "status": "Verified Available",
-        "notes": "Concrete ramps connecting bus bays."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Concrete ramps connecting bus bays."
       },
       "lift": {
         "status": "Unknown",
-        "notes": "Single-level bus terminal concourse."
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Single-level bus terminal concourse."
       },
       "accessibleParking": {
-        "status": "Verified Unavailable",
-        "notes": "Very congested vehicle area; no clear dedicated disabled bay."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Very congested vehicle area; no clear dedicated disabled bay."
       },
       "accessibleToilet": {
-        "status": "Verified Available",
-        "notes": "Pay-and-use accessible toilet near bay 4."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Pay-and-use accessible toilet near bay 4."
       },
       "brailleSignage": {
-        "status": "Verified Unavailable",
-        "notes": "No tactile maps or braille bay signs found."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] No tactile maps or braille bay signs found."
       },
       "audioAssistance": {
-        "status": "Verified Available",
-        "notes": "Loudspeaker bus departures in Tamil and English."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Loudspeaker bus departures in Tamil and English."
       }
     }
   },
@@ -569,35 +641,66 @@ const TAMIL_NADU_VERIFIED_PLACES = [
     },
     "provider": "accessable_verified",
     "providerPlaceId": "tn_cbe_tnau_garden",
-    "photos": [],
+    "photos": [
+      {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/a/a7/PPC_of_Tamil_Nadu_Agricultural_University%2C_Lawley_Road.jpg",
+        "caption": "This PPC depicts the logo of TNAU, Lawley Road, which was established in 1920 in Coimbatore.",
+        "attribution": "Wikimedia Commons / CC BY-SA 4.0 / Department of Telecommunications, Govern",
+        "authorName": "Department of Telecommunications, Government of In",
+        "license": "CC BY-SA 4.0",
+        "wikimediaPage": "https://commons.wikimedia.org/wiki/File:PPC_of_Tamil_Nadu_Agricultural_University,_Lawley_Road.jpg",
+        "isVerified": true
+      }
+    ],
     "accessibilityProfile": {
       "stepFreeEntrance": {
-        "status": "Verified Available",
-        "notes": "Wide gate with level asphalt access."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Wide gate with level asphalt access."
       },
       "ramp": {
-        "status": "Verified Available",
-        "notes": "Paved ramps at greenhouse and museum pavilions."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Paved ramps at greenhouse and museum pavilions."
       },
       "lift": {
         "status": "Unknown",
-        "notes": "Outdoor botanical gardens without multi-floor buildings."
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Outdoor botanical gardens without multi-floor buildings."
       },
       "accessibleParking": {
-        "status": "Verified Available",
-        "notes": "Designated parking inside main gate."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Designated parking inside main gate."
       },
       "accessibleToilet": {
-        "status": "Verified Available",
-        "notes": "Accessible toilet block near botanical greenhouse."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Accessible toilet block near botanical greenhouse."
       },
       "brailleSignage": {
-        "status": "Verified Available",
-        "notes": "Braille plant tags in the specialized sensory medicinal plant garden."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Braille plant tags in the specialized sensory medicinal plant garden."
       },
       "audioAssistance": {
         "status": "Unknown",
-        "notes": "Guide audio tours not permanently installed."
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Guide audio tours not permanently installed."
       }
     }
   },
@@ -673,7 +776,17 @@ const TAMIL_NADU_VERIFIED_PLACES = [
     },
     "provider": "accessable_verified",
     "providerPlaceId": "tn_cbe_valankulam",
-    "photos": [],
+    "photos": [
+      {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/e/ef/Boot_house_Valankulam_in_Coimbatore_3.jpg",
+        "caption": "This is a Boot house in Valankulam Coimbatore 3",
+        "attribution": "Wikimedia Commons / CC BY-SA 4.0 / DEEPA LAKSHMI S GRD",
+        "authorName": "DEEPA LAKSHMI S GRD",
+        "license": "CC BY-SA 4.0",
+        "wikimediaPage": "https://commons.wikimedia.org/wiki/File:Boot_house_Valankulam_in_Coimbatore_3.jpg",
+        "isVerified": true
+      }
+    ],
     "accessibilityProfile": {
       "stepFreeEntrance": {
         "status": "Verified Available",
@@ -685,7 +798,10 @@ const TAMIL_NADU_VERIFIED_PLACES = [
       },
       "lift": {
         "status": "Unknown",
-        "notes": "Outdoor flat lakefront pathway."
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Outdoor flat lakefront pathway."
       },
       "accessibleParking": {
         "status": "Verified Available",
@@ -696,12 +812,18 @@ const TAMIL_NADU_VERIFIED_PLACES = [
         "notes": "Restroom kiosk with ramp access."
       },
       "brailleSignage": {
-        "status": "Verified Unavailable",
-        "notes": "No tactile maps or braille information boards."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] No tactile maps or braille information boards."
       },
       "audioAssistance": {
         "status": "Unknown",
-        "notes": "Public natural waterfront park."
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Public natural waterfront park."
       }
     }
   },
@@ -727,42 +849,64 @@ const TAMIL_NADU_VERIFIED_PLACES = [
     "providerPlaceId": "tn_cbe_voc_park",
     "photos": [
       {
-        "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/VOC_Park_Coimbatore_Gate.jpg/800px-VOC_Park_Coimbatore_Gate.jpg",
-        "caption": "V.O. Chidambaranar Park main entrance gate and promenade",
-        "attribution": "Wikimedia Commons / CC BY-SA 3.0",
-        "authorName": "Coimbatore Corporation Records",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/9/93/Voc_Park_Front_View.jpg",
+        "caption": "Front View of Voc Park, Coimbatore. \nகோயம்புத்தூர் வ. உ. சி. பூங்காவின் முன் தோற்றம்.",
+        "attribution": "Wikimedia Commons / CC BY-SA 3.0 / Booradleyp1",
+        "authorName": "Booradleyp1",
         "license": "CC BY-SA 3.0",
+        "wikimediaPage": "https://commons.wikimedia.org/wiki/File:Voc_Park_Front_View.jpg",
         "isVerified": true
       }
     ],
     "accessibilityProfile": {
       "stepFreeEntrance": {
-        "status": "Verified Available",
-        "notes": "Wide paved gate entry with flat transition."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Wide paved gate entry with flat transition."
       },
       "ramp": {
-        "status": "Verified Available",
-        "notes": "Ramps connecting walking rings."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Ramps connecting walking rings."
       },
       "lift": {
         "status": "Unknown",
-        "notes": "Single-level public park."
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Single-level public park."
       },
       "accessibleParking": {
-        "status": "Verified Available",
-        "notes": "Side parking with dropped curbs."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Side parking with dropped curbs."
       },
       "accessibleToilet": {
-        "status": "Verified Available",
-        "notes": "Public toilet block with wide access doors."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Public toilet block with wide access doors."
       },
       "brailleSignage": {
         "status": "Unknown",
-        "notes": "Information boards in Tamil and English without braille."
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Information boards in Tamil and English without braille."
       },
       "audioAssistance": {
         "status": "Unknown",
-        "notes": "Public park."
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Public park."
       }
     }
   },
@@ -841,32 +985,53 @@ const TAMIL_NADU_VERIFIED_PLACES = [
     "photos": [],
     "accessibilityProfile": {
       "stepFreeEntrance": {
-        "status": "Verified Available",
-        "notes": "Level ground entry from driveway."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Level ground entry from driveway."
       },
       "ramp": {
-        "status": "Verified Available",
-        "notes": "Entry ramp with mild slope."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Entry ramp with mild slope."
       },
       "lift": {
-        "status": "Verified Available",
-        "notes": "Elevator access to 1st floor air-conditioned dining room."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Elevator access to 1st floor air-conditioned dining room."
       },
       "accessibleParking": {
-        "status": "Verified Available",
-        "notes": "Valet parking assistance with step-free passenger drop-off."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Valet parking assistance with step-free passenger drop-off."
       },
       "accessibleToilet": {
-        "status": "Verified Available",
-        "notes": "Ground floor restroom with handrails."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Ground floor restroom with handrails."
       },
       "brailleSignage": {
         "status": "Unknown",
-        "notes": "Braille menu not verified."
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Braille menu not verified."
       },
       "audioAssistance": {
         "status": "Unknown",
-        "notes": "Restaurant dining venue."
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Restaurant dining venue."
       }
     }
   },
@@ -893,32 +1058,53 @@ const TAMIL_NADU_VERIFIED_PLACES = [
     "photos": [],
     "accessibilityProfile": {
       "stepFreeEntrance": {
-        "status": "Verified Available",
-        "notes": "Paved side ramp provides step-free entry directly into prayer hall."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Paved side ramp provides step-free entry directly into prayer hall."
       },
       "ramp": {
-        "status": "Verified Available",
-        "notes": "Marble ramp with non-skid strips."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Marble ramp with non-skid strips."
       },
       "lift": {
         "status": "Unknown",
-        "notes": "Ground-level temple compound."
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Ground-level temple compound."
       },
       "accessibleParking": {
-        "status": "Verified Available",
-        "notes": "Vehicle drop-off lane directly in front of entry ramp."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Vehicle drop-off lane directly in front of entry ramp."
       },
       "accessibleToilet": {
-        "status": "Verified Available",
-        "notes": "Clean public toilet with grab bar near the dining hall."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Clean public toilet with grab bar near the dining hall."
       },
       "brailleSignage": {
         "status": "Unknown",
-        "notes": "Devotional venue."
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Devotional venue."
       },
       "audioAssistance": {
-        "status": "Verified Available",
-        "notes": "Loudspeakers broadcast chants and announcements."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Loudspeakers broadcast chants and announcements."
       }
     }
   },
@@ -945,32 +1131,53 @@ const TAMIL_NADU_VERIFIED_PLACES = [
     "photos": [],
     "accessibilityProfile": {
       "stepFreeEntrance": {
-        "status": "Verified Available",
-        "notes": "Level boarding tarmac."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Level boarding tarmac."
       },
       "ramp": {
-        "status": "Verified Available",
-        "notes": "Connecting ramps to queue shelters."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Connecting ramps to queue shelters."
       },
       "lift": {
         "status": "Unknown",
-        "notes": "Foothills station."
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Foothills station."
       },
       "accessibleParking": {
-        "status": "Verified Available",
-        "notes": "Large open parking with spaces near bus bay."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Large open parking with spaces near bus bay."
       },
       "accessibleToilet": {
-        "status": "Verified Available",
-        "notes": "HR&CE managed accessible toilet facility."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] HR&CE managed accessible toilet facility."
       },
       "brailleSignage": {
-        "status": "Verified Unavailable",
-        "notes": "Braille not present."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Braille not present."
       },
       "audioAssistance": {
-        "status": "Verified Available",
-        "notes": "Tamil public announcement service."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Tamil public announcement service."
       }
     }
   },
@@ -997,32 +1204,53 @@ const TAMIL_NADU_VERIFIED_PLACES = [
     "photos": [],
     "accessibilityProfile": {
       "stepFreeEntrance": {
-        "status": "Verified Available",
-        "notes": "Northern gate ramp allows step-free entry."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Northern gate ramp allows step-free entry."
       },
       "ramp": {
-        "status": "Verified Available",
-        "notes": "Ramped entry with handrails."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Ramped entry with handrails."
       },
       "lift": {
         "status": "Unknown",
-        "notes": "Single-storey temple complex."
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Single-storey temple complex."
       },
       "accessibleParking": {
-        "status": "Verified Available",
-        "notes": "Dedicated vehicle parking area close to northern gate."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Dedicated vehicle parking area close to northern gate."
       },
       "accessibleToilet": {
-        "status": "Verified Available",
-        "notes": "HR&CE public toilet block with accessible stall."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] HR&CE public toilet block with accessible stall."
       },
       "brailleSignage": {
         "status": "Unknown",
-        "notes": "Religious heritage venue."
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Religious heritage venue."
       },
       "audioAssistance": {
-        "status": "Verified Available",
-        "notes": "Public announcements in Tamil."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Public announcements in Tamil."
       }
     }
   },
@@ -1049,32 +1277,53 @@ const TAMIL_NADU_VERIFIED_PLACES = [
     "photos": [],
     "accessibilityProfile": {
       "stepFreeEntrance": {
-        "status": "Verified Available",
-        "notes": "Level entrance from Kumaran Road."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Level entrance from Kumaran Road."
       },
       "ramp": {
-        "status": "Verified Available",
-        "notes": "Concrete passenger platform ramps."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Concrete passenger platform ramps."
       },
       "lift": {
         "status": "Unknown",
-        "notes": "Single-level bus terminal."
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Single-level bus terminal."
       },
       "accessibleParking": {
-        "status": "Verified Unavailable",
-        "notes": "Congested street; no marked parking bay."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Congested street; no marked parking bay."
       },
       "accessibleToilet": {
-        "status": "Verified Available",
-        "notes": "Corporation accessible public toilet kiosk."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Corporation accessible public toilet kiosk."
       },
       "brailleSignage": {
-        "status": "Verified Unavailable",
-        "notes": "No tactile maps."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] No tactile maps."
       },
       "audioAssistance": {
-        "status": "Verified Available",
-        "notes": "Automated bus arrival announcements in Tamil."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Automated bus arrival announcements in Tamil."
       }
     }
   },
@@ -1101,32 +1350,53 @@ const TAMIL_NADU_VERIFIED_PLACES = [
     "photos": [],
     "accessibilityProfile": {
       "stepFreeEntrance": {
-        "status": "Verified Available",
-        "notes": "Step-free entry at casualty."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Step-free entry at casualty."
       },
       "ramp": {
-        "status": "Verified Available",
-        "notes": "Concrete ramps connecting all wards."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Concrete ramps connecting all wards."
       },
       "lift": {
-        "status": "Verified Available",
-        "notes": "Lifts operating in multi-storey block."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Lifts operating in multi-storey block."
       },
       "accessibleParking": {
-        "status": "Verified Available",
-        "notes": "Spaces near emergency."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Spaces near emergency."
       },
       "accessibleToilet": {
-        "status": "Verified Available",
-        "notes": "Wheelchair-friendly toilet near casualty."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Wheelchair-friendly toilet near casualty."
       },
       "brailleSignage": {
         "status": "Unknown",
-        "notes": "Braille room tags unverified."
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Braille room tags unverified."
       },
       "audioAssistance": {
-        "status": "Verified Available",
-        "notes": "Public announcement system."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Public announcement system."
       }
     }
   },
@@ -1153,32 +1423,53 @@ const TAMIL_NADU_VERIFIED_PLACES = [
     "photos": [],
     "accessibilityProfile": {
       "stepFreeEntrance": {
-        "status": "Verified Available",
-        "notes": "Step-free entrance from Sathy Road."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Step-free entrance from Sathy Road."
       },
       "ramp": {
-        "status": "Verified Available",
-        "notes": "Boarding bay ramps."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Boarding bay ramps."
       },
       "lift": {
         "status": "Unknown",
-        "notes": "Single-level terminal."
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Single-level terminal."
       },
       "accessibleParking": {
-        "status": "Verified Available",
-        "notes": "Designated auto-rickshaw/taxi accessible drop-off zone."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Designated auto-rickshaw/taxi accessible drop-off zone."
       },
       "accessibleToilet": {
-        "status": "Verified Available",
-        "notes": "Accessible toilet stall near bay 2."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Accessible toilet stall near bay 2."
       },
       "brailleSignage": {
-        "status": "Verified Unavailable",
-        "notes": "No tactile maps."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] No tactile maps."
       },
       "audioAssistance": {
-        "status": "Verified Available",
-        "notes": "Audio announcements in Tamil."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Audio announcements in Tamil."
       }
     }
   },
@@ -1205,32 +1496,53 @@ const TAMIL_NADU_VERIFIED_PLACES = [
     "photos": [],
     "accessibilityProfile": {
       "stepFreeEntrance": {
-        "status": "Verified Available",
-        "notes": "Level portico entrance."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Level portico entrance."
       },
       "ramp": {
-        "status": "Verified Available",
-        "notes": "Ramps connecting main medical and surgical blocks."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Ramps connecting main medical and surgical blocks."
       },
       "lift": {
-        "status": "Verified Available",
-        "notes": "Bed and passenger lifts operational."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Bed and passenger lifts operational."
       },
       "accessibleParking": {
-        "status": "Verified Available",
-        "notes": "Designated parking near casualty."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Designated parking near casualty."
       },
       "accessibleToilet": {
-        "status": "Verified Available",
-        "notes": "Accessible restroom on ground floor."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Accessible restroom on ground floor."
       },
       "brailleSignage": {
         "status": "Unknown",
-        "notes": "Not verified."
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Not verified."
       },
       "audioAssistance": {
-        "status": "Verified Available",
-        "notes": "Token announcement system in OPD."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Token announcement system in OPD."
       }
     }
   },
@@ -1257,32 +1569,53 @@ const TAMIL_NADU_VERIFIED_PLACES = [
     "photos": [],
     "accessibilityProfile": {
       "stepFreeEntrance": {
-        "status": "Verified Available",
-        "notes": "Step-free emergency entrance."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Step-free emergency entrance."
       },
       "ramp": {
-        "status": "Verified Available",
-        "notes": "Ramps to all patient wards."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Ramps to all patient wards."
       },
       "lift": {
-        "status": "Verified Available",
-        "notes": "Lifts operating in surgical tower."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Lifts operating in surgical tower."
       },
       "accessibleParking": {
-        "status": "Verified Available",
-        "notes": "Designated parking near casualty."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Designated parking near casualty."
       },
       "accessibleToilet": {
-        "status": "Verified Available",
-        "notes": "Accessible restroom in outpatient block."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Accessible restroom in outpatient block."
       },
       "brailleSignage": {
-        "status": "Verified Available",
-        "notes": "Braille lift button plates."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Braille lift button plates."
       },
       "audioAssistance": {
-        "status": "Verified Available",
-        "notes": "Bilingual announcement speakers."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Bilingual announcement speakers."
       }
     }
   },
@@ -1306,35 +1639,66 @@ const TAMIL_NADU_VERIFIED_PLACES = [
     },
     "provider": "accessable_verified",
     "providerPlaceId": "tn_slm_railway_junction",
-    "photos": [],
+    "photos": [
+      {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/5/50/1-Salem_junction.jpg",
+        "caption": "தென்னக ரயில்வே -சேலம் தொடர்வண்டி நிலையச் சந்திப்பு",
+        "attribution": "Wikimedia Commons / CC BY-SA 3.0 / Parvathisri",
+        "authorName": "Parvathisri",
+        "license": "CC BY-SA 3.0",
+        "wikimediaPage": "https://commons.wikimedia.org/wiki/File:1-Salem_junction.jpg",
+        "isVerified": true
+      }
+    ],
     "accessibilityProfile": {
       "stepFreeEntrance": {
-        "status": "Verified Available",
-        "notes": "Step-free entry to platform 1."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Step-free entry to platform 1."
       },
       "ramp": {
-        "status": "Verified Available",
-        "notes": "Concrete ramps with handrails."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Concrete ramps with handrails."
       },
       "lift": {
-        "status": "Verified Available",
-        "notes": "Lifts connect foot overbridge to all platforms."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Lifts connect foot overbridge to all platforms."
       },
       "accessibleParking": {
-        "status": "Verified Available",
-        "notes": "Designated parking bay near main porch."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Designated parking bay near main porch."
       },
       "accessibleToilet": {
-        "status": "Verified Available",
-        "notes": "Divyangjan toilet on platform 1."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Divyangjan toilet on platform 1."
       },
       "brailleSignage": {
-        "status": "Verified Available",
-        "notes": "Tactile maps near station entrance."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Tactile maps near station entrance."
       },
       "audioAssistance": {
-        "status": "Verified Available",
-        "notes": "Audio train announcements."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Audio train announcements."
       }
     }
   },
@@ -1360,11 +1724,12 @@ const TAMIL_NADU_VERIFIED_PLACES = [
     "providerPlaceId": "tn_nil_botanical_garden",
     "photos": [
       {
-        "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/75/Botanical_Garden_Ooty.jpg/800px-Botanical_Garden_Ooty.jpg",
-        "caption": "Government Botanical Garden terraced lawns and glasshouse, Ooty",
-        "attribution": "Wikimedia Commons / CC BY-SA 3.0",
-        "authorName": "J.M. Garg",
-        "license": "CC BY-SA 3.0",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/9/98/Front_Gate_House_Botanical_Garden_Ooty_Aug26_A7CR_12481-2_Pano.jpg",
+        "caption": "Front view, Gate Building, Govt Botanical Garden, Ooty, The Nilgiris, Tamil Nadu, India",
+        "attribution": "Wikimedia Commons / CC BY-SA 4.0 / This Photo was taken by Timothy A. Gonsa",
+        "authorName": "This Photo was taken by Timothy A. Gonsalves.  Fee",
+        "license": "CC BY-SA 4.0",
+        "wikimediaPage": "https://commons.wikimedia.org/wiki/File:Front_Gate_House_Botanical_Garden_Ooty_Aug26_A7CR_12481-2_Pano.jpg",
         "isVerified": true
       }
     ],
@@ -1385,7 +1750,10 @@ const TAMIL_NADU_VERIFIED_PLACES = [
       },
       "lift": {
         "status": "Unknown",
-        "notes": "Outdoor hill garden."
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Outdoor hill garden."
       },
       "accessibleParking": {
         "status": "Verified Available",
@@ -1401,7 +1769,10 @@ const TAMIL_NADU_VERIFIED_PLACES = [
       },
       "audioAssistance": {
         "status": "Unknown",
-        "notes": "Audio guide apps available online."
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Audio guide apps available online."
       }
     }
   },
@@ -1425,35 +1796,66 @@ const TAMIL_NADU_VERIFIED_PLACES = [
     },
     "provider": "accessable_verified",
     "providerPlaceId": "tn_nil_ooty_lake",
-    "photos": [],
+    "photos": [
+      {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/5/58/Ooty_lake%281%29.jpg",
+        "caption": "This photograph captures the scenic expanse of Ooty Lake, located in the hill station of Ooty (Udhagamandalam) in the Ni",
+        "attribution": "Wikimedia Commons / CC BY-SA 4.0 / Hellowikidoc",
+        "authorName": "Hellowikidoc",
+        "license": "CC BY-SA 4.0",
+        "wikimediaPage": "https://commons.wikimedia.org/wiki/File:Ooty_lake(1).jpg",
+        "isVerified": true
+      }
+    ],
     "accessibilityProfile": {
       "stepFreeEntrance": {
-        "status": "Verified Available",
-        "notes": "Level entrance from North Lake Road parking."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Level entrance from North Lake Road parking."
       },
       "ramp": {
-        "status": "Verified Available",
-        "notes": "Ramped path to boat house viewing deck."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Ramped path to boat house viewing deck."
       },
       "lift": {
         "status": "Unknown",
-        "notes": "Single-level lakeside walk."
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Single-level lakeside walk."
       },
       "accessibleParking": {
-        "status": "Verified Available",
-        "notes": "Designated parking spots in front of main ticket booth."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Designated parking spots in front of main ticket booth."
       },
       "accessibleToilet": {
-        "status": "Verified Available",
-        "notes": "TTDC accessible toilet stall."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] TTDC accessible toilet stall."
       },
       "brailleSignage": {
-        "status": "Verified Unavailable",
-        "notes": "No braille maps."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] No braille maps."
       },
       "audioAssistance": {
         "status": "Unknown",
-        "notes": "Public tourist lakefront."
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Public tourist lakefront."
       }
     }
   },
@@ -1477,35 +1879,66 @@ const TAMIL_NADU_VERIFIED_PLACES = [
     },
     "provider": "accessable_verified",
     "providerPlaceId": "tn_nil_sims_park",
-    "photos": [],
+    "photos": [
+      {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/6/66/Sim%27s_Park%2C_Coonoor_JEG9187.jpg",
+        "caption": "Sim's Park, Coonoor1",
+        "attribution": "Wikimedia Commons / CC BY-SA 4.0 / PJeganathan",
+        "authorName": "PJeganathan",
+        "license": "CC BY-SA 4.0",
+        "wikimediaPage": "https://commons.wikimedia.org/wiki/File:Sim%27s_Park,_Coonoor_JEG9187.jpg",
+        "isVerified": true
+      }
+    ],
     "accessibilityProfile": {
       "stepFreeEntrance": {
-        "status": "Verified Available",
-        "notes": "Step-free entrance through main archway."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Step-free entrance through main archway."
       },
       "ramp": {
-        "status": "Verified Available",
-        "notes": "Ramped pathways to central pond and rose section."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Ramped pathways to central pond and rose section."
       },
       "lift": {
         "status": "Unknown",
-        "notes": "Outdoor park."
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Outdoor park."
       },
       "accessibleParking": {
-        "status": "Verified Available",
-        "notes": "Parking area with accessible spaces."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Parking area with accessible spaces."
       },
       "accessibleToilet": {
-        "status": "Verified Available",
-        "notes": "Accessible restroom block."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Accessible restroom block."
       },
       "brailleSignage": {
         "status": "Unknown",
-        "notes": "Not verified."
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Not verified."
       },
       "audioAssistance": {
         "status": "Unknown",
-        "notes": "Outdoor public park."
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Outdoor public park."
       }
     }
   },
@@ -1532,32 +1965,53 @@ const TAMIL_NADU_VERIFIED_PLACES = [
     "photos": [],
     "accessibilityProfile": {
       "stepFreeEntrance": {
-        "status": "Verified Available",
-        "notes": "Level entrance."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Level entrance."
       },
       "ramp": {
-        "status": "Verified Available",
-        "notes": "Ramps to all boarding bays."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Ramps to all boarding bays."
       },
       "lift": {
         "status": "Unknown",
-        "notes": "Single-storey terminal."
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Single-storey terminal."
       },
       "accessibleParking": {
-        "status": "Verified Available",
-        "notes": "Designated drop-off area."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Designated drop-off area."
       },
       "accessibleToilet": {
-        "status": "Verified Available",
-        "notes": "Public toilet with accessible stall."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Public toilet with accessible stall."
       },
       "brailleSignage": {
-        "status": "Verified Unavailable",
-        "notes": "No braille."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] No braille."
       },
       "audioAssistance": {
-        "status": "Verified Available",
-        "notes": "Audio bus announcements in Tamil."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Audio bus announcements in Tamil."
       }
     }
   },
@@ -1584,32 +2038,53 @@ const TAMIL_NADU_VERIFIED_PLACES = [
     "photos": [],
     "accessibilityProfile": {
       "stepFreeEntrance": {
-        "status": "Verified Available",
-        "notes": "Ramped entry through south gate."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Ramped entry through south gate."
       },
       "ramp": {
-        "status": "Verified Available",
-        "notes": "Stone ramps with side railings."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Stone ramps with side railings."
       },
       "lift": {
         "status": "Unknown",
-        "notes": "Ground level temple compound."
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Ground level temple compound."
       },
       "accessibleParking": {
-        "status": "Verified Available",
-        "notes": "Parking space allocated near southern entrance."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Parking space allocated near southern entrance."
       },
       "accessibleToilet": {
-        "status": "Verified Available",
-        "notes": "Accessible toilet block on temple outer perimeter."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Accessible toilet block on temple outer perimeter."
       },
       "brailleSignage": {
         "status": "Unknown",
-        "notes": "Religious heritage venue."
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Religious heritage venue."
       },
       "audioAssistance": {
-        "status": "Verified Available",
-        "notes": "Loudspeaker devotional broadcast."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Loudspeaker devotional broadcast."
       }
     }
   },
@@ -1636,32 +2111,53 @@ const TAMIL_NADU_VERIFIED_PLACES = [
     "photos": [],
     "accessibilityProfile": {
       "stepFreeEntrance": {
-        "status": "Verified Available",
-        "notes": "Direct ramped entry to platform 1."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Direct ramped entry to platform 1."
       },
       "ramp": {
-        "status": "Verified Available",
-        "notes": "Concrete passenger ramps."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Concrete passenger ramps."
       },
       "lift": {
-        "status": "Verified Available",
-        "notes": "Lifts active for platform connection."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Lifts active for platform connection."
       },
       "accessibleParking": {
-        "status": "Verified Available",
-        "notes": "Designated parking bay near main gate."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Designated parking bay near main gate."
       },
       "accessibleToilet": {
-        "status": "Verified Available",
-        "notes": "Accessible Divyangjan toilet."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Accessible Divyangjan toilet."
       },
       "brailleSignage": {
-        "status": "Verified Available",
-        "notes": "Tactile maps near ticket counters."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Tactile maps near ticket counters."
       },
       "audioAssistance": {
-        "status": "Verified Available",
-        "notes": "Audio announcements in Tamil and English."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Audio announcements in Tamil and English."
       }
     }
   },
@@ -1685,7 +2181,17 @@ const TAMIL_NADU_VERIFIED_PLACES = [
     },
     "provider": "accessable_verified",
     "providerPlaceId": "tn_che_marina_ramp",
-    "photos": [],
+    "photos": [
+      {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/b/bc/MGR_Memorial%2C_Marina_Beach.jpg",
+        "caption": "A crow flies over the MGR memorial at Marina beach in Chennai, India.",
+        "attribution": "Wikimedia Commons / CC BY-SA 4.0 / Dey.sandip",
+        "authorName": "Dey.sandip",
+        "license": "CC BY-SA 4.0",
+        "wikimediaPage": "https://commons.wikimedia.org/wiki/File:MGR_Memorial,_Marina_Beach.jpg",
+        "isVerified": true
+      }
+    ],
     "openingHours": {
       "weekdayDescriptions": [
         "Open 24 hours daily",
@@ -1704,7 +2210,10 @@ const TAMIL_NADU_VERIFIED_PLACES = [
       },
       "lift": {
         "status": "Unknown",
-        "notes": "Beach boardwalk."
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Beach boardwalk."
       },
       "accessibleParking": {
         "status": "Verified Available",
@@ -1720,7 +2229,10 @@ const TAMIL_NADU_VERIFIED_PLACES = [
       },
       "audioAssistance": {
         "status": "Unknown",
-        "notes": "Natural beach shoreline."
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Natural beach shoreline."
       }
     }
   },
@@ -1744,7 +2256,17 @@ const TAMIL_NADU_VERIFIED_PLACES = [
     },
     "provider": "accessable_verified",
     "providerPlaceId": "tn_che_central_station",
-    "photos": [],
+    "photos": [
+      {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/d/d2/Chennai_train_station.jpg",
+        "caption": "The central train station in Chennai, Tamil Nadu state, India.",
+        "attribution": "Wikimedia Commons / CC BY 2.0 / Arian Zwegers derivative work: MrPanyGof",
+        "authorName": "Arian Zwegers derivative work: MrPanyGoff",
+        "license": "CC BY 2.0",
+        "wikimediaPage": "https://commons.wikimedia.org/wiki/File:Chennai_train_station.jpg",
+        "isVerified": true
+      }
+    ],
     "accessibilityProfile": {
       "stepFreeEntrance": {
         "status": "Verified Available",
@@ -1799,32 +2321,53 @@ const TAMIL_NADU_VERIFIED_PLACES = [
     "photos": [],
     "accessibilityProfile": {
       "stepFreeEntrance": {
-        "status": "Verified Available",
-        "notes": "Grade level emergency drop-off."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Grade level emergency drop-off."
       },
       "ramp": {
-        "status": "Verified Available",
-        "notes": "Gentle ramps at OPD, Tower 1, and Tower 2."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Gentle ramps at OPD, Tower 1, and Tower 2."
       },
       "lift": {
-        "status": "Verified Available",
-        "notes": "Heavy bed-lifts and passenger lifts with voice chimes."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Heavy bed-lifts and passenger lifts with voice chimes."
       },
       "accessibleParking": {
-        "status": "Verified Available",
-        "notes": "Parking allocated near Tower Block 1."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Parking allocated near Tower Block 1."
       },
       "accessibleToilet": {
-        "status": "Verified Available",
-        "notes": "Accessible toilets on ground and 1st floors."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Accessible toilets on ground and 1st floors."
       },
       "brailleSignage": {
-        "status": "Verified Available",
-        "notes": "Braille room directories in OPD."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Braille room directories in OPD."
       },
       "audioAssistance": {
-        "status": "Verified Available",
-        "notes": "Bilingual token calling system."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Bilingual token calling system."
       }
     }
   },
@@ -1851,32 +2394,53 @@ const TAMIL_NADU_VERIFIED_PLACES = [
     "photos": [],
     "accessibilityProfile": {
       "stepFreeEntrance": {
-        "status": "Verified Available",
-        "notes": "Smooth grade level entry with sliding glass doors."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Smooth grade level entry with sliding glass doors."
       },
       "ramp": {
-        "status": "Verified Available",
-        "notes": "Covered drop-off ramp with anti-skid surface."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Covered drop-off ramp with anti-skid surface."
       },
       "lift": {
-        "status": "Verified Available",
-        "notes": "Lifts with voice floor announcements and braille buttons."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Lifts with voice floor announcements and braille buttons."
       },
       "accessibleParking": {
-        "status": "Verified Available",
-        "notes": "Valet accessible parking service."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Valet accessible parking service."
       },
       "accessibleToilet": {
-        "status": "Verified Available",
-        "notes": "Accessible rest cubicles on all consultation floors."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Accessible rest cubicles on all consultation floors."
       },
       "brailleSignage": {
-        "status": "Verified Available",
-        "notes": "Braille elevator panels."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Braille elevator panels."
       },
       "audioAssistance": {
-        "status": "Verified Available",
-        "notes": "Bi-lingual audio announcements."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Bi-lingual audio announcements."
       }
     }
   },
@@ -1903,32 +2467,53 @@ const TAMIL_NADU_VERIFIED_PLACES = [
     "photos": [],
     "accessibilityProfile": {
       "stepFreeEntrance": {
-        "status": "Verified Available",
-        "notes": "Level entrance through Gates 1 and 2."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Level entrance through Gates 1 and 2."
       },
       "ramp": {
-        "status": "Verified Available",
-        "notes": "Concrete ramps with handrails."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Concrete ramps with handrails."
       },
       "lift": {
-        "status": "Verified Available",
-        "notes": "Glass scenic elevators and central passenger elevators."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Glass scenic elevators and central passenger elevators."
       },
       "accessibleParking": {
-        "status": "Verified Available",
-        "notes": "Demarcated parking bays in basement 1 and 2."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Demarcated parking bays in basement 1 and 2."
       },
       "accessibleToilet": {
-        "status": "Verified Available",
-        "notes": "Accessible restrooms on all levels."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Accessible restrooms on all levels."
       },
       "brailleSignage": {
-        "status": "Verified Available",
-        "notes": "Braille elevator buttons."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Braille elevator buttons."
       },
       "audioAssistance": {
-        "status": "Verified Available",
-        "notes": "Public voice alert system."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Public voice alert system."
       }
     }
   },
@@ -1955,32 +2540,53 @@ const TAMIL_NADU_VERIFIED_PLACES = [
     "photos": [],
     "accessibilityProfile": {
       "stepFreeEntrance": {
-        "status": "Verified Available",
-        "notes": "Zero-step entrance from ground concourse."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Zero-step entrance from ground concourse."
       },
       "ramp": {
-        "status": "Verified Available",
-        "notes": "Gentle ramps at all vehicular drop-off bays."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Gentle ramps at all vehicular drop-off bays."
       },
       "lift": {
-        "status": "Verified Available",
-        "notes": "Elevators connecting all parking and retail floors."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Elevators connecting all parking and retail floors."
       },
       "accessibleParking": {
-        "status": "Verified Available",
-        "notes": "Multiple designated handicap spots."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Multiple designated handicap spots."
       },
       "accessibleToilet": {
-        "status": "Verified Available",
-        "notes": "Accessible family washrooms."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Accessible family washrooms."
       },
       "brailleSignage": {
-        "status": "Verified Available",
-        "notes": "Braille indicators in elevators."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Braille indicators in elevators."
       },
       "audioAssistance": {
-        "status": "Verified Available",
-        "notes": "Public announcements broadcast."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Public announcements broadcast."
       }
     }
   },
@@ -2004,7 +2610,17 @@ const TAMIL_NADU_VERIFIED_PLACES = [
     },
     "provider": "accessable_verified",
     "providerPlaceId": "tn_che_anna_library",
-    "photos": [],
+    "photos": [
+      {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/b/bf/Anna_Centenary_Library_Exterior.jpg",
+        "caption": "Anna Centenary Library Exterior",
+        "attribution": "Wikimedia Commons / CC BY-SA 4.0 / Nazeem Fasil",
+        "authorName": "Nazeem Fasil",
+        "license": "CC BY-SA 4.0",
+        "wikimediaPage": "https://commons.wikimedia.org/wiki/File:Anna_Centenary_Library_Exterior.jpg",
+        "isVerified": true
+      }
+    ],
     "openingHours": {
       "weekdayDescriptions": [
         "Daily: 09:00 AM - 08:00 PM",
@@ -2014,32 +2630,53 @@ const TAMIL_NADU_VERIFIED_PLACES = [
     },
     "accessibilityProfile": {
       "stepFreeEntrance": {
-        "status": "Verified Available",
-        "notes": "Direct level entrance from car park."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Direct level entrance from car park."
       },
       "ramp": {
-        "status": "Verified Available",
-        "notes": "Ramps connecting main entrance."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Ramps connecting main entrance."
       },
       "lift": {
-        "status": "Verified Available",
-        "notes": "Multiple modern passenger lifts with audio chimes."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Multiple modern passenger lifts with audio chimes."
       },
       "accessibleParking": {
-        "status": "Verified Available",
-        "notes": "Reserved parking bays next to Braille Section entrance."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Reserved parking bays next to Braille Section entrance."
       },
       "accessibleToilet": {
-        "status": "Verified Available",
-        "notes": "Wheelchair-friendly restrooms on every floor."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Wheelchair-friendly restrooms on every floor."
       },
       "brailleSignage": {
-        "status": "Verified Available",
-        "notes": "Full Braille library floor and tactile signage throughout."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Full Braille library floor and tactile signage throughout."
       },
       "audioAssistance": {
-        "status": "Verified Available",
-        "notes": "Screen reader workstations and audiobooks."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Screen reader workstations and audiobooks."
       }
     }
   },
@@ -2063,35 +2700,66 @@ const TAMIL_NADU_VERIFIED_PLACES = [
     },
     "provider": "accessable_verified",
     "providerPlaceId": "tn_che_vandalur_zoo",
-    "photos": [],
+    "photos": [
+      {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/6/6b/VandalurZooEntrance.JPG",
+        "caption": "Entrance of Vandalur Zoo. Fountain at the entry of Vandalur Zoo",
+        "attribution": "Wikimedia Commons / CC BY-SA 3.0 / Arunprakash.pts",
+        "authorName": "Arunprakash.pts",
+        "license": "CC BY-SA 3.0",
+        "wikimediaPage": "https://commons.wikimedia.org/wiki/File:VandalurZooEntrance.JPG",
+        "isVerified": true
+      }
+    ],
     "accessibilityProfile": {
       "stepFreeEntrance": {
-        "status": "Verified Available",
-        "notes": "Level entrance with wide gates."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Level entrance with wide gates."
       },
       "ramp": {
-        "status": "Verified Available",
-        "notes": "Ramps at all animal viewing moats."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Ramps at all animal viewing moats."
       },
       "lift": {
         "status": "Unknown",
-        "notes": "Ground level biological park."
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Ground level biological park."
       },
       "accessibleParking": {
-        "status": "Verified Available",
-        "notes": "Reserved spaces near ticket counter."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Reserved spaces near ticket counter."
       },
       "accessibleToilet": {
-        "status": "Verified Available",
-        "notes": "Accessible toilet blocks across 6 zones."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Accessible toilet blocks across 6 zones."
       },
       "brailleSignage": {
-        "status": "Verified Available",
-        "notes": "Tactile maps near main entrance."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Tactile maps near main entrance."
       },
       "audioAssistance": {
-        "status": "Verified Available",
-        "notes": "Public voice assistance in electric buggies."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Public voice assistance in electric buggies."
       }
     }
   },
@@ -2118,32 +2786,53 @@ const TAMIL_NADU_VERIFIED_PLACES = [
     "photos": [],
     "accessibilityProfile": {
       "stepFreeEntrance": {
-        "status": "Verified Available",
-        "notes": "Main gate has dedicated accessible security lane."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Main gate has dedicated accessible security lane."
       },
       "ramp": {
-        "status": "Verified Available",
-        "notes": "Ramps to all academic blocks."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Ramps to all academic blocks."
       },
       "lift": {
-        "status": "Verified Available",
-        "notes": "Elevators operational in central buildings."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Elevators operational in central buildings."
       },
       "accessibleParking": {
-        "status": "Verified Available",
-        "notes": "Designated parking in all department lots."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Designated parking in all department lots."
       },
       "accessibleToilet": {
-        "status": "Verified Available",
-        "notes": "Accessible restrooms in research park and admin buildings."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Accessible restrooms in research park and admin buildings."
       },
       "brailleSignage": {
-        "status": "Verified Available",
-        "notes": "Braille room numbers."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Braille room numbers."
       },
       "audioAssistance": {
-        "status": "Verified Available",
-        "notes": "Audio hearing loop in ICSR auditorium."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Audio hearing loop in ICSR auditorium."
       }
     }
   },
@@ -2167,35 +2856,66 @@ const TAMIL_NADU_VERIFIED_PLACES = [
     },
     "provider": "accessable_verified",
     "providerPlaceId": "tn_che_kapaleeshwarar",
-    "photos": [],
+    "photos": [
+      {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/6/6f/Chennai_Kapaleeshwarar_Temple.jpg",
+        "caption": "Kapaleeshwarar Temple is a Hindu temple dedicated to lord Shiva located in Mylapore, Chennai in the Indianstate of Tamil",
+        "attribution": "Wikimedia Commons / CC BY-SA 4.0 / Thilip thiru",
+        "authorName": "Thilip thiru",
+        "license": "CC BY-SA 4.0",
+        "wikimediaPage": "https://commons.wikimedia.org/wiki/File:Chennai_Kapaleeshwarar_Temple.jpg",
+        "isVerified": true
+      }
+    ],
     "accessibilityProfile": {
       "stepFreeEntrance": {
-        "status": "Verified Available",
-        "notes": "Eastern gate ramp allows step-free entry."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Eastern gate ramp allows step-free entry."
       },
       "ramp": {
-        "status": "Verified Available",
-        "notes": "Granite ramps with grab rails at outer gopuram."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Granite ramps with grab rails at outer gopuram."
       },
       "lift": {
         "status": "Unknown",
-        "notes": "Historic temple."
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Historic temple."
       },
       "accessibleParking": {
-        "status": "Verified Available",
-        "notes": "Designated vehicle parking near tank west street."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Designated vehicle parking near tank west street."
       },
       "accessibleToilet": {
-        "status": "Verified Available",
-        "notes": "HR&CE accessible toilet stall."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] HR&CE accessible toilet stall."
       },
       "brailleSignage": {
         "status": "Unknown",
-        "notes": "Heritage temple."
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Heritage temple."
       },
       "audioAssistance": {
-        "status": "Verified Available",
-        "notes": "Loudspeaker devotional broadcast."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Loudspeaker devotional broadcast."
       }
     }
   },
@@ -2222,32 +2942,53 @@ const TAMIL_NADU_VERIFIED_PLACES = [
     "photos": [],
     "accessibilityProfile": {
       "stepFreeEntrance": {
-        "status": "Verified Available",
-        "notes": "Level entry with sliding doors."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Level entry with sliding doors."
       },
       "ramp": {
-        "status": "Verified Available",
-        "notes": "Inter-connecting campus ramps with 1:12 slope."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Inter-connecting campus ramps with 1:12 slope."
       },
       "lift": {
-        "status": "Verified Available",
-        "notes": "Lifts operational in all hospital blocks."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Lifts operational in all hospital blocks."
       },
       "accessibleParking": {
-        "status": "Verified Available",
-        "notes": "Designated parking spots near OPD."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Designated parking spots near OPD."
       },
       "accessibleToilet": {
-        "status": "Verified Available",
-        "notes": "Accessible restrooms on all floors."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Accessible restrooms on all floors."
       },
       "brailleSignage": {
-        "status": "Verified Available",
-        "notes": "Braille floor directories in elevators."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Braille floor directories in elevators."
       },
       "audioAssistance": {
-        "status": "Verified Available",
-        "notes": "Multi-lingual audio announcement system."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Multi-lingual audio announcement system."
       }
     }
   },
@@ -2271,35 +3012,66 @@ const TAMIL_NADU_VERIFIED_PLACES = [
     },
     "provider": "accessable_verified",
     "providerPlaceId": "tn_vel_fort",
-    "photos": [],
+    "photos": [
+      {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/d/d0/Vellore_fort%2C_colour_painting.jpg",
+        "caption": "Vellore fort, colour painting",
+        "attribution": "Wikimedia Commons / Public domain / Charles Gold",
+        "authorName": "Charles Gold",
+        "license": "Public domain",
+        "wikimediaPage": "https://commons.wikimedia.org/wiki/File:Vellore_fort,_colour_painting.jpg",
+        "isVerified": true
+      }
+    ],
     "accessibilityProfile": {
       "stepFreeEntrance": {
-        "status": "Verified Available",
-        "notes": "Outer bridge over moat is level and paved."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Outer bridge over moat is level and paved."
       },
       "ramp": {
-        "status": "Verified Available",
-        "notes": "ASI ramp at main entrance."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] ASI ramp at main entrance."
       },
       "lift": {
         "status": "Unknown",
-        "notes": "Historical fort complex."
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Historical fort complex."
       },
       "accessibleParking": {
-        "status": "Verified Available",
-        "notes": "Parking area with accessible spaces near gate."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Parking area with accessible spaces near gate."
       },
       "accessibleToilet": {
-        "status": "Verified Available",
-        "notes": "ASI accessible toilet block inside grounds."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] ASI accessible toilet block inside grounds."
       },
       "brailleSignage": {
-        "status": "Verified Available",
-        "notes": "Braille monument description plaque installed by ASI."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Braille monument description plaque installed by ASI."
       },
       "audioAssistance": {
         "status": "Unknown",
-        "notes": "Archaeological site."
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Archaeological site."
       }
     }
   },
@@ -2323,35 +3095,66 @@ const TAMIL_NADU_VERIFIED_PLACES = [
     },
     "provider": "accessable_verified",
     "providerPlaceId": "tn_cpt_shore_temple",
-    "photos": [],
+    "photos": [
+      {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/0/0e/Mamallapuram%2C_Shore_Temple%2C_India.jpg",
+        "caption": "Five women wearing red and gold traditional Indian clothing (four in saris and one in a salwar-kameez) in front of the S",
+        "attribution": "Wikimedia Commons / CC BY 4.0 / Vyacheslav Argenberg",
+        "authorName": "Vyacheslav Argenberg",
+        "license": "CC BY 4.0",
+        "wikimediaPage": "https://commons.wikimedia.org/wiki/File:Mamallapuram,_Shore_Temple,_India.jpg",
+        "isVerified": true
+      }
+    ],
     "accessibilityProfile": {
       "stepFreeEntrance": {
-        "status": "Verified Available",
-        "notes": "Step-free ticket entrance."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Step-free ticket entrance."
       },
       "ramp": {
-        "status": "Verified Available",
-        "notes": "ASI wooden boardwalk allows wheelchairs to approach temple perimeter."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] ASI wooden boardwalk allows wheelchairs to approach temple perimeter."
       },
       "lift": {
         "status": "Unknown",
-        "notes": "Ancient stone monument."
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Ancient stone monument."
       },
       "accessibleParking": {
-        "status": "Verified Available",
-        "notes": "Designated parking in ASI lot."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Designated parking in ASI lot."
       },
       "accessibleToilet": {
-        "status": "Verified Available",
-        "notes": "Accessible toilet cubicle."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Accessible toilet cubicle."
       },
       "brailleSignage": {
-        "status": "Verified Available",
-        "notes": "ASI Braille information plaque and tactile monument miniature."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] ASI Braille information plaque and tactile monument miniature."
       },
       "audioAssistance": {
-        "status": "Verified Available",
-        "notes": "Audio guide app supported."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Audio guide app supported."
       }
     }
   },
@@ -2375,35 +3178,66 @@ const TAMIL_NADU_VERIFIED_PLACES = [
     },
     "provider": "accessable_verified",
     "providerPlaceId": "tn_kan_ekambareswarar",
-    "photos": [],
+    "photos": [
+      {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/7/74/Ekambareswarar_Temple_6.jpg",
+        "caption": "Ekambareswarar Temple (temple in India)",
+        "attribution": "Wikimedia Commons / CC BY-SA 4.0 / Luistxo",
+        "authorName": "Luistxo",
+        "license": "CC BY-SA 4.0",
+        "wikimediaPage": "https://commons.wikimedia.org/wiki/File:Ekambareswarar_Temple_6.jpg",
+        "isVerified": true
+      }
+    ],
     "accessibilityProfile": {
       "stepFreeEntrance": {
-        "status": "Verified Available",
-        "notes": "Level entrance through southern gate."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Level entrance through southern gate."
       },
       "ramp": {
-        "status": "Verified Available",
-        "notes": "Ramped path over stone threshold."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Ramped path over stone threshold."
       },
       "lift": {
         "status": "Unknown",
-        "notes": "Ancient temple."
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Ancient temple."
       },
       "accessibleParking": {
-        "status": "Verified Available",
-        "notes": "Parking space on Sannathi street."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Parking space on Sannathi street."
       },
       "accessibleToilet": {
-        "status": "Verified Available",
-        "notes": "Accessible toilet stall near pilgrim rest hall."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Accessible toilet stall near pilgrim rest hall."
       },
       "brailleSignage": {
         "status": "Unknown",
-        "notes": "Temple venue."
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Temple venue."
       },
       "audioAssistance": {
-        "status": "Verified Available",
-        "notes": "Public voice announcements."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Public voice announcements."
       }
     }
   },
@@ -2427,35 +3261,66 @@ const TAMIL_NADU_VERIFIED_PLACES = [
     },
     "provider": "accessable_verified",
     "providerPlaceId": "tn_tvm_girivalam",
-    "photos": [],
+    "photos": [
+      {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/2/2d/Thiruvannamalai%2C_Arunachalesvara_Temple%2C_Annamalaiyar_Temple%2C_India.jpg",
+        "caption": "A Hindu temple dedicated to the deity Shiva covers 10 hectares, and is one of the largest in India. It houses four gatew",
+        "attribution": "Wikimedia Commons / CC BY 4.0 / Vyacheslav Argenberg",
+        "authorName": "Vyacheslav Argenberg",
+        "license": "CC BY 4.0",
+        "wikimediaPage": "https://commons.wikimedia.org/wiki/File:Thiruvannamalai,_Arunachalesvara_Temple,_Annamalaiyar_Temple,_India.jpg",
+        "isVerified": true
+      }
+    ],
     "accessibilityProfile": {
       "stepFreeEntrance": {
-        "status": "Verified Available",
-        "notes": "Level road transition."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Level road transition."
       },
       "ramp": {
-        "status": "Verified Available",
-        "notes": "Ramps at all rest stations along the road."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Ramps at all rest stations along the road."
       },
       "lift": {
         "status": "Unknown",
-        "notes": "Outdoor pilgrimage path."
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Outdoor pilgrimage path."
       },
       "accessibleParking": {
-        "status": "Verified Available",
-        "notes": "Designated parking near Chengam road junction."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Designated parking near Chengam road junction."
       },
       "accessibleToilet": {
-        "status": "Verified Available",
-        "notes": "Public e-toilets and municipal accessible stalls."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Public e-toilets and municipal accessible stalls."
       },
       "brailleSignage": {
         "status": "Unknown",
-        "notes": "Pilgrimage trail."
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Pilgrimage trail."
       },
       "audioAssistance": {
-        "status": "Verified Available",
-        "notes": "Tiruvannamalai district voice announcements during Pournami."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Tiruvannamalai district voice announcements during Pournami."
       }
     }
   },
@@ -2481,42 +3346,64 @@ const TAMIL_NADU_VERIFIED_PLACES = [
     "providerPlaceId": "tn_try_junction",
     "photos": [
       {
-        "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/Trichy_railway_junction.jpg/800px-Trichy_railway_junction.jpg",
-        "caption": "Tiruchirappalli Junction main entrance portico and drop-off zone",
-        "attribution": "Wikimedia Commons / CC BY-SA 4.0",
-        "authorName": "Trichy Rail Fans",
-        "license": "CC BY-SA 4.0",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/0/09/Tiruchirappalli_Junction_railway_station_%2885059%29.jpg",
+        "caption": "Tiruchirappalli Junction railway station (Indian railway station)",
+        "attribution": "Wikimedia Commons / CC BY-SA 3.0 / Manukrishnan80",
+        "authorName": "Manukrishnan80",
+        "license": "CC BY-SA 3.0",
+        "wikimediaPage": "https://commons.wikimedia.org/wiki/File:Tiruchirappalli_Junction_railway_station_(85059).jpg",
         "isVerified": true
       }
     ],
     "accessibilityProfile": {
       "stepFreeEntrance": {
-        "status": "Verified Available",
-        "notes": "Step-free entry to platform 1."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Step-free entry to platform 1."
       },
       "ramp": {
-        "status": "Verified Available",
-        "notes": "Anti-skid ramps from parking."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Anti-skid ramps from parking."
       },
       "lift": {
-        "status": "Verified Available",
-        "notes": "Modern passenger lifts connecting foot overbridge to all platforms."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Modern passenger lifts connecting foot overbridge to all platforms."
       },
       "accessibleParking": {
-        "status": "Verified Available",
-        "notes": "Reserved handicap spots."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Reserved handicap spots."
       },
       "accessibleToilet": {
-        "status": "Verified Available",
-        "notes": "Accessible restroom on platform 1."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Accessible restroom on platform 1."
       },
       "brailleSignage": {
-        "status": "Verified Available",
-        "notes": "Tactile maps installed."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Tactile maps installed."
       },
       "audioAssistance": {
-        "status": "Verified Available",
-        "notes": "Public voice announcements."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Public voice announcements."
       }
     }
   },
@@ -2540,35 +3427,66 @@ const TAMIL_NADU_VERIFIED_PLACES = [
     },
     "provider": "accessable_verified",
     "providerPlaceId": "tn_try_srirangam",
-    "photos": [],
+    "photos": [
+      {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/4/45/Srirangam_Rangnathar_Rajagopuram-mkmoorthi.jpg",
+        "caption": "The 236 feet tall Srirangam Rajagopuram is constructed on top of a stone base that is about 300 years old.",
+        "attribution": "Wikimedia Commons / CC BY-SA 4.0 / Mkmoorthi",
+        "authorName": "Mkmoorthi",
+        "license": "CC BY-SA 4.0",
+        "wikimediaPage": "https://commons.wikimedia.org/wiki/File:Srirangam_Rangnathar_Rajagopuram-mkmoorthi.jpg",
+        "isVerified": true
+      }
+    ],
     "accessibilityProfile": {
       "stepFreeEntrance": {
-        "status": "Verified Available",
-        "notes": "Outer Rajagopuram entry has smooth paving."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Outer Rajagopuram entry has smooth paving."
       },
       "ramp": {
-        "status": "Verified Available",
-        "notes": "Granite ramps at major enclosures."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Granite ramps at major enclosures."
       },
       "lift": {
         "status": "Unknown",
-        "notes": "Ancient heritage temple."
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Ancient heritage temple."
       },
       "accessibleParking": {
-        "status": "Verified Available",
-        "notes": "Dedicated vehicle parking area at south gate."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Dedicated vehicle parking area at south gate."
       },
       "accessibleToilet": {
-        "status": "Verified Available",
-        "notes": "HR&CE accessible toilet near yatri nivas."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] HR&CE accessible toilet near yatri nivas."
       },
       "brailleSignage": {
         "status": "Unknown",
-        "notes": "Religious heritage venue."
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Religious heritage venue."
       },
       "audioAssistance": {
-        "status": "Verified Available",
-        "notes": "Public voice announcements."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Public voice announcements."
       }
     }
   },
@@ -2595,32 +3513,53 @@ const TAMIL_NADU_VERIFIED_PLACES = [
     "photos": [],
     "accessibilityProfile": {
       "stepFreeEntrance": {
-        "status": "Verified Available",
-        "notes": "Step-free casualty drop-off."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Step-free casualty drop-off."
       },
       "ramp": {
-        "status": "Verified Available",
-        "notes": "Continuous ramps to upper wards."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Continuous ramps to upper wards."
       },
       "lift": {
-        "status": "Verified Available",
-        "notes": "High-capacity patient lifts."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] High-capacity patient lifts."
       },
       "accessibleParking": {
-        "status": "Verified Available",
-        "notes": "Designated parking in front of casualty."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Designated parking in front of casualty."
       },
       "accessibleToilet": {
-        "status": "Verified Available",
-        "notes": "Accessible restroom on ground floor."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Accessible restroom on ground floor."
       },
       "brailleSignage": {
         "status": "Unknown",
-        "notes": "Not verified."
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Not verified."
       },
       "audioAssistance": {
-        "status": "Verified Available",
-        "notes": "Token calling system."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Token calling system."
       }
     }
   },
@@ -2644,7 +3583,17 @@ const TAMIL_NADU_VERIFIED_PLACES = [
     },
     "provider": "accessable_verified",
     "providerPlaceId": "tn_tnj_big_temple",
-    "photos": [],
+    "photos": [
+      {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/d/dd/Brihadisvara_Temple_during_Maha_Shivaratri-WUS03611_%28edit%29.jpg",
+        "caption": "Brihadisvara Temple during Maha Shivaratri",
+        "attribution": "Wikimedia Commons / CC BY-SA 4.0 / Original:  Rainer Halama Derivative work",
+        "authorName": "Original:  Rainer Halama Derivative work:  Unpetit",
+        "license": "CC BY-SA 4.0",
+        "wikimediaPage": "https://commons.wikimedia.org/wiki/File:Brihadisvara_Temple_during_Maha_Shivaratri-WUS03611_(edit).jpg",
+        "isVerified": true
+      }
+    ],
     "openingHours": {
       "weekdayDescriptions": [
         "Daily: 06:00 AM - 12:30 PM & 04:00 PM - 08:30 PM"
@@ -2662,7 +3611,10 @@ const TAMIL_NADU_VERIFIED_PLACES = [
       },
       "lift": {
         "status": "Unknown",
-        "notes": "Historical granite structure."
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Historical granite structure."
       },
       "accessibleParking": {
         "status": "Verified Available",
@@ -2702,35 +3654,66 @@ const TAMIL_NADU_VERIFIED_PLACES = [
     },
     "provider": "accessable_verified",
     "providerPlaceId": "tn_tnj_mahamaham",
-    "photos": [],
+    "photos": [
+      {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/3/3c/Kumbakonam_Mahamaham_Tank.jpg",
+        "caption": "This file represents the Tank which is a religious place in Kumbakonam, India",
+        "attribution": "Wikimedia Commons / CC BY-SA 4.0 / Trawell.in",
+        "authorName": "Trawell.in",
+        "license": "CC BY-SA 4.0",
+        "wikimediaPage": "https://commons.wikimedia.org/wiki/File:Kumbakonam_Mahamaham_Tank.jpg",
+        "isVerified": true
+      }
+    ],
     "accessibilityProfile": {
       "stepFreeEntrance": {
-        "status": "Verified Available",
-        "notes": "Level entrance from surrounding streets."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Level entrance from surrounding streets."
       },
       "ramp": {
-        "status": "Verified Available",
-        "notes": "Ramps connecting outer street to viewing promenade."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Ramps connecting outer street to viewing promenade."
       },
       "lift": {
         "status": "Unknown",
-        "notes": "Outdoor reservoir."
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Outdoor reservoir."
       },
       "accessibleParking": {
-        "status": "Verified Available",
-        "notes": "Parking on northern road."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Parking on northern road."
       },
       "accessibleToilet": {
-        "status": "Verified Available",
-        "notes": "Municipal accessible toilet."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Municipal accessible toilet."
       },
       "brailleSignage": {
         "status": "Unknown",
-        "notes": "Heritage venue."
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Heritage venue."
       },
       "audioAssistance": {
-        "status": "Verified Available",
-        "notes": "Municipal public voice system."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Municipal public voice system."
       }
     }
   },
@@ -2756,11 +3739,12 @@ const TAMIL_NADU_VERIFIED_PLACES = [
     "providerPlaceId": "tn_mdu_meenakshi_temple",
     "photos": [
       {
-        "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Madurai_Meenakshi_Amman_Temple.jpg/800px-Madurai_Meenakshi_Amman_Temple.jpg",
-        "caption": "Meenakshi Amman Temple West Gopuram entrance tower, Madurai",
-        "attribution": "Wikimedia Commons / CC BY-SA 3.0",
-        "authorName": "Bernard Gagnon",
-        "license": "CC BY-SA 3.0",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/5/5d/MEENAKSHI_TEMPLE-_WEST_TOWER.jpg",
+        "caption": "Meenakshi Temple, north tower.",
+        "attribution": "Wikimedia Commons / CC BY-SA 4.0 / Mamichaelraj",
+        "authorName": "Mamichaelraj",
+        "license": "CC BY-SA 4.0",
+        "wikimediaPage": "https://commons.wikimedia.org/wiki/File:MEENAKSHI_TEMPLE-_WEST_TOWER.jpg",
         "isVerified": true
       }
     ],
@@ -2772,32 +3756,53 @@ const TAMIL_NADU_VERIFIED_PLACES = [
     },
     "accessibilityProfile": {
       "stepFreeEntrance": {
-        "status": "Verified Available",
-        "notes": "Level pedestrianized Chithirai Street access."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Level pedestrianized Chithirai Street access."
       },
       "ramp": {
-        "status": "Verified Available",
-        "notes": "Paved stone ramps at East and North gopurams."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Paved stone ramps at East and North gopurams."
       },
       "lift": {
         "status": "Unknown",
-        "notes": "Ancient temple complex."
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Ancient temple complex."
       },
       "accessibleParking": {
-        "status": "Verified Available",
-        "notes": "Battery-car pick up points at multi-level parking complex."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Battery-car pick up points at multi-level parking complex."
       },
       "accessibleToilet": {
-        "status": "Verified Available",
-        "notes": "Accessible restroom block near East Chithirai Street."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Accessible restroom block near East Chithirai Street."
       },
       "brailleSignage": {
-        "status": "Verified Available",
-        "notes": "Tactile model of the temple complex in temple museum."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Tactile model of the temple complex in temple museum."
       },
       "audioAssistance": {
-        "status": "Verified Available",
-        "notes": "Audio guide and announcement system."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Audio guide and announcement system."
       }
     }
   },
@@ -2821,35 +3826,66 @@ const TAMIL_NADU_VERIFIED_PLACES = [
     },
     "provider": "accessable_verified",
     "providerPlaceId": "tn_mdu_railway_junction",
-    "photos": [],
+    "photos": [
+      {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/2/26/Madurai_Junction_railway_station.jpg",
+        "caption": "Madurai Junction railway station",
+        "attribution": "Wikimedia Commons / CC BY 4.0 / Dr. Chinchu C.",
+        "authorName": "Dr. Chinchu C.",
+        "license": "CC BY 4.0",
+        "wikimediaPage": "https://commons.wikimedia.org/wiki/File:Madurai_Junction_railway_station.jpg",
+        "isVerified": true
+      }
+    ],
     "accessibilityProfile": {
       "stepFreeEntrance": {
-        "status": "Verified Available",
-        "notes": "Direct level entry from West Veli Street."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Direct level entry from West Veli Street."
       },
       "ramp": {
-        "status": "Verified Available",
-        "notes": "Concrete ramps with handrails."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Concrete ramps with handrails."
       },
       "lift": {
-        "status": "Verified Available",
-        "notes": "Elevators connect foot-overbridge to all platforms."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Elevators connect foot-overbridge to all platforms."
       },
       "accessibleParking": {
-        "status": "Verified Available",
-        "notes": "Designated parking bay near main entrance."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Designated parking bay near main entrance."
       },
       "accessibleToilet": {
-        "status": "Verified Available",
-        "notes": "Divyangjan accessible restroom on platform 1."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Divyangjan accessible restroom on platform 1."
       },
       "brailleSignage": {
-        "status": "Verified Available",
-        "notes": "Braille station map and signs."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Braille station map and signs."
       },
       "audioAssistance": {
-        "status": "Verified Available",
-        "notes": "Audio train announcements in Tamil, Hindi, and English."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Audio train announcements in Tamil, Hindi, and English."
       }
     }
   },
@@ -2876,32 +3912,53 @@ const TAMIL_NADU_VERIFIED_PLACES = [
     "photos": [],
     "accessibilityProfile": {
       "stepFreeEntrance": {
-        "status": "Verified Available",
-        "notes": "Step-free emergency entrance."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Step-free emergency entrance."
       },
       "ramp": {
-        "status": "Verified Available",
-        "notes": "Ramps to all patient wards."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Ramps to all patient wards."
       },
       "lift": {
-        "status": "Verified Available",
-        "notes": "Lifts operating in trauma and surgical wings."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Lifts operating in trauma and surgical wings."
       },
       "accessibleParking": {
-        "status": "Verified Available",
-        "notes": "Designated parking near casualty."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Designated parking near casualty."
       },
       "accessibleToilet": {
-        "status": "Verified Available",
-        "notes": "Accessible restroom on ground floor."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Accessible restroom on ground floor."
       },
       "brailleSignage": {
         "status": "Unknown",
-        "notes": "Not verified."
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Not verified."
       },
       "audioAssistance": {
-        "status": "Verified Available",
-        "notes": "Public voice announcements."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Public voice announcements."
       }
     }
   },
@@ -2925,35 +3982,66 @@ const TAMIL_NADU_VERIFIED_PLACES = [
     },
     "provider": "accessable_verified",
     "providerPlaceId": "tn_mdu_thirumalai_mahal",
-    "photos": [],
+    "photos": [
+      {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/8/82/Mathura_thirumala_naikar_palace.JPG",
+        "caption": "മധുരയിലെ തിരുമല നയിക്കർ കൊട്ടാരത്തിന്റെ മുൻവശം",
+        "attribution": "Wikimedia Commons / CC BY 3.0 / Jomesh at Malayalam Wikipedia",
+        "authorName": "Jomesh at Malayalam Wikipedia",
+        "license": "CC BY 3.0",
+        "wikimediaPage": "https://commons.wikimedia.org/wiki/File:Mathura_thirumala_naikar_palace.JPG",
+        "isVerified": true
+      }
+    ],
     "accessibilityProfile": {
       "stepFreeEntrance": {
-        "status": "Verified Available",
-        "notes": "Level entrance from main parking."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Level entrance from main parking."
       },
       "ramp": {
-        "status": "Verified Available",
-        "notes": "Ramps to central courtyard."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Ramps to central courtyard."
       },
       "lift": {
         "status": "Unknown",
-        "notes": "Single-storey palace courtyard."
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Single-storey palace courtyard."
       },
       "accessibleParking": {
-        "status": "Verified Available",
-        "notes": "Parking area with accessible spots."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Parking area with accessible spots."
       },
       "accessibleToilet": {
-        "status": "Verified Available",
-        "notes": "ASI accessible restroom."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] ASI accessible restroom."
       },
       "brailleSignage": {
-        "status": "Verified Available",
-        "notes": "Braille monument information standee."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Braille monument information standee."
       },
       "audioAssistance": {
-        "status": "Verified Available",
-        "notes": "Bilingual audio show."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Bilingual audio show."
       }
     }
   },
@@ -2980,32 +4068,53 @@ const TAMIL_NADU_VERIFIED_PLACES = [
     "photos": [],
     "accessibilityProfile": {
       "stepFreeEntrance": {
-        "status": "Verified Available",
-        "notes": "Level portico entry."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Level portico entry."
       },
       "ramp": {
-        "status": "Verified Available",
-        "notes": "Ramps connecting main porch to platform 1."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Ramps connecting main porch to platform 1."
       },
       "lift": {
-        "status": "Verified Available",
-        "notes": "Lifts on foot overbridge."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Lifts on foot overbridge."
       },
       "accessibleParking": {
-        "status": "Verified Available",
-        "notes": "Designated parking spots."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Designated parking spots."
       },
       "accessibleToilet": {
-        "status": "Verified Available",
-        "notes": "Accessible Divyangjan toilet."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Accessible Divyangjan toilet."
       },
       "brailleSignage": {
-        "status": "Verified Available",
-        "notes": "Tactile maps near entrance."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Tactile maps near entrance."
       },
       "audioAssistance": {
-        "status": "Verified Available",
-        "notes": "Audio train announcements in Tamil and English."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Audio train announcements in Tamil and English."
       }
     }
   },
@@ -3032,32 +4141,53 @@ const TAMIL_NADU_VERIFIED_PLACES = [
     "photos": [],
     "accessibilityProfile": {
       "stepFreeEntrance": {
-        "status": "Verified Available",
-        "notes": "Level transition from parking."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Level transition from parking."
       },
       "ramp": {
-        "status": "Verified Available",
-        "notes": "Boardwalk ramp leading onto viewing deck."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Boardwalk ramp leading onto viewing deck."
       },
       "lift": {
         "status": "Unknown",
-        "notes": "Outdoor promenade."
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Outdoor promenade."
       },
       "accessibleParking": {
-        "status": "Verified Available",
-        "notes": "Designated vehicle parking."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Designated vehicle parking."
       },
       "accessibleToilet": {
-        "status": "Verified Available",
-        "notes": "Municipal accessible toilet kiosk."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Municipal accessible toilet kiosk."
       },
       "brailleSignage": {
         "status": "Unknown",
-        "notes": "Waterfront area."
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Waterfront area."
       },
       "audioAssistance": {
         "status": "Unknown",
-        "notes": "Natural beach."
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Natural beach."
       }
     }
   },
@@ -3081,7 +4211,17 @@ const TAMIL_NADU_VERIFIED_PLACES = [
     },
     "provider": "accessable_verified",
     "providerPlaceId": "tn_kny_sunset_point",
-    "photos": [],
+    "photos": [
+      {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/4/4e/Rocky_shore_%40_Kanyakumari.jpg",
+        "caption": "Picture of tidepool of Rocky shores of Kanyakumari",
+        "attribution": "Wikimedia Commons / CC0 / TBOE PC Ohm",
+        "authorName": "TBOE PC Ohm",
+        "license": "CC0",
+        "wikimediaPage": "https://commons.wikimedia.org/wiki/File:Rocky_shore_@_Kanyakumari.jpg",
+        "isVerified": true
+      }
+    ],
     "accessibilityProfile": {
       "stepFreeEntrance": {
         "status": "Verified Available",
@@ -3093,7 +4233,10 @@ const TAMIL_NADU_VERIFIED_PLACES = [
       },
       "lift": {
         "status": "Unknown",
-        "notes": "Outdoor coastal promenade."
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Outdoor coastal promenade."
       },
       "accessibleParking": {
         "status": "Verified Available",
@@ -3109,7 +4252,10 @@ const TAMIL_NADU_VERIFIED_PLACES = [
       },
       "audioAssistance": {
         "status": "Unknown",
-        "notes": "Coastal tourist destination."
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Coastal tourist destination."
       }
     }
   },
@@ -3133,35 +4279,66 @@ const TAMIL_NADU_VERIFIED_PLACES = [
     },
     "provider": "accessable_verified",
     "providerPlaceId": "tn_ram_temple",
-    "photos": [],
+    "photos": [
+      {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/b/b6/Ramanathaswamy_Temple_night_view.jpg",
+        "caption": "Ramanathaswamy Temple corridor (Corridor inside the Ramanathaswamy Temple)",
+        "attribution": "Wikimedia Commons / CC BY-SA 4.0 / Shajinss",
+        "authorName": "Shajinss",
+        "license": "CC BY-SA 4.0",
+        "wikimediaPage": "https://commons.wikimedia.org/wiki/File:Ramanathaswamy_Temple_night_view.jpg",
+        "isVerified": true
+      }
+    ],
     "accessibilityProfile": {
       "stepFreeEntrance": {
-        "status": "Verified Available",
-        "notes": "East entrance has level threshold access."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] East entrance has level threshold access."
       },
       "ramp": {
-        "status": "Verified Available",
-        "notes": "Ramp into the main corridor."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Ramp into the main corridor."
       },
       "lift": {
         "status": "Unknown",
-        "notes": "Ancient temple complex."
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Ancient temple complex."
       },
       "accessibleParking": {
-        "status": "Verified Available",
-        "notes": "Parking area with battery car pick-up."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Parking area with battery car pick-up."
       },
       "accessibleToilet": {
-        "status": "Verified Available",
-        "notes": "HR&CE accessible toilet near yatri nivas."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] HR&CE accessible toilet near yatri nivas."
       },
       "brailleSignage": {
         "status": "Unknown",
-        "notes": "Heritage venue."
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Heritage venue."
       },
       "audioAssistance": {
-        "status": "Verified Available",
-        "notes": "Public voice announcements."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Public voice announcements."
       }
     }
   },
@@ -3185,35 +4362,66 @@ const TAMIL_NADU_VERIFIED_PLACES = [
     },
     "provider": "accessable_verified",
     "providerPlaceId": "tn_ram_kalam_memorial",
-    "photos": [],
+    "photos": [
+      {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/0/0c/APJ_Abdul_Kalam_Memorial_Rameswaram.jpg",
+        "caption": "A.P.J. Abdul Kalam Memorial In Ramanathapuram district, Rameshwaram, Tamil Nadine,  India.",
+        "attribution": "Wikimedia Commons / CC0 / Selvakumar mallar",
+        "authorName": "Selvakumar mallar",
+        "license": "CC0",
+        "wikimediaPage": "https://commons.wikimedia.org/wiki/File:APJ_Abdul_Kalam_Memorial_Rameswaram.jpg",
+        "isVerified": true
+      }
+    ],
     "accessibilityProfile": {
       "stepFreeEntrance": {
-        "status": "Verified Available",
-        "notes": "Step-free main gate with wide sliding access."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Step-free main gate with wide sliding access."
       },
       "ramp": {
-        "status": "Verified Available",
-        "notes": "All 4 exhibition galleries connected by gentle ramps."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] All 4 exhibition galleries connected by gentle ramps."
       },
       "lift": {
         "status": "Unknown",
-        "notes": "Single-storey national monument."
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Single-storey national monument."
       },
       "accessibleParking": {
-        "status": "Verified Available",
-        "notes": "Designated parking bays close to entrance gate."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Designated parking bays close to entrance gate."
       },
       "accessibleToilet": {
-        "status": "Verified Available",
-        "notes": "Modern ADA-compliant accessible restrooms."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Modern ADA-compliant accessible restrooms."
       },
       "brailleSignage": {
-        "status": "Verified Available",
-        "notes": "Braille summaries of exhibits available."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Braille summaries of exhibits available."
       },
       "audioAssistance": {
-        "status": "Verified Available",
-        "notes": "Captioned video exhibits and audio guides."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Captioned video exhibits and audio guides."
       }
     }
   },
@@ -3237,35 +4445,66 @@ const TAMIL_NADU_VERIFIED_PLACES = [
     },
     "provider": "accessable_verified",
     "providerPlaceId": "tn_dgl_kodai_lake",
-    "photos": [],
+    "photos": [
+      {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/5/57/Kodaikanal_Lake_2.jpg",
+        "caption": "This is the lake in Kodaikanal, Tamilnadu",
+        "attribution": "Wikimedia Commons / CC BY-SA 4.0 / Devasenathipathi1957",
+        "authorName": "Devasenathipathi1957",
+        "license": "CC BY-SA 4.0",
+        "wikimediaPage": "https://commons.wikimedia.org/wiki/File:Kodaikanal_Lake_2.jpg",
+        "isVerified": true
+      }
+    ],
     "accessibilityProfile": {
       "stepFreeEntrance": {
-        "status": "Verified Available",
-        "notes": "Level entrance from Lake road."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Level entrance from Lake road."
       },
       "ramp": {
-        "status": "Verified Available",
-        "notes": "Ramps to boat house jetty."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Ramps to boat house jetty."
       },
       "lift": {
         "status": "Unknown",
-        "notes": "Outdoor lakefront."
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Outdoor lakefront."
       },
       "accessibleParking": {
-        "status": "Verified Available",
-        "notes": "Parking area with accessible spots."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Parking area with accessible spots."
       },
       "accessibleToilet": {
-        "status": "Verified Available",
-        "notes": "TTDC accessible toilet stall."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] TTDC accessible toilet stall."
       },
       "brailleSignage": {
         "status": "Unknown",
-        "notes": "Hill station."
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Hill station."
       },
       "audioAssistance": {
         "status": "Unknown",
-        "notes": "Natural lake promenade."
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Natural lake promenade."
       }
     }
   },
@@ -3289,35 +4528,66 @@ const TAMIL_NADU_VERIFIED_PLACES = [
     },
     "provider": "accessable_verified",
     "providerPlaceId": "tn_nag_velankanni",
-    "photos": [],
+    "photos": [
+      {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/2/2a/Basilica_of_Our_Lady_of_Good_Health_in_Velankanni%2C_Tamil_Nadu.jpg",
+        "caption": "Basilica of Our Lady of Good Health in Velankanni, Tamil Nadu",
+        "attribution": "Wikimedia Commons / CC BY-SA 4.0 / Matthew T Rader",
+        "authorName": "Matthew T Rader",
+        "license": "CC BY-SA 4.0",
+        "wikimediaPage": "https://commons.wikimedia.org/wiki/File:Basilica_of_Our_Lady_of_Good_Health_in_Velankanni,_Tamil_Nadu.jpg",
+        "isVerified": true
+      }
+    ],
     "accessibilityProfile": {
       "stepFreeEntrance": {
-        "status": "Verified Available",
-        "notes": "Level entrance through main pilgrimage gates."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Level entrance through main pilgrimage gates."
       },
       "ramp": {
-        "status": "Verified Available",
-        "notes": "Wide gentle ramps into Lower and Upper Basilic plazas."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Wide gentle ramps into Lower and Upper Basilic plazas."
       },
       "lift": {
-        "status": "Verified Available",
-        "notes": "Elevator operating in museum and administration wing."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Elevator operating in museum and administration wing."
       },
       "accessibleParking": {
-        "status": "Verified Available",
-        "notes": "Designated parking area next to yatri nivas."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Designated parking area next to yatri nivas."
       },
       "accessibleToilet": {
-        "status": "Verified Available",
-        "notes": "Multiple accessible toilet stalls across the campus."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Multiple accessible toilet stalls across the campus."
       },
       "brailleSignage": {
         "status": "Unknown",
-        "notes": "Pilgrimage basilica."
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Pilgrimage basilica."
       },
       "audioAssistance": {
-        "status": "Verified Available",
-        "notes": "Multi-lingual mass audio system."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Multi-lingual mass audio system."
       }
     }
   },
@@ -3344,32 +4614,53 @@ const TAMIL_NADU_VERIFIED_PLACES = [
     "photos": [],
     "accessibilityProfile": {
       "stepFreeEntrance": {
-        "status": "Verified Available",
-        "notes": "Level entrance from main parking."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Level entrance from main parking."
       },
       "ramp": {
-        "status": "Verified Available",
-        "notes": "Ramps connecting lake promenade."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Ramps connecting lake promenade."
       },
       "lift": {
         "status": "Unknown",
-        "notes": "Outdoor hill lake."
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Outdoor hill lake."
       },
       "accessibleParking": {
-        "status": "Verified Available",
-        "notes": "Spaces near boathouse."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Spaces near boathouse."
       },
       "accessibleToilet": {
-        "status": "Verified Available",
-        "notes": "TTDC accessible toilet."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] TTDC accessible toilet."
       },
       "brailleSignage": {
         "status": "Unknown",
-        "notes": "Hill lake."
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Hill lake."
       },
       "audioAssistance": {
         "status": "Unknown",
-        "notes": "Natural lake."
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Natural lake."
       }
     }
   },
@@ -3393,35 +4684,66 @@ const TAMIL_NADU_VERIFIED_PLACES = [
     },
     "provider": "accessable_verified",
     "providerPlaceId": "tn_dhp_hogenakkal",
-    "photos": [],
+    "photos": [
+      {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/5/52/Hogenakkal_Falls_Close.jpg",
+        "caption": "Hogenakkal Falls, Tamilnadu India",
+        "attribution": "Wikimedia Commons / CC BY-SA 3.0 / Mithun Kundu",
+        "authorName": "Mithun Kundu",
+        "license": "CC BY-SA 3.0",
+        "wikimediaPage": "https://commons.wikimedia.org/wiki/File:Hogenakkal_Falls_Close.jpg",
+        "isVerified": true
+      }
+    ],
     "accessibilityProfile": {
       "stepFreeEntrance": {
-        "status": "Verified Available",
-        "notes": "Paved access from eco-tourism parking lot."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Paved access from eco-tourism parking lot."
       },
       "ramp": {
-        "status": "Verified Available",
-        "notes": "Ramps lead to the safe elevated viewing platform."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Ramps lead to the safe elevated viewing platform."
       },
       "lift": {
         "status": "Unknown",
-        "notes": "Eco-tourism river canyon."
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Eco-tourism river canyon."
       },
       "accessibleParking": {
-        "status": "Verified Available",
-        "notes": "Designated parking in main tourism lot."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Designated parking in main tourism lot."
       },
       "accessibleToilet": {
-        "status": "Verified Available",
-        "notes": "Forest Department accessible toilet stall."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Forest Department accessible toilet stall."
       },
       "brailleSignage": {
         "status": "Unknown",
-        "notes": "Eco-tourism viewpoint."
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Eco-tourism viewpoint."
       },
       "audioAssistance": {
         "status": "Unknown",
-        "notes": "Natural river waterfall."
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Natural river waterfall."
       }
     }
   },
@@ -3445,35 +4767,66 @@ const TAMIL_NADU_VERIFIED_PLACES = [
     },
     "provider": "accessable_verified",
     "providerPlaceId": "tn_nil_coonoor_railway",
-    "photos": [],
+    "photos": [
+      {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/2/23/Coonoor_Railway_Station_04.jpg",
+        "caption": ".mw-parser-output .messagebox{margin:4px 0;width:auto;border-collapse:collapse;border:2px solid var(--border-color-progr",
+        "attribution": "Wikimedia Commons / CC BY-SA 4.0 / RealinRear",
+        "authorName": "RealinRear",
+        "license": "CC BY-SA 4.0",
+        "wikimediaPage": "https://commons.wikimedia.org/wiki/File:Coonoor_Railway_Station_04.jpg",
+        "isVerified": true
+      }
+    ],
     "accessibilityProfile": {
       "stepFreeEntrance": {
-        "status": "Verified Available",
-        "notes": "Direct level entry from station driveway."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Direct level entry from station driveway."
       },
       "ramp": {
-        "status": "Verified Available",
-        "notes": "Wooden ramps at station booking office."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Wooden ramps at station booking office."
       },
       "lift": {
         "status": "Unknown",
-        "notes": "Ground level station."
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Ground level station."
       },
       "accessibleParking": {
-        "status": "Verified Available",
-        "notes": "Designated parking in station forecourt."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Designated parking in station forecourt."
       },
       "accessibleToilet": {
-        "status": "Verified Available",
-        "notes": "Accessible Divyangjan restroom on platform 1."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Accessible Divyangjan restroom on platform 1."
       },
       "brailleSignage": {
-        "status": "Verified Available",
-        "notes": "Braille heritage plaque installed by Southern Railway."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Braille heritage plaque installed by Southern Railway."
       },
       "audioAssistance": {
-        "status": "Verified Available",
-        "notes": "Audio station announcements in Tamil and English."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Audio station announcements in Tamil and English."
       }
     }
   },
@@ -3500,32 +4853,53 @@ const TAMIL_NADU_VERIFIED_PLACES = [
     "photos": [],
     "accessibilityProfile": {
       "stepFreeEntrance": {
-        "status": "Verified Available",
-        "notes": "Level entrance gate from Station Road."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Level entrance gate from Station Road."
       },
       "ramp": {
-        "status": "Verified Available",
-        "notes": "Paved ramps connecting memorial plinth."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Paved ramps connecting memorial plinth."
       },
       "lift": {
         "status": "Unknown",
-        "notes": "Single-level park."
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Single-level park."
       },
       "accessibleParking": {
-        "status": "Verified Available",
-        "notes": "Side parking with dropped kerb."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Side parking with dropped kerb."
       },
       "accessibleToilet": {
-        "status": "Verified Available",
-        "notes": "Corporation accessible toilet stall."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Corporation accessible toilet stall."
       },
       "brailleSignage": {
-        "status": "Verified Available",
-        "notes": "Braille history plaque at memorial base."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Braille history plaque at memorial base."
       },
       "audioAssistance": {
         "status": "Unknown",
-        "notes": "Public municipal park."
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Public municipal park."
       }
     }
   },
@@ -3552,32 +4926,53 @@ const TAMIL_NADU_VERIFIED_PLACES = [
     "photos": [],
     "accessibilityProfile": {
       "stepFreeEntrance": {
-        "status": "Verified Available",
-        "notes": "Level entrance from parking lot."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Level entrance from parking lot."
       },
       "ramp": {
-        "status": "Verified Available",
-        "notes": "Wooden ramp into the visitors interpretation center."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Wooden ramp into the visitors interpretation center."
       },
       "lift": {
         "status": "Unknown",
-        "notes": "Single-storey eco-tourism complex."
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Single-storey eco-tourism complex."
       },
       "accessibleParking": {
-        "status": "Verified Available",
-        "notes": "Designated parking in sanctuary entrance lot."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Designated parking in sanctuary entrance lot."
       },
       "accessibleToilet": {
-        "status": "Verified Available",
-        "notes": "Forest Department accessible restroom."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Forest Department accessible restroom."
       },
       "brailleSignage": {
-        "status": "Verified Available",
-        "notes": "Braille species directory inside visitors hall."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Braille species directory inside visitors hall."
       },
       "audioAssistance": {
         "status": "Unknown",
-        "notes": "Nature sanctuary."
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Nature sanctuary."
       }
     }
   },
@@ -3604,32 +4999,53 @@ const TAMIL_NADU_VERIFIED_PLACES = [
     "photos": [],
     "accessibilityProfile": {
       "stepFreeEntrance": {
-        "status": "Verified Available",
-        "notes": "Level entrance with wide gates."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Level entrance with wide gates."
       },
       "ramp": {
-        "status": "Verified Available",
-        "notes": "Gentle ramps at all animal viewing pavilions."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Gentle ramps at all animal viewing pavilions."
       },
       "lift": {
         "status": "Unknown",
-        "notes": "Outdoor zoological grounds."
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Outdoor zoological grounds."
       },
       "accessibleParking": {
-        "status": "Verified Available",
-        "notes": "Designated parking bay near ticket booth."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Designated parking bay near ticket booth."
       },
       "accessibleToilet": {
-        "status": "Verified Available",
-        "notes": "Accessible toilet block near main entrance."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Accessible toilet block near main entrance."
       },
       "brailleSignage": {
         "status": "Unknown",
-        "notes": "Botanical and animal signage in Tamil and English."
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Botanical and animal signage in Tamil and English."
       },
       "audioAssistance": {
-        "status": "Verified Available",
-        "notes": "Guided electric buggy voice commentary."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Guided electric buggy voice commentary."
       }
     }
   },
@@ -3656,32 +5072,53 @@ const TAMIL_NADU_VERIFIED_PLACES = [
     "photos": [],
     "accessibilityProfile": {
       "stepFreeEntrance": {
-        "status": "Verified Available",
-        "notes": "Direct level portico entrance."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Direct level portico entrance."
       },
       "ramp": {
-        "status": "Verified Available",
-        "notes": "Wide anti-skid ramp with double handrails."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Wide anti-skid ramp with double handrails."
       },
       "lift": {
-        "status": "Verified Available",
-        "notes": "High-speed lifts with audio voice alerts."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] High-speed lifts with audio voice alerts."
       },
       "accessibleParking": {
-        "status": "Verified Available",
-        "notes": "Dedicated handicap parking bays."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Dedicated handicap parking bays."
       },
       "accessibleToilet": {
-        "status": "Verified Available",
-        "notes": "Accessible restrooms on all consultation floors."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Accessible restrooms on all consultation floors."
       },
       "brailleSignage": {
-        "status": "Verified Available",
-        "notes": "Braille lift buttons and OPD wing maps."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Braille lift buttons and OPD wing maps."
       },
       "audioAssistance": {
-        "status": "Verified Available",
-        "notes": "Bilingual token announcement system."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Bilingual token announcement system."
       }
     }
   },
@@ -3708,32 +5145,53 @@ const TAMIL_NADU_VERIFIED_PLACES = [
     "photos": [],
     "accessibilityProfile": {
       "stepFreeEntrance": {
-        "status": "Verified Available",
-        "notes": "Step-free emergency drop-off."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Step-free emergency drop-off."
       },
       "ramp": {
-        "status": "Verified Available",
-        "notes": "Anti-skid concrete ramps connecting all blocks."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Anti-skid concrete ramps connecting all blocks."
       },
       "lift": {
-        "status": "Verified Available",
-        "notes": "Modern passenger elevators with audio floor chimes."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Modern passenger elevators with audio floor chimes."
       },
       "accessibleParking": {
-        "status": "Verified Available",
-        "notes": "Designated parking bays near casualty."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Designated parking bays near casualty."
       },
       "accessibleToilet": {
-        "status": "Verified Available",
-        "notes": "Accessible toilet stall on ground floor."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Accessible toilet stall on ground floor."
       },
       "brailleSignage": {
-        "status": "Verified Available",
-        "notes": "Braille buttons in lifts."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Braille buttons in lifts."
       },
       "audioAssistance": {
-        "status": "Verified Available",
-        "notes": "Public voice alert announcements."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Public voice alert announcements."
       }
     }
   },
@@ -3760,32 +5218,53 @@ const TAMIL_NADU_VERIFIED_PLACES = [
     "photos": [],
     "accessibilityProfile": {
       "stepFreeEntrance": {
-        "status": "Verified Available",
-        "notes": "Level gate entrance with designated accessible lane."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Level gate entrance with designated accessible lane."
       },
       "ramp": {
-        "status": "Verified Available",
-        "notes": "Ramps connecting all academic and library complexes."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Ramps connecting all academic and library complexes."
       },
       "lift": {
-        "status": "Verified Available",
-        "notes": "Multiple lifts in all technology blocks."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Multiple lifts in all technology blocks."
       },
       "accessibleParking": {
-        "status": "Verified Available",
-        "notes": "Marked accessible parking spaces in all departmental lots."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Marked accessible parking spaces in all departmental lots."
       },
       "accessibleToilet": {
-        "status": "Verified Available",
-        "notes": "Accessible restrooms available in major campus buildings."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Accessible restrooms available in major campus buildings."
       },
       "brailleSignage": {
-        "status": "Verified Available",
-        "notes": "Braille signs in Central Library."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Braille signs in Central Library."
       },
       "audioAssistance": {
-        "status": "Verified Available",
-        "notes": "Hearing loop in Anna Auditorium."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Hearing loop in Anna Auditorium."
       }
     }
   },
@@ -3812,32 +5291,53 @@ const TAMIL_NADU_VERIFIED_PLACES = [
     "photos": [],
     "accessibilityProfile": {
       "stepFreeEntrance": {
-        "status": "Verified Available",
-        "notes": "Level entrance through eastern gopuram."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Level entrance through eastern gopuram."
       },
       "ramp": {
-        "status": "Verified Available",
-        "notes": "Granite ramps with side support rails."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Granite ramps with side support rails."
       },
       "lift": {
         "status": "Unknown",
-        "notes": "Ancient temple complex."
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Ancient temple complex."
       },
       "accessibleParking": {
-        "status": "Verified Available",
-        "notes": "Parking area with accessible spots on Sannathi street."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Parking area with accessible spots on Sannathi street."
       },
       "accessibleToilet": {
-        "status": "Verified Available",
-        "notes": "HR&CE accessible toilet stall."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] HR&CE accessible toilet stall."
       },
       "brailleSignage": {
         "status": "Unknown",
-        "notes": "Heritage venue."
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Heritage venue."
       },
       "audioAssistance": {
-        "status": "Verified Available",
-        "notes": "Devotional announcement loudspeakers."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Devotional announcement loudspeakers."
       }
     }
   },
@@ -3864,32 +5364,53 @@ const TAMIL_NADU_VERIFIED_PLACES = [
     "photos": [],
     "accessibilityProfile": {
       "stepFreeEntrance": {
-        "status": "Verified Available",
-        "notes": "Level entrance from Car Street."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Level entrance from Car Street."
       },
       "ramp": {
-        "status": "Verified Available",
-        "notes": "Ramps into the outer mandapam."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Ramps into the outer mandapam."
       },
       "lift": {
         "status": "Unknown",
-        "notes": "Historical shrine."
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Historical shrine."
       },
       "accessibleParking": {
-        "status": "Verified Available",
-        "notes": "Parking on outer Car Street."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Parking on outer Car Street."
       },
       "accessibleToilet": {
-        "status": "Verified Available",
-        "notes": "Public accessible toilet block."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Public accessible toilet block."
       },
       "brailleSignage": {
         "status": "Unknown",
-        "notes": "Heritage venue."
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Heritage venue."
       },
       "audioAssistance": {
-        "status": "Verified Available",
-        "notes": "Public broadcast system."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Public broadcast system."
       }
     }
   },
@@ -3916,32 +5437,53 @@ const TAMIL_NADU_VERIFIED_PLACES = [
     "photos": [],
     "accessibilityProfile": {
       "stepFreeEntrance": {
-        "status": "Verified Available",
-        "notes": "Direct level entry at emergency portico."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Direct level entry at emergency portico."
       },
       "ramp": {
-        "status": "Verified Available",
-        "notes": "Concrete ramps connecting patient wards."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Concrete ramps connecting patient wards."
       },
       "lift": {
-        "status": "Verified Available",
-        "notes": "Modern passenger and stretcher lifts."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Modern passenger and stretcher lifts."
       },
       "accessibleParking": {
-        "status": "Verified Available",
-        "notes": "Designated parking bays near casualty."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Designated parking bays near casualty."
       },
       "accessibleToilet": {
-        "status": "Verified Available",
-        "notes": "Accessible restroom on ground floor."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Accessible restroom on ground floor."
       },
       "brailleSignage": {
         "status": "Unknown",
-        "notes": "Not verified."
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Not verified."
       },
       "audioAssistance": {
-        "status": "Verified Available",
-        "notes": "Public announcement system."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Public announcement system."
       }
     }
   },
@@ -3968,32 +5510,53 @@ const TAMIL_NADU_VERIFIED_PLACES = [
     "photos": [],
     "accessibilityProfile": {
       "stepFreeEntrance": {
-        "status": "Verified Available",
-        "notes": "Step-free entrance to platform 1."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Step-free entrance to platform 1."
       },
       "ramp": {
-        "status": "Verified Available",
-        "notes": "Ramps connecting main porch."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Ramps connecting main porch."
       },
       "lift": {
-        "status": "Verified Available",
-        "notes": "Lifts on foot overbridge."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Lifts on foot overbridge."
       },
       "accessibleParking": {
-        "status": "Verified Available",
-        "notes": "Designated parking spaces."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Designated parking spaces."
       },
       "accessibleToilet": {
-        "status": "Verified Available",
-        "notes": "Accessible Divyangjan restroom."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Accessible Divyangjan restroom."
       },
       "brailleSignage": {
-        "status": "Verified Available",
-        "notes": "Tactile maps near entrance."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Tactile maps near entrance."
       },
       "audioAssistance": {
-        "status": "Verified Available",
-        "notes": "Audio train announcements in Tamil and English."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Audio train announcements in Tamil and English."
       }
     }
   },
@@ -4020,32 +5583,53 @@ const TAMIL_NADU_VERIFIED_PLACES = [
     "photos": [],
     "accessibilityProfile": {
       "stepFreeEntrance": {
-        "status": "Verified Available",
-        "notes": "Level entrance at casualty."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Level entrance at casualty."
       },
       "ramp": {
-        "status": "Verified Available",
-        "notes": "Concrete ramps connecting all wards."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Concrete ramps connecting all wards."
       },
       "lift": {
-        "status": "Verified Available",
-        "notes": "Lifts operating in newer block."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Lifts operating in newer block."
       },
       "accessibleParking": {
-        "status": "Verified Available",
-        "notes": "Parking spaces near emergency."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Parking spaces near emergency."
       },
       "accessibleToilet": {
-        "status": "Verified Available",
-        "notes": "Accessible toilet on ground floor."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Accessible toilet on ground floor."
       },
       "brailleSignage": {
         "status": "Unknown",
-        "notes": "Not verified."
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Not verified."
       },
       "audioAssistance": {
-        "status": "Verified Available",
-        "notes": "Public announcement system."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Public announcement system."
       }
     }
   },
@@ -4072,32 +5656,53 @@ const TAMIL_NADU_VERIFIED_PLACES = [
     "photos": [],
     "accessibilityProfile": {
       "stepFreeEntrance": {
-        "status": "Verified Available",
-        "notes": "Level entrance through main gate."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Level entrance through main gate."
       },
       "ramp": {
-        "status": "Verified Available",
-        "notes": "Wooden ramps to ground-floor archaeological galleries."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Wooden ramps to ground-floor archaeological galleries."
       },
       "lift": {
         "status": "Unknown",
-        "notes": "Heritage single-level palace building."
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Heritage single-level palace building."
       },
       "accessibleParking": {
-        "status": "Verified Available",
-        "notes": "Designated parking in museum compound."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Designated parking in museum compound."
       },
       "accessibleToilet": {
-        "status": "Verified Available",
-        "notes": "Accessible toilet cubicle."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Accessible toilet cubicle."
       },
       "brailleSignage": {
-        "status": "Verified Available",
-        "notes": "Braille exhibit summaries in bronze sculpture section."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Braille exhibit summaries in bronze sculpture section."
       },
       "audioAssistance": {
         "status": "Unknown",
-        "notes": "Museum venue."
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Museum venue."
       }
     }
   },
@@ -4124,32 +5729,53 @@ const TAMIL_NADU_VERIFIED_PLACES = [
     "photos": [],
     "accessibilityProfile": {
       "stepFreeEntrance": {
-        "status": "Verified Available",
-        "notes": "Step-free emergency entrance."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Step-free emergency entrance."
       },
       "ramp": {
-        "status": "Verified Available",
-        "notes": "Ramps connecting all floors."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Ramps connecting all floors."
       },
       "lift": {
-        "status": "Verified Available",
-        "notes": "Stretcher lifts operating."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Stretcher lifts operating."
       },
       "accessibleParking": {
-        "status": "Verified Available",
-        "notes": "Spaces near casualty."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Spaces near casualty."
       },
       "accessibleToilet": {
-        "status": "Verified Available",
-        "notes": "Accessible restroom on ground floor."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Accessible restroom on ground floor."
       },
       "brailleSignage": {
         "status": "Unknown",
-        "notes": "Not verified."
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Not verified."
       },
       "audioAssistance": {
-        "status": "Verified Available",
-        "notes": "Public voice alert announcements."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Public voice alert announcements."
       }
     }
   },
@@ -4176,32 +5802,53 @@ const TAMIL_NADU_VERIFIED_PLACES = [
     "photos": [],
     "accessibilityProfile": {
       "stepFreeEntrance": {
-        "status": "Verified Available",
-        "notes": "Paved approach path from parking lot."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Paved approach path from parking lot."
       },
       "ramp": {
-        "status": "Verified Available",
-        "notes": "ASI ramps at outer bailey entrance."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] ASI ramps at outer bailey entrance."
       },
       "lift": {
         "status": "Unknown",
-        "notes": "Historical stone fort."
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Historical stone fort."
       },
       "accessibleParking": {
-        "status": "Verified Available",
-        "notes": "Parking area with accessible spots."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Parking area with accessible spots."
       },
       "accessibleToilet": {
-        "status": "Verified Available",
-        "notes": "ASI accessible toilet booth."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] ASI accessible toilet booth."
       },
       "brailleSignage": {
-        "status": "Verified Available",
-        "notes": "Braille monument description plaque installed by ASI."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Braille monument description plaque installed by ASI."
       },
       "audioAssistance": {
         "status": "Unknown",
-        "notes": "Archaeological site."
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Archaeological site."
       }
     }
   },
@@ -4228,32 +5875,53 @@ const TAMIL_NADU_VERIFIED_PLACES = [
     "photos": [],
     "accessibilityProfile": {
       "stepFreeEntrance": {
-        "status": "Verified Available",
-        "notes": "Step-free entrance to platform 1."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Step-free entrance to platform 1."
       },
       "ramp": {
-        "status": "Verified Available",
-        "notes": "Ramps connecting main porch."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Ramps connecting main porch."
       },
       "lift": {
-        "status": "Verified Available",
-        "notes": "Lifts on foot overbridge."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Lifts on foot overbridge."
       },
       "accessibleParking": {
-        "status": "Verified Available",
-        "notes": "Designated parking spaces."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Designated parking spaces."
       },
       "accessibleToilet": {
-        "status": "Verified Available",
-        "notes": "Accessible Divyangjan restroom."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Accessible Divyangjan restroom."
       },
       "brailleSignage": {
-        "status": "Verified Available",
-        "notes": "Tactile maps near entrance."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Tactile maps near entrance."
       },
       "audioAssistance": {
-        "status": "Verified Available",
-        "notes": "Audio announcements in Tamil and English."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Audio announcements in Tamil and English."
       }
     }
   },
@@ -4277,35 +5945,66 @@ const TAMIL_NADU_VERIFIED_PLACES = [
     },
     "provider": "accessable_verified",
     "providerPlaceId": "tn_mdu_gandhi_museum",
-    "photos": [],
+    "photos": [
+      {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/c/c4/Gandhi_museum%2C_Madurai.jpg",
+        "caption": "மதுரையிலுள்ள காந்தி அருங்காட்சியகம், இந்த வளாகத்தின் அருகேயே மதுரை மாவட்ட அரசு அருங்காட்சியகமும் உள்ளது. மேலும் காந்தியம",
+        "attribution": "Wikimedia Commons / CC0 / Info-farmer",
+        "authorName": "Info-farmer",
+        "license": "CC0",
+        "wikimediaPage": "https://commons.wikimedia.org/wiki/File:Gandhi_museum,_Madurai.jpg",
+        "isVerified": true
+      }
+    ],
     "accessibilityProfile": {
       "stepFreeEntrance": {
-        "status": "Verified Available",
-        "notes": "Direct level entrance from car park."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Direct level entrance from car park."
       },
       "ramp": {
-        "status": "Verified Available",
-        "notes": "Wide ramp to ground-floor exhibition gallery."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Wide ramp to ground-floor exhibition gallery."
       },
       "lift": {
         "status": "Unknown",
-        "notes": "Historic single-level museum."
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Historic single-level museum."
       },
       "accessibleParking": {
-        "status": "Verified Available",
-        "notes": "Designated parking in museum compound."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Designated parking in museum compound."
       },
       "accessibleToilet": {
-        "status": "Verified Available",
-        "notes": "Accessible restroom block."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Accessible restroom block."
       },
       "brailleSignage": {
-        "status": "Verified Available",
-        "notes": "Braille summaries of select exhibits."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Braille summaries of select exhibits."
       },
       "audioAssistance": {
-        "status": "Verified Available",
-        "notes": "Guided audio tour available."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Guided audio tour available."
       }
     }
   },
@@ -4332,32 +6031,53 @@ const TAMIL_NADU_VERIFIED_PLACES = [
     "photos": [],
     "accessibilityProfile": {
       "stepFreeEntrance": {
-        "status": "Verified Available",
-        "notes": "Level entrance from Melur Road."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Level entrance from Melur Road."
       },
       "ramp": {
-        "status": "Verified Available",
-        "notes": "Concrete ramps connecting all 8 bus bays."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Concrete ramps connecting all 8 bus bays."
       },
       "lift": {
         "status": "Unknown",
-        "notes": "Single-level bus terminal."
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Single-level bus terminal."
       },
       "accessibleParking": {
-        "status": "Verified Available",
-        "notes": "Designated drop-off area."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Designated drop-off area."
       },
       "accessibleToilet": {
-        "status": "Verified Available",
-        "notes": "Accessible public restroom near Platform 2."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Accessible public restroom near Platform 2."
       },
       "brailleSignage": {
-        "status": "Verified Unavailable",
-        "notes": "No tactile maps."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] No tactile maps."
       },
       "audioAssistance": {
-        "status": "Verified Available",
-        "notes": "Audio announcements in Tamil and English."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Audio announcements in Tamil and English."
       }
     }
   },
@@ -4384,32 +6104,53 @@ const TAMIL_NADU_VERIFIED_PLACES = [
     "photos": [],
     "accessibilityProfile": {
       "stepFreeEntrance": {
-        "status": "Verified Available",
-        "notes": "Step-free emergency portico."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Step-free emergency portico."
       },
       "ramp": {
-        "status": "Verified Available",
-        "notes": "Ramps connecting all wards."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Ramps connecting all wards."
       },
       "lift": {
-        "status": "Verified Available",
-        "notes": "Lifts operating in trauma and surgical wings."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Lifts operating in trauma and surgical wings."
       },
       "accessibleParking": {
-        "status": "Verified Available",
-        "notes": "Designated parking near casualty."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Designated parking near casualty."
       },
       "accessibleToilet": {
-        "status": "Verified Available",
-        "notes": "Accessible restroom on ground floor."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Accessible restroom on ground floor."
       },
       "brailleSignage": {
         "status": "Unknown",
-        "notes": "Not verified."
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Not verified."
       },
       "audioAssistance": {
-        "status": "Verified Available",
-        "notes": "Public voice alert announcements."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Public voice alert announcements."
       }
     }
   },
@@ -4436,32 +6177,53 @@ const TAMIL_NADU_VERIFIED_PLACES = [
     "photos": [],
     "accessibilityProfile": {
       "stepFreeEntrance": {
-        "status": "Verified Available",
-        "notes": "Step-free emergency entrance."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Step-free emergency entrance."
       },
       "ramp": {
-        "status": "Verified Available",
-        "notes": "Anti-skid concrete ramps connecting all blocks."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Anti-skid concrete ramps connecting all blocks."
       },
       "lift": {
-        "status": "Verified Available",
-        "notes": "Modern passenger elevators with audio floor chimes."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Modern passenger elevators with audio floor chimes."
       },
       "accessibleParking": {
-        "status": "Verified Available",
-        "notes": "Designated parking bays near casualty."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Designated parking bays near casualty."
       },
       "accessibleToilet": {
-        "status": "Verified Available",
-        "notes": "Accessible toilet stall on ground floor."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Accessible toilet stall on ground floor."
       },
       "brailleSignage": {
-        "status": "Verified Available",
-        "notes": "Braille buttons in lifts."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Braille buttons in lifts."
       },
       "audioAssistance": {
-        "status": "Verified Available",
-        "notes": "Public voice alert announcements."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Public voice alert announcements."
       }
     }
   },
@@ -4485,35 +6247,66 @@ const TAMIL_NADU_VERIFIED_PLACES = [
     },
     "provider": "accessable_verified",
     "providerPlaceId": "tn_kny_ferry_terminal",
-    "photos": [],
+    "photos": [
+      {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/5/53/Rock_memorial_of_Vivekananda.jpg",
+        "caption": "Vivekananda Rock Memorial, Kanyakumari, last south land of India. It was built in honour of Swami Vivekananda (1863-1902",
+        "attribution": "Wikimedia Commons / CC BY-SA 4.0 / Shivani",
+        "authorName": "Shivani",
+        "license": "CC BY-SA 4.0",
+        "wikimediaPage": "https://commons.wikimedia.org/wiki/File:Rock_memorial_of_Vivekananda.jpg",
+        "isVerified": true
+      }
+    ],
     "accessibilityProfile": {
       "stepFreeEntrance": {
-        "status": "Verified Available",
-        "notes": "Direct level access from ferry ticket counter."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Direct level access from ferry ticket counter."
       },
       "ramp": {
-        "status": "Verified Available",
-        "notes": "Paved ramps to boat embarkation pontoon."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Paved ramps to boat embarkation pontoon."
       },
       "lift": {
         "status": "Unknown",
-        "notes": "Marine passenger terminal."
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Marine passenger terminal."
       },
       "accessibleParking": {
-        "status": "Verified Available",
-        "notes": "Designated parking in Poompuhar Shipping lot."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Designated parking in Poompuhar Shipping lot."
       },
       "accessibleToilet": {
-        "status": "Verified Available",
-        "notes": "Accessible toilet block inside terminal waiting hall."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Accessible toilet block inside terminal waiting hall."
       },
       "brailleSignage": {
-        "status": "Verified Available",
-        "notes": "Tactile route guidance to ferry queue."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Tactile route guidance to ferry queue."
       },
       "audioAssistance": {
-        "status": "Verified Available",
-        "notes": "Public voice announcements."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Public voice announcements."
       }
     }
   },
@@ -4540,32 +6333,53 @@ const TAMIL_NADU_VERIFIED_PLACES = [
     "photos": [],
     "accessibilityProfile": {
       "stepFreeEntrance": {
-        "status": "Verified Available",
-        "notes": "Step-free emergency casualty entrance."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Step-free emergency casualty entrance."
       },
       "ramp": {
-        "status": "Verified Available",
-        "notes": "Continuous ramps connecting all surgical blocks."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Continuous ramps connecting all surgical blocks."
       },
       "lift": {
-        "status": "Verified Available",
-        "notes": "Modern passenger and stretcher elevators."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Modern passenger and stretcher elevators."
       },
       "accessibleParking": {
-        "status": "Verified Available",
-        "notes": "Designated parking near casualty."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Designated parking near casualty."
       },
       "accessibleToilet": {
-        "status": "Verified Available",
-        "notes": "Accessible restroom on ground floor."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Accessible restroom on ground floor."
       },
       "brailleSignage": {
         "status": "Unknown",
-        "notes": "Not verified."
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Not verified."
       },
       "audioAssistance": {
-        "status": "Verified Available",
-        "notes": "Token calling system."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Token calling system."
       }
     }
   },
@@ -4592,32 +6406,53 @@ const TAMIL_NADU_VERIFIED_PLACES = [
     "photos": [],
     "accessibilityProfile": {
       "stepFreeEntrance": {
-        "status": "Verified Available",
-        "notes": "Lower ticket counter and museum garden are step-free."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Lower ticket counter and museum garden are step-free."
       },
       "ramp": {
-        "status": "Verified Available",
-        "notes": "ASI stone ramp to base pavilion."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] ASI stone ramp to base pavilion."
       },
       "lift": {
         "status": "Unknown",
-        "notes": "Historical granite hill fort."
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Historical granite hill fort."
       },
       "accessibleParking": {
-        "status": "Verified Available",
-        "notes": "Parking area with accessible spots."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Parking area with accessible spots."
       },
       "accessibleToilet": {
-        "status": "Verified Available",
-        "notes": "ASI accessible restroom."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] ASI accessible restroom."
       },
       "brailleSignage": {
-        "status": "Verified Available",
-        "notes": "Braille monument information standee installed by ASI."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Braille monument information standee installed by ASI."
       },
       "audioAssistance": {
         "status": "Unknown",
-        "notes": "Archaeological site."
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Archaeological site."
       }
     }
   },
@@ -4644,32 +6479,53 @@ const TAMIL_NADU_VERIFIED_PLACES = [
     "photos": [],
     "accessibilityProfile": {
       "stepFreeEntrance": {
-        "status": "Verified Available",
-        "notes": "Step-free entrance from Lower Shola Road."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Step-free entrance from Lower Shola Road."
       },
       "ramp": {
-        "status": "Verified Available",
-        "notes": "Ramps to glasshouse and rose garden."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Ramps to glasshouse and rose garden."
       },
       "lift": {
         "status": "Unknown",
-        "notes": "Outdoor botanical garden."
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Outdoor botanical garden."
       },
       "accessibleParking": {
-        "status": "Verified Available",
-        "notes": "Parking spots near main gate."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Parking spots near main gate."
       },
       "accessibleToilet": {
-        "status": "Verified Available",
-        "notes": "Accessible restroom block."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Accessible restroom block."
       },
       "brailleSignage": {
         "status": "Unknown",
-        "notes": "Hill botanical park."
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Hill botanical park."
       },
       "audioAssistance": {
         "status": "Unknown",
-        "notes": "Botanical garden."
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Botanical garden."
       }
     }
   },
@@ -4696,32 +6552,53 @@ const TAMIL_NADU_VERIFIED_PLACES = [
     "photos": [],
     "accessibilityProfile": {
       "stepFreeEntrance": {
-        "status": "Verified Available",
-        "notes": "Step-free emergency portico."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Step-free emergency portico."
       },
       "ramp": {
-        "status": "Verified Available",
-        "notes": "Ramps connecting all hospital wards."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Ramps connecting all hospital wards."
       },
       "lift": {
-        "status": "Verified Available",
-        "notes": "Modern passenger and stretcher elevators."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Modern passenger and stretcher elevators."
       },
       "accessibleParking": {
-        "status": "Verified Available",
-        "notes": "Designated parking near casualty."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Designated parking near casualty."
       },
       "accessibleToilet": {
-        "status": "Verified Available",
-        "notes": "Accessible restroom on ground floor."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Accessible restroom on ground floor."
       },
       "brailleSignage": {
         "status": "Unknown",
-        "notes": "Not verified."
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Not verified."
       },
       "audioAssistance": {
-        "status": "Verified Available",
-        "notes": "Public announcement system."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Public announcement system."
       }
     }
   },
@@ -4748,32 +6625,53 @@ const TAMIL_NADU_VERIFIED_PLACES = [
     "photos": [],
     "accessibilityProfile": {
       "stepFreeEntrance": {
-        "status": "Verified Available",
-        "notes": "Level entrance from Car Street."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Level entrance from Car Street."
       },
       "ramp": {
-        "status": "Verified Available",
-        "notes": "Granite ramps with side rails."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Granite ramps with side rails."
       },
       "lift": {
         "status": "Unknown",
-        "notes": "Ancient temple compound."
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Ancient temple compound."
       },
       "accessibleParking": {
-        "status": "Verified Available",
-        "notes": "Parking area with accessible spots on Car Street."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Parking area with accessible spots on Car Street."
       },
       "accessibleToilet": {
-        "status": "Verified Available",
-        "notes": "HR&CE accessible toilet stall."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] HR&CE accessible toilet stall."
       },
       "brailleSignage": {
         "status": "Unknown",
-        "notes": "Religious heritage venue."
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Religious heritage venue."
       },
       "audioAssistance": {
-        "status": "Verified Available",
-        "notes": "Loudspeaker announcements in Tamil."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Loudspeaker announcements in Tamil."
       }
     }
   },
@@ -4797,35 +6695,66 @@ const TAMIL_NADU_VERIFIED_PLACES = [
     },
     "provider": "accessable_verified",
     "providerPlaceId": "tn_tks_courtallam_falls",
-    "photos": [],
+    "photos": [
+      {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/9/9e/TNT18-32_Old_Courtallam_falls_in_lean_season.jpg",
+        "caption": "Old Courtallam falls in lean season, Courtallam, Tamil Nadu, India",
+        "attribution": "Wikimedia Commons / CC BY 4.0 / VasuVR",
+        "authorName": "VasuVR",
+        "license": "CC BY 4.0",
+        "wikimediaPage": "https://commons.wikimedia.org/wiki/File:TNT18-32_Old_Courtallam_falls_in_lean_season.jpg",
+        "isVerified": true
+      }
+    ],
     "accessibilityProfile": {
       "stepFreeEntrance": {
-        "status": "Verified Available",
-        "notes": "Level entrance from tourist parking area."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Level entrance from tourist parking area."
       },
       "ramp": {
-        "status": "Verified Available",
-        "notes": "Paved ramps to the falls viewing pavilion."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Paved ramps to the falls viewing pavilion."
       },
       "lift": {
         "status": "Unknown",
-        "notes": "Natural waterfall site."
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Natural waterfall site."
       },
       "accessibleParking": {
-        "status": "Verified Available",
-        "notes": "Designated parking in tourism lot."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Designated parking in tourism lot."
       },
       "accessibleToilet": {
-        "status": "Verified Available",
-        "notes": "TTDC accessible toilet stall."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] TTDC accessible toilet stall."
       },
       "brailleSignage": {
         "status": "Unknown",
-        "notes": "Natural waterfall."
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Natural waterfall."
       },
       "audioAssistance": {
-        "status": "Verified Available",
-        "notes": "Public voice alert announcements during monsoon."
+        "status": "Unknown",
+        "evidenceSource": "Pending on-site accessibility audit",
+        "verificationMethod": "unverified",
+        "lastVerifiedAt": null,
+        "notes": "[Pending on-site audit] Public voice alert announcements during monsoon."
       }
     }
   }

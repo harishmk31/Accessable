@@ -8,7 +8,8 @@ import {
   LayoutGrid,
   Map as MapIcon,
   Columns2,
-  Navigation
+  Navigation,
+  AlertCircle
 } from 'lucide-react';
 import { placeService } from '../services/api';
 import { useTranslation } from '../context/LanguageContext';
@@ -25,6 +26,7 @@ const DiscoveryPage = () => {
   const [places, setPlaces] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [fallbackNotice, setFallbackNotice] = useState(null);
   const [pagination, setPagination] = useState({ page: 1, pages: 1, total: 0 });
   const [showMobileFilter, setShowMobileFilter] = useState(false);
   const [viewMode, setViewMode] = useState('list'); // 'list' | 'map' | 'split'
@@ -50,6 +52,8 @@ const DiscoveryPage = () => {
     audioAssistance: searchParams.get('audioAssistance') || '',
     minRating: searchParams.get('minRating') || '',
     minAccessibilityRating: searchParams.get('minAccessibilityRating') || '',
+    minAccessibilityScore: searchParams.get('minAccessibilityScore') || '',
+    accessibilityTier: searchParams.get('accessibilityTier') || '',
     sortBy: searchParams.get('sortBy') || (searchParams.get('lat') ? 'distance' : 'newest'),
     page: parseInt(searchParams.get('page') || '1', 10)
   };
@@ -86,6 +90,7 @@ const DiscoveryPage = () => {
         }
 
         setPlaces(res.data.data || []);
+        setFallbackNotice(res.data?.fallbackNotice || null);
         setPagination(res.data.pagination || { page: 1, pages: 1, total: (res.data.data || []).length });
       } catch (err) {
         setError(err.message || 'Failed to retrieve places directory');
@@ -136,7 +141,7 @@ const DiscoveryPage = () => {
       : null;
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
+    <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-6">
       {/* Top Page Header */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
         <div>
@@ -247,10 +252,17 @@ const DiscoveryPage = () => {
               </span>
 
               {userLocation && (
-                <span className="inline-flex items-center gap-1 text-xs font-bold text-blue-700 bg-blue-50 px-2 py-0.5 rounded-md border border-blue-200">
-                  <Navigation className="w-3 h-3" />
-                  Near GPS ({currentFilters.radius || 10} km)
-                </span>
+                fallbackNotice ? (
+                  <span className="inline-flex items-center gap-1 text-xs font-bold text-amber-800 bg-amber-50 px-2.5 py-0.5 rounded-md border border-amber-300">
+                    <AlertCircle className="w-3 h-3 text-amber-600" />
+                    Outside {currentFilters.radius || 25}km Search Radius
+                  </span>
+                ) : (
+                  <span className="inline-flex items-center gap-1 text-xs font-bold text-blue-700 bg-blue-50 px-2 py-0.5 rounded-md border border-blue-200">
+                    <Navigation className="w-3 h-3" />
+                    Near GPS ({currentFilters.radius || 10} km)
+                  </span>
+                )
               )}
             </div>
 
@@ -335,6 +347,52 @@ const DiscoveryPage = () => {
                   </button>
                 </span>
               )}
+
+              {/* Active Facility Filters */}
+              {[
+                { key: 'wheelchairRamp', label: 'Wheelchair Ramp' },
+                { key: 'elevatorLift', label: 'Elevator' },
+                { key: 'accessibleToilet', label: 'Accessible Restroom' },
+                { key: 'accessibleParking', label: 'Parking' },
+                { key: 'brailleSignage', label: 'Braille' },
+                { key: 'audioAssistance', label: 'Audio Assistance' }
+              ].map(({ key, label }) => {
+                const val = currentFilters[key];
+                if (!val) return null;
+                return (
+                  <span
+                    key={key}
+                    className="inline-flex items-center gap-1.5 px-3 py-1 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-lg text-xs font-bold"
+                  >
+                    {label}: {val}
+                    <button
+                      type="button"
+                      onClick={() => updateFilters(key, '')}
+                      className="hover:text-emerald-950"
+                      aria-label={`Remove facility filter ${label}`}
+                    >
+                      <X className="w-3 h-3" />
+                    </button>
+                  </span>
+                );
+              })}
+            </div>
+          )}
+
+          {/* Fallback Notice when GPS radius returned 0 records */}
+          {fallbackNotice && (
+            <div className="p-3.5 bg-amber-50 dark:bg-amber-950/40 border border-amber-300 dark:border-amber-800 rounded-xl text-xs text-amber-900 dark:text-amber-200 flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <MapPin className="w-4 h-4 text-amber-600 shrink-0" />
+                <span>{fallbackNotice}</span>
+              </div>
+              <button
+                type="button"
+                onClick={() => setFallbackNotice(null)}
+                className="text-amber-700 dark:text-amber-400 font-bold hover:underline"
+              >
+                Dismiss
+              </button>
             </div>
           )}
 

@@ -9,7 +9,7 @@ const Footer = () => {
       role="contentinfo"
       aria-label="AccessAble Platform Footer"
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Column 1: Brand & College Project Info */}
           <div className="md:col-span-2 space-y-4">
@@ -23,7 +23,7 @@ const Footer = () => {
             </div>
 
             <p className="text-xs text-slate-400 max-w-md leading-relaxed">
-              <strong>AccessAble</strong> is a Full Stack Accessibility Discovery Platform built to empower individuals with mobility, sensory, and auditory disabilities to identify public venues with verified ramps, lifts, restrooms, parking, and braille provisions.
+              <strong>AccessAble</strong> is an Accessibility Discovery Platform built to help people with disabilities, seniors, and caregivers find public places across Tamil Nadu with documented accessibility features.
             </p>
 
             <div className="p-3 bg-slate-800/80 rounded-xl border border-slate-700 text-xs text-slate-300 max-w-lg">
@@ -54,47 +54,40 @@ const Footer = () => {
                 </Link>
               </li>
               <li>
-                <Link to="/places/new" className="hover:text-teal-400 transition-colors">
-                  Submit / Register Place
+                <Link to="/map" className="hover:text-teal-400 transition-colors">
+                  Interactive Accessibility Map
                 </Link>
               </li>
               <li>
-                <Link to="/login" className="hover:text-teal-400 transition-colors">
-                  Member & Admin Login
+                <Link to="/reviews" className="hover:text-teal-400 transition-colors">
+                  Community Reviews
+                </Link>
+              </li>
+              <li>
+                <Link to="/places/new" className="hover:text-teal-400 transition-colors">
+                  Submit / Register Place
                 </Link>
               </li>
             </ul>
           </div>
 
-          {/* Column 3: Accessibility Philosophy */}
+          {/* Column 3: Stack Details */}
           <div className="space-y-3">
             <h3 className="text-xs font-bold text-white uppercase tracking-wider">
-              Accessibility Standard
+              Technology Stack
             </h3>
-            <div className="space-y-2 text-xs text-slate-400 leading-relaxed">
-              <p className="flex items-center gap-1.5">
-                <CheckCircle2 className="w-3.5 h-3.5 text-teal-400 shrink-0" />
-                <span>WCAG 2.1 AA Contrast</span>
-              </p>
-              <p className="flex items-center gap-1.5">
-                <CheckCircle2 className="w-3.5 h-3.5 text-teal-400 shrink-0" />
-                <span>Strict 3-State Logic</span>
-              </p>
-              <p className="flex items-center gap-1.5">
-                <CheckCircle2 className="w-3.5 h-3.5 text-teal-400 shrink-0" />
-                <span>High-Visibility Keyboard Focus</span>
-              </p>
-              <p className="flex items-center gap-1.5">
-                <CheckCircle2 className="w-3.5 h-3.5 text-teal-400 shrink-0" />
-                <span>Screen Reader ARIA Annotations</span>
-              </p>
-            </div>
+            <ul className="space-y-2 text-xs text-slate-400">
+              <li>React 18 + Vite</li>
+              <li>Node.js + Express REST API</li>
+              <li>MongoDB + Mongoose</li>
+              <li>Tailwind CSS + Leaflet Maps</li>
+            </ul>
           </div>
         </div>
 
         {/* Bottom copyright line */}
         <div className="mt-10 pt-6 border-t border-slate-800 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-4">
-          <p>© {new Date().getFullYear()} AccessAble. Full Stack College Mini Project.</p>
+          <p>© {new Date().getFullYear()} AccessAble. Full Stack Mini Project.</p>
           <div className="flex items-center gap-2">
             <span>Built with React + Vite, Node.js + Express, MongoDB & Tailwind CSS</span>
           </div>

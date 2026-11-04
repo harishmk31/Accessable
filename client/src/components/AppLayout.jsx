@@ -24,7 +24,7 @@ const AppLayout = ({ children }) => {
   };
 
   return (
-    <div className="flex min-h-screen bg-slate-50 text-slate-900 selection:bg-teal-600 selection:text-white">
+    <div className="flex min-h-screen bg-[#FAFBFC] text-[#17324D] selection:bg-[#087F8C] selection:text-white">
       {/* Skip to Content for Screen Readers / Keyboard Users */}
       <a href="#main-content" className="skip-link">
         Skip to main content

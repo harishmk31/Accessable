@@ -5,6 +5,25 @@ const dotenv = require('dotenv');
 
 dotenv.config({ path: __dirname + '/../.env' });
 
+// Ensure test suite strictly targets isolated test database, NEVER the active accessable_db
+process.env.MONGODB_URI = process.env.TEST_MONGODB_URI || 'mongodb://127.0.0.1:27017/accessable_test';
+
+// Hard guard: Parse and validate database name strictly from URI path component (never print credentials)
+function extractDatabaseName(uri) {
+  if (!uri || typeof uri !== 'string') return '';
+  const withoutProtocol = uri.replace(/^mongodb(\+srv)?:\/\//i, '');
+  const withoutAuth = withoutProtocol.includes('@') ? withoutProtocol.split('@')[1] : withoutProtocol;
+  const pathPart = withoutAuth.split('?')[0].split('/')[1] || '';
+  return pathPart.trim();
+}
+
+const targetDbName = extractDatabaseName(process.env.MONGODB_URI);
+if (!targetDbName || !targetDbName.toLowerCase().includes('test') || targetDbName.toLowerCase() === 'accessable_db') {
+  throw new Error(
+    `[SECURITY GUARD] Test suite aborted: Resolved database name is "${targetDbName}". Tests must run strictly against an isolated database whose name contains "test".`
+  );
+}
+
 const app = require('../server');
 const User = require('../models/User');
 const Place = require('../models/Place');
@@ -16,14 +35,20 @@ let testAdminToken;
 let testUserToken;
 let testUserId;
 let testPlaceId;
+let createdReviewId;
 
 test.before(async () => {
-  // Connect to test database or local db
-  const mongoUri =
-    process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/accessable_db';
+  // Connect to isolated test database
+  const mongoUri = process.env.MONGODB_URI;
   if (mongoose.connection.readyState === 0) {
     await mongoose.connect(mongoUri);
   }
+
+  // Clean up any test fixtures from previous runs
+  await Place.deleteMany({ name: 'City General Medical Clinic' });
+  await Review.deleteMany({ comment: 'Great accessibility ramp at the main reception entrance.' });
+  await User.deleteMany({ email: /testuser_.*@test\.org/ });
+  await User.deleteMany({ email: /testadmin_.*@test\.org/ });
 
   // Start server on an ephemeral port
   await new Promise((resolve) => {
@@ -36,6 +61,14 @@ test.before(async () => {
 });
 
 test.after(async () => {
+  // Thoroughly clean up all created test entities
+  await Place.deleteMany({ name: 'City General Medical Clinic' });
+  if (createdReviewId) {
+    await Review.findByIdAndDelete(createdReviewId);
+  }
+  await Review.deleteMany({ comment: 'Great accessibility ramp at the main reception entrance.' });
+  await User.deleteMany({ email: /testuser_.*@test\.org/ });
+  await User.deleteMany({ email: /testadmin_.*@test\.org/ });
   if (serverInstance) {
     await new Promise((resolve) => serverInstance.close(resolve));
   }
@@ -170,11 +203,14 @@ test('POST /api/reviews/place/:id should add a review and update ratings', async
   const data = await res.json();
   assert.equal(res.status, 201);
   assert.equal(data.success, true);
+  createdReviewId = data.data._id;
   assert.equal(data.data.rating, 5);
   assert.equal(data.data.accessibilityRating, 4);
 
   // Check that place average rating is recalculated
-  const placeRes = await fetch(`${baseUrl}/api/places/${testPlaceId}`);
+  const placeRes = await fetch(`${baseUrl}/api/places/${testPlaceId}`, {
+    headers: { Authorization: `Bearer ${testUserToken}` }
+  });
   const placeData = await placeRes.json();
   assert.equal(placeRes.status, 200);
   assert.equal(placeData.data.averageRating, 5);

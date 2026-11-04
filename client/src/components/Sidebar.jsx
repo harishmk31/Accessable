@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { NavLink, useNavigate, useLocation } from 'react-router-dom';
 import {
   Accessibility,
@@ -16,7 +16,8 @@ import {
   HelpCircle,
   ShieldCheck,
   Globe,
-  PlusCircle
+  PlusCircle,
+  X
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { useTranslation } from '../context/LanguageContext';
@@ -34,6 +35,18 @@ const Sidebar = ({
   const { t, lang, changeLanguage } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
+
+  // Close mobile drawer on Escape key press (WCAG 2.1 compliance)
+  useEffect(() => {
+    if (!mobileOpen) return;
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        if (onCloseMobile) onCloseMobile();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [mobileOpen, onCloseMobile]);
 
   const handleNearMeClick = (e) => {
     e.preventDefault();
@@ -89,7 +102,7 @@ const Sidebar = ({
             )}
           </NavLink>
 
-          {/* Hamburger / Collapse Toggle (Desktop only) */}
+          {/* Single Collapse Toggle (Desktop only) */}
           <button
             type="button"
             onClick={onToggleCollapse}
@@ -99,23 +112,18 @@ const Sidebar = ({
           >
             {isCollapsed ? <ChevronRight className="w-4 h-4" /> : <ChevronLeft className="w-4 h-4" />}
           </button>
-        </div>
 
-        {/* Hamburger Control below Logo when expanded */}
-        {!isCollapsed && (
-          <div className="hidden lg:flex items-center justify-between text-[11px] text-slate-400 font-semibold pt-1 border-t border-slate-100">
-            <span>Navigation Menu</span>
-            <button
-              type="button"
-              onClick={onToggleCollapse}
-              className="hover:text-slate-700 transition-colors flex items-center gap-1"
-              title="Toggle sidebar size"
-            >
-              <Menu className="w-3.5 h-3.5" />
-              <span>Collapse</span>
-            </button>
-          </div>
-        )}
+          {/* Close Button (Mobile drawer only) */}
+          <button
+            type="button"
+            onClick={onCloseMobile}
+            className="lg:hidden p-1.5 rounded-lg text-slate-500 hover:text-slate-800 hover:bg-slate-100 transition-colors focus-visible:ring-2 focus-visible:ring-teal-600 focus-visible:outline-none"
+            aria-label="Close navigation menu"
+            title="Close navigation menu"
+          >
+            <X className="w-5 h-5" aria-hidden="true" />
+          </button>
+        </div>
       </div>
 
       {/* Main Navigation Items (Vertical) */}
@@ -163,11 +171,11 @@ const Sidebar = ({
 
         {/* 4. Map View */}
         <NavLink
-          to="/discover?view=map"
+          to="/accessibility-map"
           onClick={onCloseMobile}
-          className={({ isActive }) => navItemClass(isActive && location.search.includes('view=map'))}
-          title={isCollapsed ? 'Interactive Map' : undefined}
-          aria-label="Interactive Map View"
+          className={({ isActive }) => navItemClass(isActive)}
+          title={isCollapsed ? 'Accessibility Map' : undefined}
+          aria-label="Dedicated Accessibility Map"
         >
           <Map className="w-4 h-4 shrink-0" aria-hidden="true" />
           {!isCollapsed && <span>Map View</span>}
@@ -245,56 +253,9 @@ const Sidebar = ({
         )}
       </nav>
 
-      {/* Lower Section: Language Selector, Profile Settings, Help */}
+      {/* Lower Section: Profile Settings, Help */}
       <div className="p-3 border-t border-slate-100 space-y-2">
-        {/* 8. Language Selector */}
-        {!isCollapsed ? (
-          <div className="p-2.5 bg-slate-50 rounded-xl border border-slate-200/70 space-y-1.5">
-            <div className="flex items-center justify-between text-[11px] font-bold text-slate-500 uppercase tracking-wider">
-              <span className="flex items-center gap-1.5">
-                <Globe className="w-3.5 h-3.5 text-teal-600" />
-                <span>Language</span>
-              </span>
-              <span className="text-[10px] text-teal-700 font-bold uppercase">{lang}</span>
-            </div>
-            <div className="grid grid-cols-3 gap-1 text-[11px]">
-              {[
-                { code: 'en', label: 'English' },
-                { code: 'ta', label: 'தமிழ்' },
-                { code: 'hi', label: 'हिंदी' }
-              ].map(({ code, label }) => (
-                <button
-                  key={code}
-                  type="button"
-                  onClick={() => changeLanguage(code)}
-                  className={`py-1 rounded-lg font-bold text-center transition-all ${
-                    lang === code
-                      ? 'bg-teal-700 text-white shadow-2xs'
-                      : 'bg-white text-slate-700 hover:bg-slate-200 border border-slate-200/80'
-                  }`}
-                  aria-pressed={lang === code}
-                >
-                  {label}
-                </button>
-              ))}
-            </div>
-          </div>
-        ) : (
-          <button
-            type="button"
-            onClick={() => {
-              const next = lang === 'en' ? 'ta' : lang === 'ta' ? 'hi' : 'en';
-              changeLanguage(next);
-            }}
-            className="w-full flex justify-center py-2.5 rounded-xl hover:bg-slate-100 text-slate-600 text-xs font-bold"
-            title={`Language: ${lang.toUpperCase()} (Click to toggle)`}
-            aria-label={`Current language is ${lang}. Click to switch.`}
-          >
-            <Globe className="w-4 h-4 text-teal-600" />
-          </button>
-        )}
-
-        {/* 9. Profile Settings */}
+        {/* Profile Settings */}
         <button
           type="button"
           onClick={() => {

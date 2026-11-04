@@ -8,6 +8,7 @@ import AppLayout from './components/AppLayout';
 import HomePage from './pages/HomePage';
 import DiscoveryPage from './pages/DiscoveryPage';
 import TamilNaduHubPage from './pages/TamilNaduHubPage';
+import AccessibilityMapPage from './pages/AccessibilityMapPage';
 import ReviewsPage from './pages/ReviewsPage';
 import PlaceDetailsPage from './pages/PlaceDetailsPage';
 import AddPlacePage from './pages/AddPlacePage';
@@ -27,9 +28,12 @@ function App() {
             <Routes>
               <Route path="/" element={<HomePage />} />
               <Route path="/discover" element={<DiscoveryPage />} />
+              <Route path="/accessibility-map" element={<AccessibilityMapPage />} />
+              <Route path="/map" element={<AccessibilityMapPage />} />
               <Route path="/regions" element={<TamilNaduHubPage />} />
               <Route path="/reviews" element={<ReviewsPage />} />
               <Route path="/saved" element={<SavedPlacesPage />} />
+              <Route path="/saved-places" element={<SavedPlacesPage />} />
               <Route path="/places/new" element={<AddPlacePage />} />
               <Route path="/places/:id" element={<PlaceDetailsPage />} />
               <Route path="/places/:id/edit" element={<EditPlacePage />} />

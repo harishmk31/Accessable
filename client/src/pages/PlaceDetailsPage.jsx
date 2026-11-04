@@ -19,7 +19,10 @@ import {
   Share2,
   Camera,
   ExternalLink,
-  Info
+  Info,
+  Scan,
+  Volume2,
+  Clock
 } from 'lucide-react';
 import { placeService, reviewService } from '../services/api';
 import { useAuth } from '../context/AuthContext';
@@ -28,6 +31,9 @@ import FacilityBadge from '../components/FacilityBadge';
 import StarRating from '../components/StarRating';
 import LoadingSpinner from '../components/LoadingSpinner';
 import ReportModal from '../components/ReportModal';
+import AccessibilityScoreBadge from '../components/AccessibilityScoreBadge';
+import AIAssessmentCard from '../components/AIAssessmentCard';
+import ImageAnalysisModal from '../components/ImageAnalysisModal';
 
 const PlaceDetailsPage = () => {
   const { id } = useParams();
@@ -41,6 +47,7 @@ const PlaceDetailsPage = () => {
   const [error, setError] = useState(null);
   const [activePhotoIdx, setActivePhotoIdx] = useState(0);
   const [reportModalOpen, setReportModalOpen] = useState(false);
+  const [imageAnalysisModalOpen, setImageAnalysisModalOpen] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
   const [savingPlace, setSavingPlace] = useState(false);
 
@@ -293,6 +300,16 @@ const PlaceDetailsPage = () => {
 
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-10">
+      {/* Pending Approval Notice for submitter / admin */}
+      {status === 'pending' && (
+        <div className="p-4 bg-amber-50 border border-amber-300 rounded-2xl flex items-start gap-3 text-amber-950 text-xs">
+          <Clock className="w-5 h-5 text-amber-700 shrink-0 mt-0.5" />
+          <div className="leading-relaxed">
+            <strong className="font-bold">Awaiting Administrative Review:</strong> Your place submission has been recorded and is currently in the moderation queue awaiting verification. It is not currently visible to the general public in search or map directories.
+          </div>
+        </div>
+      )}
+
       {/* Sample Data Disclaimer if marked */}
       {isSampleData && (
         <div className="p-4 bg-teal-50 border border-teal-200 rounded-2xl flex items-start gap-3 text-teal-950 text-xs">
@@ -309,9 +326,14 @@ const PlaceDetailsPage = () => {
           {hasPhoto && currentPhoto ? (
             <>
               <img
-                src={currentPhoto.url}
+                src={
+                  currentPhoto.url?.startsWith('https://upload.wikimedia.org/')
+                    ? `/api/places/photo-proxy?url=${encodeURIComponent(currentPhoto.url)}`
+                    : currentPhoto.url
+                }
                 alt={currentPhoto.caption || name}
                 className="w-full h-full object-cover opacity-90 transition-opacity duration-300"
+                referrerPolicy="no-referrer"
                 onError={(e) => {
                   e.target.style.display = 'none';
                 }}
@@ -466,9 +488,25 @@ const PlaceDetailsPage = () => {
                 </span>
               </div>
             </div>
+
+            <div className="pl-6 border-l border-slate-200 hidden sm:block">
+              <span className="text-xs font-bold text-slate-500 uppercase block mb-1">
+                Readiness Score
+              </span>
+              <AccessibilityScoreBadge place={place} size="md" />
+            </div>
           </div>
 
           <div className="flex flex-wrap items-center gap-3">
+            <button
+              type="button"
+              onClick={() => setImageAnalysisModalOpen(true)}
+              className="inline-flex items-center gap-1.5 px-3.5 py-2.5 bg-purple-50 hover:bg-purple-100 text-purple-700 dark:bg-purple-950 dark:text-purple-300 border border-purple-200 dark:border-purple-800 text-xs font-bold rounded-xl shadow-xs transition-colors"
+              title="Scan photo with computer vision"
+            >
+              <Scan className="w-4 h-4" />
+              <span>Scan Photo AI</span>
+            </button>
             <a
               href={googleMapsDirectionsUrl}
               target="_blank"
@@ -542,6 +580,7 @@ const PlaceDetailsPage = () => {
             const statusVal = profile?.status || legacyStatus || 'Unknown';
             const noteVal = profile?.notes || legacyNote || '';
             const sourceVal = profile?.evidenceSource || '';
+            const verifiedDate = profile?.lastVerifiedAt || place.updatedAt;
 
             return (
               <FacilityBadge
@@ -550,10 +589,154 @@ const PlaceDetailsPage = () => {
                 status={statusVal}
                 note={noteVal}
                 evidenceSource={sourceVal}
+                lastVerifiedAt={verifiedDate}
               />
             );
           })}
         </div>
+
+        {/* Suggest a correction action */}
+        <div className="mt-4 p-3.5 bg-slate-50 border border-slate-200 rounded-2xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs">
+          <div className="flex items-center gap-2 text-slate-700">
+            <Flag className="w-4 h-4 text-amber-600 shrink-0" />
+            <span>Notice outdated or incorrect accessibility details for this venue?</span>
+          </div>
+          <button
+            type="button"
+            onClick={() => setReportModalOpen(true)}
+            className="px-3.5 py-1.5 bg-white hover:bg-slate-100 text-teal-800 border border-slate-300 rounded-xl font-bold shrink-0 transition-colors shadow-2xs"
+          >
+            Suggest a Correction / Report
+          </button>
+        </div>
+      </section>
+
+      {/* Accessibility Compliance Score Transparency Section */}
+      <section aria-labelledby="score-transparency-title" className="bg-white rounded-3xl border border-slate-200 p-6 sm:p-8 shadow-xs space-y-5">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-100">
+          <div>
+            <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-md bg-teal-50 border border-teal-200 text-teal-800 text-xs font-bold uppercase tracking-wider mb-1">
+              <ShieldCheck className="w-3.5 h-3.5" />
+              Audited Weighted Formula
+            </div>
+            <h2 id="score-transparency-title" className="text-xl font-black text-slate-900 tracking-tight">
+              Accessibility Score Calculation & Breakdown
+            </h2>
+            <p className="text-xs sm:text-sm text-slate-600 mt-0.5">
+              Transparent, deterministic evaluation based strictly on ground-verified physical infrastructure.
+            </p>
+          </div>
+
+          <div className="flex items-center gap-3">
+            <div className="text-right">
+              <span className="text-[11px] text-slate-500 font-bold uppercase tracking-wider block">Compliance Tier</span>
+              <span className="text-xs sm:text-sm font-black text-teal-800 bg-teal-50 px-2.5 py-1 rounded-lg border border-teal-200 inline-block mt-0.5">
+                {place.accessibilityTier || 'Insufficient Data'}
+              </span>
+            </div>
+            <div className="w-14 h-14 rounded-2xl bg-teal-700 text-white flex flex-col items-center justify-center shrink-0 shadow-xs">
+              {place.accessibilityScore !== null && place.accessibilityScore !== undefined ? (
+                <>
+                  <span className="text-lg font-black leading-none">{place.accessibilityScore}</span>
+                  <span className="text-[10px] font-bold text-teal-200">/ 100</span>
+                </>
+              ) : (
+                <>
+                  <span className="text-xs font-black leading-none text-center">N/A</span>
+                  <span className="text-[9px] font-bold text-teal-200 text-center">No score</span>
+                </>
+              )}
+            </div>
+          </div>
+        </div>
+
+        {/* Weighted breakdown grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+          {[
+            {
+              label: 'Wheelchair Ramp / Step-Free',
+              icon: '♿',
+              weight: 25,
+              status: place.facilities?.wheelchairRamp || 'Unknown',
+              isAvailable: place.facilities?.wheelchairRamp === 'Available'
+            },
+            {
+              label: 'Elevator / Stretcher Lift',
+              icon: '🛗',
+              weight: 20,
+              status: place.facilities?.elevatorLift || 'Unknown',
+              isAvailable: place.facilities?.elevatorLift === 'Available'
+            },
+            {
+              label: 'Accessible Restroom (Grab Bars)',
+              icon: '🚻',
+              weight: 20,
+              status: place.facilities?.accessibleToilet || 'Unknown',
+              isAvailable: place.facilities?.accessibleToilet === 'Available'
+            },
+            {
+              label: 'Disability Reserved Parking',
+              icon: '🅿️',
+              weight: 15,
+              status: place.facilities?.accessibleParking || 'Unknown',
+              isAvailable: place.facilities?.accessibleParking === 'Available'
+            },
+            {
+              label: 'Tactile & Braille Signage',
+              icon: '⠃⠗',
+              weight: 10,
+              status: place.facilities?.brailleSignage || 'Unknown',
+              isAvailable: place.facilities?.brailleSignage === 'Available'
+            },
+            {
+              label: 'Audio Chimes & Announcements',
+              icon: '🔊',
+              weight: 10,
+              status: place.facilities?.audioAssistance || 'Unknown',
+              isAvailable: place.facilities?.audioAssistance === 'Available'
+            }
+          ].map((item) => (
+            <div
+              key={item.label}
+              className={`p-3.5 rounded-xl border transition-all ${
+                item.isAvailable
+                  ? 'bg-emerald-50/50 border-emerald-200 text-emerald-950'
+                  : item.status === 'Unavailable'
+                  ? 'bg-rose-50/40 border-rose-200 text-rose-950'
+                  : 'bg-slate-50 border-slate-200 text-slate-700'
+              }`}
+            >
+              <div className="flex items-center justify-between text-xs mb-1.5">
+                <span className="font-bold flex items-center gap-1.5">
+                  <span className="text-base" aria-hidden="true">{item.icon}</span>
+                  <span className="truncate">{item.label}</span>
+                </span>
+                <span className="font-mono text-[11px] font-extrabold shrink-0 ml-1">
+                  {item.isAvailable ? `+${item.weight} pts` : `0 / ${item.weight}`}
+                </span>
+              </div>
+              <div className="flex items-center justify-between text-[11px] text-slate-500 pt-1 border-t border-slate-200/50">
+                <span>Weight: {item.weight}%</span>
+                <span
+                  className={`font-bold ${
+                    item.isAvailable
+                      ? 'text-emerald-700'
+                      : item.status === 'Unavailable'
+                      ? 'text-rose-700'
+                      : 'text-amber-700'
+                  }`}
+                >
+                  {item.status}
+                </span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* AI Accessibility Assessment Section */}
+      <section aria-labelledby="ai-assessment-heading">
+        <AIAssessmentCard placeId={place._id} placeName={place.name} />
       </section>
 
       {/* Community Reviews & Ratings Section */}
@@ -814,6 +997,14 @@ const PlaceDetailsPage = () => {
         onClose={() => setReportModalOpen(false)}
         placeId={place._id}
         placeName={place.name}
+      />
+
+      {/* Computer Vision Image Analysis Modal */}
+      <ImageAnalysisModal
+        isOpen={imageAnalysisModalOpen}
+        onClose={() => setImageAnalysisModalOpen(false)}
+        place={place}
+        initialPhotoUrl={currentPhoto?.url}
       />
     </div>
   );

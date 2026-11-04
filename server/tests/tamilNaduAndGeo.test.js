@@ -5,6 +5,25 @@ const dotenv = require('dotenv');
 
 dotenv.config({ path: __dirname + '/../.env' });
 
+// Ensure test suite strictly targets isolated test database, NEVER active accessable_db
+process.env.MONGODB_URI = process.env.TEST_MONGODB_URI || 'mongodb://127.0.0.1:27017/accessable_test';
+
+// Hard guard: Parse and validate database name strictly from URI path component (never print credentials)
+function extractDatabaseName(uri) {
+  if (!uri || typeof uri !== 'string') return '';
+  const withoutProtocol = uri.replace(/^mongodb(\+srv)?:\/\//i, '');
+  const withoutAuth = withoutProtocol.includes('@') ? withoutProtocol.split('@')[1] : withoutProtocol;
+  const pathPart = withoutAuth.split('?')[0].split('/')[1] || '';
+  return pathPart.trim();
+}
+
+const targetDbName = extractDatabaseName(process.env.MONGODB_URI);
+if (!targetDbName || !targetDbName.toLowerCase().includes('test') || targetDbName.toLowerCase() === 'accessable_db') {
+  throw new Error(
+    `[SECURITY GUARD] Test suite aborted: Resolved database name is "${targetDbName}". Tests must run strictly against an isolated database whose name contains "test".`
+  );
+}
+
 const app = require('../server');
 const Place = require('../models/Place');
 const Report = require('../models/Report');
@@ -14,7 +33,7 @@ let baseUrl;
 let samplePlaceId;
 
 test.before(async () => {
-  const mongoUri = 'mongodb://127.0.0.1:27017/accessable_db';
+  const mongoUri = process.env.MONGODB_URI;
   if (mongoose.connection.readyState === 0) {
     await mongoose.connect(mongoUri);
   }
@@ -34,6 +53,8 @@ test.before(async () => {
 });
 
 test.after(async () => {
+  // Clean up any test-submitted inaccuracy reports
+  await Report.deleteMany({ reporterEmail: 'auditor@example.org' });
   if (serverInstance) {
     await new Promise((resolve) => serverInstance.close(resolve));
   }

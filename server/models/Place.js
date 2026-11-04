@@ -49,6 +49,10 @@ const photoSchema = new mongoose.Schema(
       type: String,
       required: true
     },
+    title: {
+      type: String,
+      default: ''
+    },
     caption: {
       type: String,
       default: ''
@@ -57,11 +61,23 @@ const photoSchema = new mongoose.Schema(
       type: String,
       default: 'AccessAble Contributor'
     },
+    author: {
+      type: String,
+      default: ''
+    },
     authorName: {
       type: String,
       default: ''
     },
     authorUrl: {
+      type: String,
+      default: ''
+    },
+    license: {
+      type: String,
+      default: 'CC BY-SA 4.0'
+    },
+    sourceUrl: {
       type: String,
       default: ''
     },
@@ -204,6 +220,14 @@ const placeSchema = new mongoose.Schema(
       sparse: true,
       index: true
     },
+    locationSource: {
+      type: String,
+      default: 'Survey of India / OpenStreetMap / Official Directory'
+    },
+    locationRetrievalDate: {
+      type: Date,
+      default: Date.now
+    },
     // Photos with attribution
     photos: [photoSchema],
     // Backward-compatible images array of URLs
@@ -325,6 +349,19 @@ const placeSchema = new mongoose.Schema(
       type: Number,
       default: 0
     },
+    // Calculated 0-100 accessibility readiness score (null when insufficient evidence to produce a score)
+    accessibilityScore: {
+      type: Number,
+      default: null,
+      min: 0,
+      max: 100
+    },
+    // Transparent accessibility tier: High, Moderate, Limited, or Insufficient Data
+    accessibilityTier: {
+      type: String,
+      enum: ['High Accessibility', 'Moderate Accessibility', 'Limited Accessibility', 'Insufficient Data'],
+      default: 'Insufficient Data'
+    },
     tags: [
       {
         type: String,
@@ -384,6 +421,7 @@ placeSchema.pre('save', function (next) {
   const toLegacyStatus = (detailedStatus) => {
     if (detailedStatus === 'Verified Available') return 'Available';
     if (detailedStatus === 'Verified Unavailable') return 'Unavailable';
+    // 'User Reported Pending Verification', 'Conflicting Reports', and unverified default to 'Unknown'
     return 'Unknown';
   };
 
@@ -393,53 +431,41 @@ placeSchema.pre('save', function (next) {
     return 'Unknown';
   };
 
-  // If facilities passed with Available/Unavailable, ensure accessibilityProfile matches
-  if (this.facilities) {
+  // If facilities was passed or modified, synchronize to accessibilityProfile
+  if (this.facilities && (this.isNew || this.isModified('facilities'))) {
     if (!this.accessibilityProfile) this.accessibilityProfile = {};
     const f = this.facilities;
     const p = this.accessibilityProfile;
 
-    if (f.wheelchairRamp && f.wheelchairRamp !== 'Unknown' && (!p.ramp?.status || p.ramp?.status === 'Unknown')) {
-      if (!p.ramp) p.ramp = {};
-      p.ramp.status = toDetailedStatus(f.wheelchairRamp);
-      if (this.facilityNotes?.wheelchairRamp) p.ramp.notes = this.facilityNotes.wheelchairRamp;
-    }
-    if (f.elevatorLift && f.elevatorLift !== 'Unknown' && (!p.lift?.status || p.lift?.status === 'Unknown')) {
-      if (!p.lift) p.lift = {};
-      p.lift.status = toDetailedStatus(f.elevatorLift);
-      if (this.facilityNotes?.elevatorLift) p.lift.notes = this.facilityNotes.elevatorLift;
-    }
-    if (f.accessibleToilet && f.accessibleToilet !== 'Unknown' && (!p.accessibleToilet?.status || p.accessibleToilet?.status === 'Unknown')) {
-      if (!p.accessibleToilet) p.accessibleToilet = {};
-      p.accessibleToilet.status = toDetailedStatus(f.accessibleToilet);
-      if (this.facilityNotes?.accessibleToilet) p.accessibleToilet.notes = this.facilityNotes.accessibleToilet;
-    }
-    if (f.accessibleParking && f.accessibleParking !== 'Unknown' && (!p.accessibleParking?.status || p.accessibleParking?.status === 'Unknown')) {
-      if (!p.accessibleParking) p.accessibleParking = {};
-      p.accessibleParking.status = toDetailedStatus(f.accessibleParking);
-      if (this.facilityNotes?.accessibleParking) p.accessibleParking.notes = this.facilityNotes.accessibleParking;
-    }
-    if (f.brailleSignage && f.brailleSignage !== 'Unknown' && (!p.brailleSignage?.status || p.brailleSignage?.status === 'Unknown')) {
-      if (!p.brailleSignage) p.brailleSignage = {};
-      p.brailleSignage.status = toDetailedStatus(f.brailleSignage);
-      if (this.facilityNotes?.brailleSignage) p.brailleSignage.notes = this.facilityNotes.brailleSignage;
-    }
-    if (f.audioAssistance && f.audioAssistance !== 'Unknown' && (!p.audioAssistance?.status || p.audioAssistance?.status === 'Unknown')) {
-      if (!p.audioAssistance) p.audioAssistance = {};
-      p.audioAssistance.status = toDetailedStatus(f.audioAssistance);
-      if (this.facilityNotes?.audioAssistance) p.audioAssistance.notes = this.facilityNotes.audioAssistance;
-    }
+    const syncFacilityToProfile = (facVal, profKey, noteKey) => {
+      if (facVal && facVal !== 'Unknown') {
+        if (!p[profKey]) p[profKey] = {};
+        if (!p[profKey].status || p[profKey].status === 'Unknown') {
+          p[profKey].status = toDetailedStatus(facVal);
+        }
+        if (this.facilityNotes?.[noteKey] && !p[profKey].notes) {
+          p[profKey].notes = this.facilityNotes[noteKey];
+        }
+      }
+    };
+
+    syncFacilityToProfile(f.wheelchairRamp, 'ramp', 'wheelchairRamp');
+    syncFacilityToProfile(f.elevatorLift, 'lift', 'elevatorLift');
+    syncFacilityToProfile(f.accessibleToilet, 'accessibleToilet', 'accessibleToilet');
+    syncFacilityToProfile(f.accessibleParking, 'accessibleParking', 'accessibleParking');
+    syncFacilityToProfile(f.brailleSignage, 'brailleSignage', 'brailleSignage');
+    syncFacilityToProfile(f.audioAssistance, 'audioAssistance', 'audioAssistance');
   }
 
-  // And sync accessibilityProfile back to legacy facilities
+  // Synchronize accessibilityProfile back to legacy facilities
   if (this.accessibilityProfile) {
     const prof = this.accessibilityProfile;
-    if (prof.ramp?.status && prof.ramp.status !== 'Unknown') this.facilities.wheelchairRamp = toLegacyStatus(prof.ramp.status);
-    if (prof.lift?.status && prof.lift.status !== 'Unknown') this.facilities.elevatorLift = toLegacyStatus(prof.lift.status);
-    if (prof.accessibleToilet?.status && prof.accessibleToilet.status !== 'Unknown') this.facilities.accessibleToilet = toLegacyStatus(prof.accessibleToilet.status);
-    if (prof.accessibleParking?.status && prof.accessibleParking.status !== 'Unknown') this.facilities.accessibleParking = toLegacyStatus(prof.accessibleParking.status);
-    if (prof.brailleSignage?.status && prof.brailleSignage.status !== 'Unknown') this.facilities.brailleSignage = toLegacyStatus(prof.brailleSignage.status);
-    if (prof.audioAssistance?.status && prof.audioAssistance.status !== 'Unknown') this.facilities.audioAssistance = toLegacyStatus(prof.audioAssistance.status);
+    if (prof.ramp?.status) this.facilities.wheelchairRamp = toLegacyStatus(prof.ramp.status);
+    if (prof.lift?.status) this.facilities.elevatorLift = toLegacyStatus(prof.lift.status);
+    if (prof.accessibleToilet?.status) this.facilities.accessibleToilet = toLegacyStatus(prof.accessibleToilet.status);
+    if (prof.accessibleParking?.status) this.facilities.accessibleParking = toLegacyStatus(prof.accessibleParking.status);
+    if (prof.brailleSignage?.status) this.facilities.brailleSignage = toLegacyStatus(prof.brailleSignage.status);
+    if (prof.audioAssistance?.status) this.facilities.audioAssistance = toLegacyStatus(prof.audioAssistance.status);
 
     if (prof.ramp?.notes) this.facilityNotes.wheelchairRamp = prof.ramp.notes;
     if (prof.lift?.notes) this.facilityNotes.elevatorLift = prof.lift.notes;
@@ -449,8 +475,79 @@ placeSchema.pre('save', function (next) {
     if (prof.audioAssistance?.notes) this.facilityNotes.audioAssistance = prof.audioAssistance.notes;
   }
 
+  // Calculate accessibilityScore and accessibilityTier
+  // Unknown facilities are excluded from denominator (never assumed unavailable or penalized)
+  const scoreResult = calculateAccessibilityScore(this.facilities);
+  this.accessibilityScore = scoreResult.score;
+  this.accessibilityTier = scoreResult.tier;
+
   next();
 });
+
+// Standalone scoring calculator function
+function calculateAccessibilityScore(facilities) {
+  const FACILITY_WEIGHTS = {
+    wheelchairRamp: 25,
+    elevatorLift: 20,
+    accessibleToilet: 20,
+    accessibleParking: 15,
+    brailleSignage: 10,
+    audioAssistance: 10
+  };
+
+  if (!facilities || typeof facilities !== 'object') {
+    return {
+      score: null,
+      tier: 'Insufficient Data',
+      auditedCount: 0,
+      earnedScore: 0,
+      assessedMaxWeight: 0
+    };
+  }
+
+  let earnedScore = 0;
+  let assessedMaxWeight = 0;
+  let auditedCount = 0;
+
+  for (const [key, weight] of Object.entries(FACILITY_WEIGHTS)) {
+    const rawVal = facilities[key];
+    const val = typeof rawVal === 'string' ? rawVal.trim() : '';
+    if (val === 'Available') {
+      earnedScore += weight;
+      assessedMaxWeight += weight;
+      auditedCount++;
+    } else if (val === 'Unavailable') {
+      assessedMaxWeight += weight;
+      auditedCount++;
+    }
+  }
+
+  if (auditedCount < 2 || assessedMaxWeight === 0) {
+    return {
+      score: null,
+      tier: 'Insufficient Data',
+      auditedCount,
+      earnedScore,
+      assessedMaxWeight
+    };
+  }
+
+  const normalizedScore = Math.round((earnedScore / assessedMaxWeight) * 100);
+  let tier = 'Limited Accessibility';
+  if (normalizedScore >= 70) {
+    tier = 'High Accessibility';
+  } else if (normalizedScore >= 40) {
+    tier = 'Moderate Accessibility';
+  }
+
+  return {
+    score: normalizedScore,
+    tier,
+    auditedCount,
+    earnedScore,
+    assessedMaxWeight
+  };
+}
 
 // Geospatial 2dsphere index for location queries
 placeSchema.index({ location: '2dsphere' });
@@ -471,4 +568,5 @@ placeSchema.index({ region: 1, district: 1 });
 placeSchema.index({ status: 1 });
 
 const Place = mongoose.model('Place', placeSchema);
+Place.calculateAccessibilityScore = calculateAccessibilityScore;
 module.exports = Place;

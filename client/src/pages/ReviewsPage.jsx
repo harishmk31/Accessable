@@ -20,19 +20,43 @@ import FacilityBadge from '../components/FacilityBadge';
 import LoadingSpinner from '../components/LoadingSpinner';
 import EmptyState from '../components/EmptyState';
 
+const FACILITY_LABELS = {
+  wheelchairRamp: 'Wheelchair Ramp',
+  elevatorLift: 'Elevator / Lift',
+  accessibleToilet: 'Accessible Restroom',
+  accessibleParking: 'Accessible Parking',
+  brailleSignage: 'Tactile & Braille Signage',
+  audioAssistance: 'Audio Assistance'
+};
+
+function formatDate(dateStr) {
+  if (!dateStr) return '';
+  const d = new Date(dateStr);
+  return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+}
+
 const ReviewsPage = () => {
   const { t } = useTranslation();
   const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [filterCategory, setFilterCategory] = useState('All');
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [totalReviewsCount, setTotalReviewsCount] = useState(0);
+  const [nonSampleCount, setNonSampleCount] = useState(0);
 
   useEffect(() => {
     const fetchReviews = async () => {
       try {
         setLoading(true);
-        const res = await reviewService.getRecentReviews();
+        const res = await reviewService.getRecentReviews({ page, limit: 12 });
         setReviews(res.data.data || []);
+        setTotalReviewsCount(res.data.total ?? (res.data.data || []).length);
+        setNonSampleCount(res.data.nonSampleTotal ?? 0);
+        if (res.data.pagination) {
+          setTotalPages(res.data.pagination.pages || 1);
+        }
       } catch (err) {
         console.error('Error loading reviews:', err.message);
         setError('Unable to load community reviews.');
@@ -41,17 +65,19 @@ const ReviewsPage = () => {
       }
     };
     fetchReviews();
-  }, []);
+  }, [page]);
 
-  const categories = ['All', 'Hospital', 'Transit/Station', 'College/University', 'Shopping/Mall', 'Tourist Attraction'];
+  const categories = ['All', 'Hospital', 'Transit/Station', 'College/University', 'Shopping/Mall', 'Tourist Attraction', 'Restaurant/Cafe', 'Office/Government'];
 
   const filteredReviews = filterCategory === 'All'
     ? reviews
     : reviews.filter((r) => r.place?.category === filterCategory);
 
-  const avgAccessScore = reviews.length > 0
-    ? (reviews.reduce((acc, r) => acc + (r.accessibilityRating || 5), 0) / reviews.length).toFixed(1)
-    : '5.0';
+  // Compute average access score strictly from non-sample reviews when available
+  const nonSampleReviews = reviews.filter((r) => !r.isSampleData && !r.place?.isSampleData);
+  const avgAccessScore = nonSampleReviews.length > 0
+    ? (nonSampleReviews.reduce((acc, r) => acc + (r.accessibilityRating || 5), 0) / nonSampleReviews.length).toFixed(1)
+    : null;
 
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
@@ -59,35 +85,39 @@ const ReviewsPage = () => {
       <div>
         <div className="flex items-center gap-2 text-teal-700 font-bold text-xs uppercase tracking-wider mb-1">
           <MessageSquare className="w-4 h-4" />
-          <span>User Verified Audits</span>
+          <span>User Feedback & Field Observations</span>
         </div>
         <h1 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
           Accessibility Reviews
         </h1>
         <p className="text-xs sm:text-sm text-slate-600 mt-1 max-w-2xl leading-relaxed">
-          First-hand community feedback on ramp gradients, door clearances, grab bars, audio assistance, and barrier-free access conditions across Tamil Nadu venues.
+          Community observations on wheelchair ramps, door clearances, accessible restrooms, and audio assistance across public destinations.
         </p>
       </div>
 
       {/* Overview Stat Cards */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div className="p-4 bg-white rounded-2xl border border-slate-200 shadow-2xs">
-          <span className="text-xs text-slate-500 font-medium block">Total Community Reviews</span>
-          <span className="text-2xl font-black text-slate-900 mt-0.5 block">{reviews.length}</span>
-          <span className="text-[11px] text-slate-400 mt-0.5 block">Moderated feedback</span>
+          <span className="text-xs text-slate-500 font-medium block">Total Seeded & Community Reviews</span>
+          <span className="text-2xl font-black text-slate-900 mt-0.5 block">{totalReviewsCount}</span>
+          <span className="text-[11px] text-slate-400 mt-0.5 block">
+            {nonSampleCount > 0 ? `${nonSampleCount} live community submissions` : 'Includes initial demonstration personas'}
+          </span>
         </div>
 
-        <div className="p-4 bg-white rounded-2xl border border-slate-200 shadow-2xs">
-          <span className="text-xs text-slate-500 font-medium block">Average Access Score</span>
-          <span className="text-2xl font-black text-teal-700 mt-0.5 block">{avgAccessScore} / 5.0</span>
-          <span className="text-[11px] text-slate-400 mt-0.5 block">Based on lived mobility</span>
-        </div>
-
-        <div className="p-4 bg-white rounded-2xl border border-slate-200 shadow-2xs col-span-2 sm:col-span-1">
-          <span className="text-xs text-slate-500 font-medium block">Evidentiary Standard</span>
-          <span className="text-sm font-bold text-slate-900 mt-1 block">5-Status Verification</span>
-          <span className="text-[11px] text-slate-400 mt-0.5 block">Zero fabricated claims</span>
-        </div>
+        {avgAccessScore ? (
+          <div className="p-4 bg-white rounded-2xl border border-slate-200 shadow-2xs">
+            <span className="text-xs text-slate-500 font-medium block">Community Accessibility Rating</span>
+            <span className="text-2xl font-black text-teal-700 mt-0.5 block">{avgAccessScore} / 5.0</span>
+            <span className="text-[11px] text-slate-400 mt-0.5 block">Calculated strictly from verified user reviews</span>
+          </div>
+        ) : (
+          <div className="p-4 bg-slate-50 rounded-2xl border border-slate-200 shadow-2xs">
+            <span className="text-xs text-slate-500 font-medium block">Live Community Ratings</span>
+            <span className="text-sm font-bold text-slate-700 mt-1 block">Awaiting Public Submissions</span>
+            <span className="text-[11px] text-slate-400 mt-0.5 block">Demonstration reviews are excluded from community scores</span>
+          </div>
+        )}
       </div>
 
       {/* Category Filter Chips */}
@@ -129,31 +159,44 @@ const ReviewsPage = () => {
         <div className="space-y-4">
           {filteredReviews.map((rev) => {
             const place = rev.place;
+            const isDemo = rev.isSampleData || place?.isSampleData;
             return (
               <article
                 key={rev._id}
                 className="p-5 sm:p-6 bg-white rounded-2xl border border-slate-200 shadow-2xs space-y-4 hover:border-slate-300 transition-colors"
               >
-                {/* Header: Place name & reviewer */}
+                {/* Header: Place name, demo label & reviewer */}
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-3">
                   <div>
                     {place ? (
-                      <Link
-                        to={`/places/${place._id}`}
-                        className="text-base font-bold text-slate-900 hover:text-teal-700 transition-colors inline-flex items-center gap-1.5"
-                      >
-                        <span>{place.name}</span>
-                        <ArrowRight className="w-3.5 h-3.5 text-teal-600" />
-                      </Link>
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <Link
+                          to={`/places/${place._id}`}
+                          className="text-base font-bold text-slate-900 hover:text-teal-700 transition-colors inline-flex items-center gap-1.5"
+                        >
+                          <span>{place.name}</span>
+                          <ArrowRight className="w-3.5 h-3.5 text-teal-600" />
+                        </Link>
+                        {isDemo && (
+                          <span className="px-2 py-0.5 rounded text-[10px] font-semibold bg-slate-100 text-slate-600 border border-slate-200">
+                            Demonstration Sample
+                          </span>
+                        )}
+                      </div>
                     ) : (
-                      <span className="text-base font-bold text-slate-900">Verified Place</span>
+                      <div className="flex items-center gap-2">
+                        <span className="text-base font-bold text-slate-700">Archived Venue</span>
+                        <span className="px-2 py-0.5 rounded text-[10px] font-semibold bg-amber-50 text-amber-800 border border-amber-200">
+                          Inactive
+                        </span>
+                      </div>
                     )}
 
                     {place && (
                       <div className="flex items-center gap-1.5 text-xs text-slate-500 mt-0.5">
                         <MapPin className="w-3 h-3 text-slate-400 shrink-0" />
                         <span>
-                          {place.locality ? `${place.locality}, ` : ''}{place.city}, {place.district}
+                          {place.locality ? `${place.locality}, ` : ''}{place.city}{place.district ? `, ${place.district}` : ''}
                         </span>
                         <span className="text-slate-300">•</span>
                         <span className="px-1.5 py-0.2 rounded bg-slate-100 text-slate-600 text-[10px] font-semibold">
@@ -169,7 +212,7 @@ const ReviewsPage = () => {
                       <span className="font-semibold text-slate-700">{rev.user?.name || 'Community Member'}</span>
                     </div>
                     <span className="text-slate-300">•</span>
-                    <span>{new Date(rev.createdAt).toLocaleDateString()}</span>
+                    <span>{formatDate(rev.createdAt)}</span>
                   </div>
                 </div>
 
@@ -193,8 +236,8 @@ const ReviewsPage = () => {
                   "{rev.comment}"
                 </p>
 
-                {/* Facility Feedback Pills */}
-                {rev.facilityFeedback && (
+                {/* Facility Feedback Pills with clean human labels */}
+                {rev.facilityFeedback && Object.keys(rev.facilityFeedback).length > 0 && (
                   <div className="pt-1">
                     <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400 block mb-1.5">
                       Reported Conditions
@@ -202,6 +245,7 @@ const ReviewsPage = () => {
                     <div className="flex flex-wrap gap-1.5 text-[11px]">
                       {Object.entries(rev.facilityFeedback).map(([key, val]) => {
                         if (val === 'Not Checked' || !val) return null;
+                        const label = FACILITY_LABELS[key] || key;
                         const isAvailable = val === 'Available';
                         const isUnavailable = val === 'Unavailable';
                         return (
@@ -215,7 +259,7 @@ const ReviewsPage = () => {
                                 : 'bg-slate-100 text-slate-600 border-slate-200'
                             }`}
                           >
-                            {key.replace(/([A-Z])/g, ' $1').trim()}: {val}
+                            {label}: {val}
                           </span>
                         );
                       })}
@@ -225,6 +269,31 @@ const ReviewsPage = () => {
               </article>
             );
           })}
+        </div>
+      )}
+
+      {/* Pagination Controls */}
+      {totalPages > 1 && (
+        <div className="flex items-center justify-center gap-2 pt-4">
+          <button
+            type="button"
+            onClick={() => setPage((p) => Math.max(1, p - 1))}
+            disabled={page === 1}
+            className="px-4 py-2 text-xs font-bold bg-white border border-slate-300 rounded-xl hover:bg-slate-50 disabled:opacity-40"
+          >
+            Previous
+          </button>
+          <span className="text-xs font-semibold text-slate-600">
+            Page {page} of {totalPages}
+          </span>
+          <button
+            type="button"
+            onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+            disabled={page === totalPages}
+            className="px-4 py-2 text-xs font-bold bg-white border border-slate-300 rounded-xl hover:bg-slate-50 disabled:opacity-40"
+          >
+            Next
+          </button>
         </div>
       )}
     </div>

@@ -32,6 +32,21 @@ const errorHandler = (err, req, res, next) => {
     return res.status(401).json({ success: false, message: 'Authentication token expired' });
   }
 
+  // Multer file upload errors
+  if (err.code === 'LIMIT_FILE_SIZE') {
+    return res.status(400).json({
+      success: false,
+      message: 'File size exceeds maximum allowed limit of 5MB.'
+    });
+  }
+
+  if (err.message && err.message.includes('Only image files')) {
+    return res.status(400).json({
+      success: false,
+      message: err.message
+    });
+  }
+
   res.status(error.statusCode || 500).json({
     success: false,
     message: error.message || 'Internal Server Error'

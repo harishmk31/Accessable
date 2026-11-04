@@ -1,0 +1,352 @@
+{
+  "tn_cbe_railway_junction": {
+    "placeName": "Coimbatore Junction Railway Station",
+    "providerPlaceId": "tn_cbe_railway_junction",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/5/52/Coimbatore_Junction_railway_station_facade.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+    "wikimediaPage": "https://commons.wikimedia.org/wiki/File:Coimbatore_Junction_railway_station_facade.jpg",
+    "authorName": "deadrat",
+    "license": "CC BY-SA 4.0",
+    "caption": "Coimbatore Junction railway station facade",
+    "attribution": "Wikimedia Commons / CC BY-SA 4.0 / deadrat"
+  },
+  "tn_cbe_tnau_garden": {
+    "placeName": "TNAU Botanical Garden",
+    "providerPlaceId": "tn_cbe_tnau_garden",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/a/a7/PPC_of_Tamil_Nadu_Agricultural_University%2C_Lawley_Road.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+    "wikimediaPage": "https://commons.wikimedia.org/wiki/File:PPC_of_Tamil_Nadu_Agricultural_University,_Lawley_Road.jpg",
+    "authorName": "Department of Telecommunications, Government of In",
+    "license": "CC BY-SA 4.0",
+    "caption": "This PPC depicts the logo of TNAU, Lawley Road, which was established in 1920 in Coimbatore.",
+    "attribution": "Wikimedia Commons / CC BY-SA 4.0 / Department of Telecommunications, Govern"
+  },
+  "tn_cbe_voc_park": {
+    "placeName": "VOC Park & Grounds",
+    "providerPlaceId": "tn_cbe_voc_park",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/9/93/Voc_Park_Front_View.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+    "wikimediaPage": "https://commons.wikimedia.org/wiki/File:Voc_Park_Front_View.jpg",
+    "authorName": "Booradleyp1",
+    "license": "CC BY-SA 3.0",
+    "caption": "Front View of Voc Park, Coimbatore. \nகோயம்புத்தூர் வ. உ. சி. பூங்காவின் முன் தோற்றம்.",
+    "attribution": "Wikimedia Commons / CC BY-SA 3.0 / Booradleyp1"
+  },
+  "tn_cbe_valankulam": {
+    "placeName": "Valankulam Lake Promenade & Boardwalk",
+    "providerPlaceId": "tn_cbe_valankulam",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/e/ef/Boot_house_Valankulam_in_Coimbatore_3.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+    "wikimediaPage": "https://commons.wikimedia.org/wiki/File:Boot_house_Valankulam_in_Coimbatore_3.jpg",
+    "authorName": "DEEPA LAKSHMI S GRD",
+    "license": "CC BY-SA 4.0",
+    "caption": "This is a Boot house in Valankulam Coimbatore 3",
+    "attribution": "Wikimedia Commons / CC BY-SA 4.0 / DEEPA LAKSHMI S GRD"
+  },
+  "tn_cbe_race_course": {
+    "placeName": "Race Course Walkway & Promenade",
+    "providerPlaceId": "tn_cbe_race_course",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/0/02/Coimbatore_Race_Course%2C_illuminated_pathway.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+    "wikimediaPage": "https://commons.wikimedia.org/wiki/File:Coimbatore_Race_Course,_illuminated_pathway.jpg",
+    "authorName": "Rangan Datta Wiki",
+    "license": "CC BY-SA 4.0",
+    "caption": "Coimbatore Race Course, illuminated pathway",
+    "attribution": "Wikimedia Commons / CC BY-SA 4.0 / Rangan Datta Wiki"
+  },
+  "tn_che_central_station": {
+    "placeName": "Chennai Central Station",
+    "providerPlaceId": "tn_che_central_station",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/d/d2/Chennai_train_station.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+    "wikimediaPage": "https://commons.wikimedia.org/wiki/File:Chennai_train_station.jpg",
+    "authorName": "Arian Zwegers\nderivative work: MrPanyGoff",
+    "license": "CC BY 2.0",
+    "caption": "The central train station in Chennai, Tamil Nadu state, India.",
+    "attribution": "Wikimedia Commons / CC BY 2.0 / Arian Zwegers\nderivative work: MrPanyGof"
+  },
+  "tn_che_marina_ramp": {
+    "placeName": "Marina Beach Accessible Boardwalk",
+    "providerPlaceId": "tn_che_marina_ramp",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/b/bc/MGR_Memorial%2C_Marina_Beach.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+    "wikimediaPage": "https://commons.wikimedia.org/wiki/File:MGR_Memorial,_Marina_Beach.jpg",
+    "authorName": "Dey.sandip",
+    "license": "CC BY-SA 4.0",
+    "caption": "A crow flies over the MGR memorial at Marina beach in Chennai, India.",
+    "attribution": "Wikimedia Commons / CC BY-SA 4.0 / Dey.sandip"
+  },
+  "tn_che_anna_library": {
+    "placeName": "Anna Centenary Library",
+    "providerPlaceId": "tn_che_anna_library",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/b/bf/Anna_Centenary_Library_Exterior.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+    "wikimediaPage": "https://commons.wikimedia.org/wiki/File:Anna_Centenary_Library_Exterior.jpg",
+    "authorName": "Nazeem Fasil",
+    "license": "CC BY-SA 4.0",
+    "caption": "Anna Centenary Library Exterior",
+    "attribution": "Wikimedia Commons / CC BY-SA 4.0 / Nazeem Fasil"
+  },
+  "tn_che_vandalur_zoo": {
+    "placeName": "Arignar Anna Zoological Park (Vandalur Zoo)",
+    "providerPlaceId": "tn_che_vandalur_zoo",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/6/6b/VandalurZooEntrance.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+    "wikimediaPage": "https://commons.wikimedia.org/wiki/File:VandalurZooEntrance.JPG",
+    "authorName": "Arunprakash.pts",
+    "license": "CC BY-SA 3.0",
+    "caption": "Entrance of Vandalur Zoo. Fountain at the entry of Vandalur Zoo",
+    "attribution": "Wikimedia Commons / CC BY-SA 3.0 / Arunprakash.pts"
+  },
+  "tn_che_kapaleeshwarar": {
+    "placeName": "Kapaleeshwarar Temple",
+    "providerPlaceId": "tn_che_kapaleeshwarar",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/6/6f/Chennai_Kapaleeshwarar_Temple.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+    "wikimediaPage": "https://commons.wikimedia.org/wiki/File:Chennai_Kapaleeshwarar_Temple.jpg",
+    "authorName": "Thilip thiru",
+    "license": "CC BY-SA 4.0",
+    "caption": "Kapaleeshwarar Temple is a Hindu temple dedicated to lord Shiva located in Mylapore, Chennai in the Indianstate of Tamil",
+    "attribution": "Wikimedia Commons / CC BY-SA 4.0 / Thilip thiru"
+  },
+  "tn_vel_fort": {
+    "placeName": "Vellore Fort Archaeological Complex",
+    "providerPlaceId": "tn_vel_fort",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/d/d0/Vellore_fort%2C_colour_painting.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+    "wikimediaPage": "https://commons.wikimedia.org/wiki/File:Vellore_fort,_colour_painting.jpg",
+    "authorName": "Charles Gold",
+    "license": "Public domain",
+    "caption": "Vellore fort, colour painting",
+    "attribution": "Wikimedia Commons / Public domain / Charles Gold"
+  },
+  "tn_cpt_shore_temple": {
+    "placeName": "Shore Temple Archaeological Grounds",
+    "providerPlaceId": "tn_cpt_shore_temple",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/0/0e/Mamallapuram%2C_Shore_Temple%2C_India.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+    "wikimediaPage": "https://commons.wikimedia.org/wiki/File:Mamallapuram,_Shore_Temple,_India.jpg",
+    "authorName": "Vyacheslav Argenberg",
+    "license": "CC BY 4.0",
+    "caption": "Five women wearing red and gold traditional Indian clothing (four in saris and one in a salwar-kameez) in front of the S",
+    "attribution": "Wikimedia Commons / CC BY 4.0 / Vyacheslav Argenberg"
+  },
+  "tn_kan_ekambareswarar": {
+    "placeName": "Ekambareswarar Temple",
+    "providerPlaceId": "tn_kan_ekambareswarar",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/7/74/Ekambareswarar_Temple_6.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+    "wikimediaPage": "https://commons.wikimedia.org/wiki/File:Ekambareswarar_Temple_6.jpg",
+    "authorName": "Luistxo",
+    "license": "CC BY-SA 4.0",
+    "caption": "Ekambareswarar Temple (temple in India)",
+    "attribution": "Wikimedia Commons / CC BY-SA 4.0 / Luistxo"
+  },
+  "tn_tvm_girivalam": {
+    "placeName": "Annamalaiyar Temple Girivalam",
+    "providerPlaceId": "tn_tvm_girivalam",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/2/2d/Thiruvannamalai%2C_Arunachalesvara_Temple%2C_Annamalaiyar_Temple%2C_India.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+    "wikimediaPage": "https://commons.wikimedia.org/wiki/File:Thiruvannamalai,_Arunachalesvara_Temple,_Annamalaiyar_Temple,_India.jpg",
+    "authorName": "Vyacheslav Argenberg",
+    "license": "CC BY 4.0",
+    "caption": "A Hindu temple dedicated to the deity Shiva covers 10 hectares, and is one of the largest in India. It houses four gatew",
+    "attribution": "Wikimedia Commons / CC BY 4.0 / Vyacheslav Argenberg"
+  },
+  "tn_try_junction": {
+    "placeName": "Tiruchirappalli Junction Railway Station",
+    "providerPlaceId": "tn_try_junction",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/0/09/Tiruchirappalli_Junction_railway_station_%2885059%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+    "wikimediaPage": "https://commons.wikimedia.org/wiki/File:Tiruchirappalli_Junction_railway_station_(85059).jpg",
+    "authorName": "Manukrishnan80",
+    "license": "CC BY-SA 3.0",
+    "caption": "Tiruchirappalli Junction railway station (Indian railway station)",
+    "attribution": "Wikimedia Commons / CC BY-SA 3.0 / Manukrishnan80"
+  },
+  "tn_try_srirangam": {
+    "placeName": "Sri Ranganathaswamy Temple Srirangam",
+    "providerPlaceId": "tn_try_srirangam",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/4/45/Srirangam_Rangnathar_Rajagopuram-mkmoorthi.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+    "wikimediaPage": "https://commons.wikimedia.org/wiki/File:Srirangam_Rangnathar_Rajagopuram-mkmoorthi.jpg",
+    "authorName": "Mkmoorthi",
+    "license": "CC BY-SA 4.0",
+    "caption": "The 236 feet tall Srirangam Rajagopuram is constructed on top of a stone base that is about 300 years old.",
+    "attribution": "Wikimedia Commons / CC BY-SA 4.0 / Mkmoorthi"
+  },
+  "tn_tnj_big_temple": {
+    "placeName": "Brihadisvara Temple (Big Temple)",
+    "providerPlaceId": "tn_tnj_big_temple",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/d/dd/Brihadisvara_Temple_during_Maha_Shivaratri-WUS03611_%28edit%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+    "wikimediaPage": "https://commons.wikimedia.org/wiki/File:Brihadisvara_Temple_during_Maha_Shivaratri-WUS03611_(edit).jpg",
+    "authorName": "Original:  Rainer Halama\nDerivative work:  Unpetit",
+    "license": "CC BY-SA 4.0",
+    "caption": "Brihadisvara Temple during Maha Shivaratri",
+    "attribution": "Wikimedia Commons / CC BY-SA 4.0 / Original:  Rainer Halama\nDerivative work"
+  },
+  "tn_tnj_mahamaham": {
+    "placeName": "Mahamaham Tank Kumbakonam",
+    "providerPlaceId": "tn_tnj_mahamaham",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/3/3c/Kumbakonam_Mahamaham_Tank.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+    "wikimediaPage": "https://commons.wikimedia.org/wiki/File:Kumbakonam_Mahamaham_Tank.jpg",
+    "authorName": "Trawell.in",
+    "license": "CC BY-SA 4.0",
+    "caption": "This file represents the Tank which is a religious place in Kumbakonam, India",
+    "attribution": "Wikimedia Commons / CC BY-SA 4.0 / Trawell.in"
+  },
+  "tn_mdu_meenakshi_temple": {
+    "placeName": "Madurai Meenakshi Amman Temple",
+    "providerPlaceId": "tn_mdu_meenakshi_temple",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/5/5d/MEENAKSHI_TEMPLE-_WEST_TOWER.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+    "wikimediaPage": "https://commons.wikimedia.org/wiki/File:MEENAKSHI_TEMPLE-_WEST_TOWER.jpg",
+    "authorName": "Mamichaelraj",
+    "license": "CC BY-SA 4.0",
+    "caption": "Meenakshi Temple, north tower.",
+    "attribution": "Wikimedia Commons / CC BY-SA 4.0 / Mamichaelraj"
+  },
+  "tn_mdu_railway_junction": {
+    "placeName": "Madurai Junction Railway Station",
+    "providerPlaceId": "tn_mdu_railway_junction",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/2/26/Madurai_Junction_railway_station.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+    "wikimediaPage": "https://commons.wikimedia.org/wiki/File:Madurai_Junction_railway_station.jpg",
+    "authorName": "Dr. Chinchu C.",
+    "license": "CC BY 4.0",
+    "caption": "Madurai Junction railway station",
+    "attribution": "Wikimedia Commons / CC BY 4.0 / Dr. Chinchu C."
+  },
+  "tn_mdu_thirumalai_mahal": {
+    "placeName": "Thirumalai Nayakkar Mahal",
+    "providerPlaceId": "tn_mdu_thirumalai_mahal",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/8/82/Mathura_thirumala_naikar_palace.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+    "wikimediaPage": "https://commons.wikimedia.org/wiki/File:Mathura_thirumala_naikar_palace.JPG",
+    "authorName": "Jomesh at Malayalam Wikipedia",
+    "license": "CC BY 3.0",
+    "caption": "മധുരയിലെ തിരുമല നയിക്കർ കൊട്ടാരത്തിന്റെ മുൻവശം",
+    "attribution": "Wikimedia Commons / CC BY 3.0 / Jomesh at Malayalam Wikipedia"
+  },
+  "tn_mdu_gandhi_museum": {
+    "placeName": "Gandhi Memorial Museum Madurai",
+    "providerPlaceId": "tn_mdu_gandhi_museum",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/c/c4/Gandhi_museum%2C_Madurai.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+    "wikimediaPage": "https://commons.wikimedia.org/wiki/File:Gandhi_museum,_Madurai.jpg",
+    "authorName": "Info-farmer",
+    "license": "CC0",
+    "caption": "மதுரையிலுள்ள காந்தி அருங்காட்சியகம், இந்த வளாகத்தின் அருகேயே மதுரை மாவட்ட அரசு அருங்காட்சியகமும் உள்ளது. மேலும் காந்தியம",
+    "attribution": "Wikimedia Commons / CC0 / Info-farmer"
+  },
+  "tn_nil_botanical_garden": {
+    "placeName": "Government Botanical Garden Ooty",
+    "providerPlaceId": "tn_nil_botanical_garden",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/9/98/Front_Gate_House_Botanical_Garden_Ooty_Aug26_A7CR_12481-2_Pano.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+    "wikimediaPage": "https://commons.wikimedia.org/wiki/File:Front_Gate_House_Botanical_Garden_Ooty_Aug26_A7CR_12481-2_Pano.jpg",
+    "authorName": "This Photo was taken by Timothy A. Gonsalves.  Fee",
+    "license": "CC BY-SA 4.0",
+    "caption": "Front view, Gate Building, Govt Botanical Garden, Ooty, The Nilgiris, Tamil Nadu, India",
+    "attribution": "Wikimedia Commons / CC BY-SA 4.0 / This Photo was taken by Timothy A. Gonsa"
+  },
+  "tn_nil_ooty_lake": {
+    "placeName": "Ooty Lake Boat House",
+    "providerPlaceId": "tn_nil_ooty_lake",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/5/58/Ooty_lake%281%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+    "wikimediaPage": "https://commons.wikimedia.org/wiki/File:Ooty_lake(1).jpg",
+    "authorName": "Hellowikidoc",
+    "license": "CC BY-SA 4.0",
+    "caption": "This photograph captures the scenic expanse of Ooty Lake, located in the hill station of Ooty (Udhagamandalam) in the Ni",
+    "attribution": "Wikimedia Commons / CC BY-SA 4.0 / Hellowikidoc"
+  },
+  "tn_nil_sims_park": {
+    "placeName": "Sims Park Coonoor",
+    "providerPlaceId": "tn_nil_sims_park",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/6/66/Sim%27s_Park%2C_Coonoor_JEG9187.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+    "wikimediaPage": "https://commons.wikimedia.org/wiki/File:Sim%27s_Park,_Coonoor_JEG9187.jpg",
+    "authorName": "PJeganathan",
+    "license": "CC BY-SA 4.0",
+    "caption": "Sim's Park, Coonoor1",
+    "attribution": "Wikimedia Commons / CC BY-SA 4.0 / PJeganathan"
+  },
+  "tn_nil_coonoor_railway": {
+    "placeName": "Coonoor Railway Station",
+    "providerPlaceId": "tn_nil_coonoor_railway",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/2/23/Coonoor_Railway_Station_04.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+    "wikimediaPage": "https://commons.wikimedia.org/wiki/File:Coonoor_Railway_Station_04.jpg",
+    "authorName": "RealinRear",
+    "license": "CC BY-SA 4.0",
+    "caption": ".mw-parser-output .messagebox{margin:4px 0;width:auto;border-collapse:collapse;border:2px solid var(--border-color-progr",
+    "attribution": "Wikimedia Commons / CC BY-SA 4.0 / RealinRear"
+  },
+  "tn_dgl_kodai_lake": {
+    "placeName": "Kodaikanal Lake",
+    "providerPlaceId": "tn_dgl_kodai_lake",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/5/57/Kodaikanal_Lake_2.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+    "wikimediaPage": "https://commons.wikimedia.org/wiki/File:Kodaikanal_Lake_2.jpg",
+    "authorName": "Devasenathipathi1957",
+    "license": "CC BY-SA 4.0",
+    "caption": "This is the lake in Kodaikanal, Tamilnadu",
+    "attribution": "Wikimedia Commons / CC BY-SA 4.0 / Devasenathipathi1957"
+  },
+  "tn_slm_railway_junction": {
+    "placeName": "Salem Junction Railway Station",
+    "providerPlaceId": "tn_slm_railway_junction",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/5/50/1-Salem_junction.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+    "wikimediaPage": "https://commons.wikimedia.org/wiki/File:1-Salem_junction.jpg",
+    "authorName": "Parvathisri",
+    "license": "CC BY-SA 3.0",
+    "caption": "தென்னக ரயில்வே -சேலம் தொடர்வண்டி நிலையச் சந்திப்பு",
+    "attribution": "Wikimedia Commons / CC BY-SA 3.0 / Parvathisri"
+  },
+  "tn_dhp_hogenakkal": {
+    "placeName": "Hogenakkal Falls",
+    "providerPlaceId": "tn_dhp_hogenakkal",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/5/52/Hogenakkal_Falls_Close.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+    "wikimediaPage": "https://commons.wikimedia.org/wiki/File:Hogenakkal_Falls_Close.jpg",
+    "authorName": "Mithun Kundu",
+    "license": "CC BY-SA 3.0",
+    "caption": "Hogenakkal Falls, Tamilnadu India",
+    "attribution": "Wikimedia Commons / CC BY-SA 3.0 / Mithun Kundu"
+  },
+  "tn_nag_velankanni": {
+    "placeName": "Basilica of Our Lady of Good Health Velankanni",
+    "providerPlaceId": "tn_nag_velankanni",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/2/2a/Basilica_of_Our_Lady_of_Good_Health_in_Velankanni%2C_Tamil_Nadu.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+    "wikimediaPage": "https://commons.wikimedia.org/wiki/File:Basilica_of_Our_Lady_of_Good_Health_in_Velankanni,_Tamil_Nadu.jpg",
+    "authorName": "Matthew T Rader",
+    "license": "CC BY-SA 4.0",
+    "caption": "Basilica of Our Lady of Good Health in Velankanni, Tamil Nadu",
+    "attribution": "Wikimedia Commons / CC BY-SA 4.0 / Matthew T Rader"
+  },
+  "tn_kny_sunset_point": {
+    "placeName": "Kanyakumari Sunset View Point",
+    "providerPlaceId": "tn_kny_sunset_point",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/4/4e/Rocky_shore_%40_Kanyakumari.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+    "wikimediaPage": "https://commons.wikimedia.org/wiki/File:Rocky_shore_@_Kanyakumari.jpg",
+    "authorName": "TBOE PC Ohm",
+    "license": "CC0",
+    "caption": "Picture of tidepool of Rocky shores of Kanyakumari",
+    "attribution": "Wikimedia Commons / CC0 / TBOE PC Ohm"
+  },
+  "tn_kny_ferry_terminal": {
+    "placeName": "Vivekananda Rock Memorial",
+    "providerPlaceId": "tn_kny_ferry_terminal",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/5/53/Rock_memorial_of_Vivekananda.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+    "wikimediaPage": "https://commons.wikimedia.org/wiki/File:Rock_memorial_of_Vivekananda.jpg",
+    "authorName": "Shivani",
+    "license": "CC BY-SA 4.0",
+    "caption": "Vivekananda Rock Memorial, Kanyakumari, last south land of India. It was built in honour of Swami Vivekananda (1863-1902",
+    "attribution": "Wikimedia Commons / CC BY-SA 4.0 / Shivani"
+  },
+  "tn_ram_temple": {
+    "placeName": "Ramanathaswamy Temple",
+    "providerPlaceId": "tn_ram_temple",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/b/b6/Ramanathaswamy_Temple_night_view.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+    "wikimediaPage": "https://commons.wikimedia.org/wiki/File:Ramanathaswamy_Temple_night_view.jpg",
+    "authorName": "Shajinss",
+    "license": "CC BY-SA 4.0",
+    "caption": "Ramanathaswamy Temple corridor (Corridor inside the Ramanathaswamy Temple)",
+    "attribution": "Wikimedia Commons / CC BY-SA 4.0 / Shajinss"
+  },
+  "tn_ram_kalam_memorial": {
+    "placeName": "Dr. APJ Abdul Kalam National Memorial",
+    "providerPlaceId": "tn_ram_kalam_memorial",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/0/0c/APJ_Abdul_Kalam_Memorial_Rameswaram.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+    "wikimediaPage": "https://commons.wikimedia.org/wiki/File:APJ_Abdul_Kalam_Memorial_Rameswaram.jpg",
+    "authorName": "Selvakumar mallar",
+    "license": "CC0",
+    "caption": "A.P.J. Abdul Kalam Memorial In Ramanathapuram district, Rameshwaram, Tamil Nadine,  India.",
+    "attribution": "Wikimedia Commons / CC0 / Selvakumar mallar"
+  },
+  "tn_tks_courtallam_falls": {
+    "placeName": "Courtallam Main Falls",
+    "providerPlaceId": "tn_tks_courtallam_falls",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/9/9e/TNT18-32_Old_Courtallam_falls_in_lean_season.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+    "wikimediaPage": "https://commons.wikimedia.org/wiki/File:TNT18-32_Old_Courtallam_falls_in_lean_season.jpg",
+    "authorName": "VasuVR",
+    "license": "CC BY 4.0",
+    "caption": "Old Courtallam falls in lean season, Courtallam, Tamil Nadu, India",
+    "attribution": "Wikimedia Commons / CC BY 4.0 / VasuVR"
+  }
+}

@@ -72,7 +72,10 @@ function normalizeDistrictName(rawDistrict = '') {
     'tinnevelly': 'Tirunelveli',
     'madras': 'Chennai',
     'coimbatore district': 'Coimbatore',
-    'kovai': 'Coimbatore'
+    'kovai': 'Coimbatore',
+    'tirupathur': 'Tirupattur',
+    'tirupattur district': 'Tirupattur',
+    'tirupathur district': 'Tirupattur'
   };
 
   if (mapping[clean]) return mapping[clean];
@@ -109,6 +112,7 @@ const REGION_MAPPING = {
   Chengalpattu: 'Northern Tamil Nadu',
   Villupuram: 'Northern Tamil Nadu',
   Ranipet: 'Northern Tamil Nadu',
+  Tirupattur: 'Northern Tamil Nadu',
   Tirupathur: 'Northern Tamil Nadu',
   Kallakurichi: 'Northern Tamil Nadu',
 
@@ -206,6 +210,17 @@ const REGIONAL_CENTERS = {
   'hogenakkal': { lat: 12.1188, lng: 77.7769, name: 'Hogenakkal', region: 'Western Tamil Nadu' }
 };
 
+const OFFICIAL_38_DISTRICTS = [
+  'Ariyalur', 'Chengalpattu', 'Chennai', 'Coimbatore', 'Cuddalore',
+  'Dharmapuri', 'Dindigul', 'Erode', 'Kallakurichi', 'Kanchipuram',
+  'Kanyakumari', 'Karur', 'Krishnagiri', 'Madurai', 'Mayiladuthurai',
+  'Nagapattinam', 'Namakkal', 'Nilgiris', 'Perambalur', 'Pudukkottai',
+  'Ramanathapuram', 'Ranipet', 'Salem', 'Sivaganga', 'Tenkasi',
+  'Thanjavur', 'Theni', 'Thoothukudi', 'Tiruchirappalli', 'Tirunelveli',
+  'Tirupattur', 'Tiruppur', 'Tiruvallur', 'Tiruvannamalai', 'Tiruvarur',
+  'Vellore', 'Villupuram', 'Virudhunagar'
+];
+
 module.exports = {
   EARTH_RADIUS_KM,
   TAMIL_NADU_BOUNDS,
@@ -214,5 +229,6 @@ module.exports = {
   normalizeDistrictName,
   getRegionForDistrict,
   REGIONAL_CENTERS,
-  REGION_MAPPING
+  REGION_MAPPING,
+  OFFICIAL_38_DISTRICTS
 };

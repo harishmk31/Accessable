@@ -59,6 +59,15 @@ const PlacePhoto = ({
   const photoMeta = photos && photos.length > 0 ? photos[0] : null;
   const CategoryIcon = getCategoryIcon(category);
 
+  // Route Wikimedia Commons photos through backend proxy to avoid 403 hotlink blocks
+  const displayUrl = (() => {
+    if (!candidateUrl) return null;
+    if (candidateUrl.startsWith('https://upload.wikimedia.org/')) {
+      return `/api/places/photo-proxy?url=${encodeURIComponent(candidateUrl)}`;
+    }
+    return candidateUrl;
+  })();
+
   // If no confirmed photo or image load failed, render neutral placeholder
   if (!candidateUrl || imgError) {
     return (
@@ -89,10 +98,11 @@ const PlacePhoto = ({
       style={aspectRatio ? { aspectRatio } : undefined}
     >
       <img
-        src={candidateUrl}
+        src={displayUrl}
         alt={`Exterior view of ${placeName || 'the venue'}`}
         className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
         loading="lazy"
+        referrerPolicy="no-referrer"
         onError={() => setImgError(true)}
       />
 
@@ -100,13 +110,17 @@ const PlacePhoto = ({
       <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-black/10 pointer-events-none" />
 
       {/* Real Photo Attribution badge */}
-      {showAttribution && photoMeta?.authorName && (
+      {showAttribution && (photoMeta?.author || photoMeta?.authorName || photoMeta?.attribution) && (
         <div className="absolute bottom-2 left-2 z-10 pointer-events-none">
           <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-slate-900/85 text-slate-200 text-[10px] font-medium backdrop-blur-xs border border-white/10">
             <Camera className="w-3 h-3 text-teal-400" />
-            <span className="truncate max-w-[150px]">{photoMeta.authorName}</span>
-            {photoMeta.license && (
-              <span className="text-slate-400 text-[9px] uppercase">({photoMeta.license})</span>
+            <span className="truncate max-w-[160px]">
+              {photoMeta.author || photoMeta.authorName || photoMeta.attribution?.split('/')?.[2]?.trim() || 'Wikimedia Contributor'}
+            </span>
+            {(photoMeta.license || photoMeta.attribution?.split('/')?.[1]?.trim()) && (
+              <span className="text-slate-400 text-[9px] uppercase">
+                ({photoMeta.license || photoMeta.attribution?.split('/')?.[1]?.trim()})
+              </span>
             )}
           </span>
         </div>

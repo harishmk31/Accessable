@@ -158,15 +158,33 @@ const getAllReviewsAdmin = async (req, res, next) => {
 // @access  Public
 const getRecentReviews = async (req, res, next) => {
   try {
-    const reviews = await Review.find({ isModerated: true })
-      .populate('place', 'name address locality city district category photos images')
-      .populate('user', 'name role')
-      .sort({ createdAt: -1 })
-      .limit(30);
+    const page = Math.max(1, parseInt(req.query.page || '1', 10));
+    const limit = Math.max(1, Math.min(50, parseInt(req.query.limit || '12', 10)));
+    const skip = (page - 1) * limit;
+
+    const query = { isModerated: true };
+    const [total, nonSampleTotal, reviews] = await Promise.all([
+      Review.countDocuments(query),
+      Review.countDocuments({ ...query, isSampleData: { $ne: true } }),
+      Review.find(query)
+        .populate('place', 'name address locality city district category photos images isSampleData')
+        .populate('user', 'name role')
+        .sort({ createdAt: -1 })
+        .skip(skip)
+        .limit(limit)
+    ]);
 
     res.json({
       success: true,
       count: reviews.length,
+      total,
+      nonSampleTotal,
+      pagination: {
+        page,
+        pages: Math.ceil(total / limit) || 1,
+        total,
+        limit
+      },
       data: reviews
     });
   } catch (error) {

@@ -2,16 +2,17 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
   MapPin,
-  ShieldCheck,
   Heart,
   Navigation,
   ArrowRight,
   Accessibility,
-  Camera
+  Camera,
+  CircleHelp
 } from 'lucide-react';
 import StarRating from './StarRating';
 import FacilityBadge from './FacilityBadge';
 import PlacePhoto from './PlacePhoto';
+import AccessibilityScoreBadge from './AccessibilityScoreBadge';
 import { useAuth } from '../context/AuthContext';
 import { authService } from '../services/api';
 import { useTranslation } from '../context/LanguageContext';
@@ -37,8 +38,19 @@ const PlaceCard = ({ place, onBookmarkToggle = null }) => {
     photos = [],
     images = [],
     status = 'verified',
-    distanceKm
+    distanceKm,
+    isSampleData = false
   } = place;
+
+  // Filter confirmed facilities (omitting Unknown)
+  const knownFacilities = [
+    { key: 'wheelchairRamp', status: accessibilityProfile.ramp?.status || facilities.wheelchairRamp },
+    { key: 'elevatorLift', status: accessibilityProfile.lift?.status || facilities.elevatorLift },
+    { key: 'accessibleToilet', status: accessibilityProfile.accessibleToilet?.status || facilities.accessibleToilet },
+    { key: 'accessibleParking', status: accessibilityProfile.accessibleParking?.status || facilities.accessibleParking },
+    { key: 'brailleSignage', status: accessibilityProfile.brailleSignage?.status || facilities.brailleSignage },
+    { key: 'audioAssistance', status: accessibilityProfile.audioAssistance?.status || facilities.audioAssistance }
+  ].filter((f) => f.status && f.status !== 'Unknown');
 
   // Check if bookmarked
   const [isSaved, setIsSaved] = useState(
@@ -93,10 +105,9 @@ const PlaceCard = ({ place, onBookmarkToggle = null }) => {
             <span className="px-2 py-0.5 bg-slate-900/85 backdrop-blur-xs text-white text-[10px] font-bold rounded-md shadow-xs pointer-events-auto">
               {category}
             </span>
-            {status === 'verified' && (
-              <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-teal-600/95 backdrop-blur-xs text-white text-[10px] font-bold rounded-md shadow-xs pointer-events-auto">
-                <ShieldCheck className="w-3 h-3" />
-                Verified
+            {isSampleData && (
+              <span className="px-2 py-0.5 bg-amber-600/90 backdrop-blur-xs text-white text-[10px] font-medium rounded-md shadow-xs pointer-events-auto">
+                Sample
               </span>
             )}
           </div>
@@ -122,28 +133,32 @@ const PlaceCard = ({ place, onBookmarkToggle = null }) => {
       {/* Main Body */}
       <div className="p-4 sm:p-5 flex-1 flex flex-col justify-between">
         <div>
-          {/* Rating bar & Distance */}
-          <div className="flex items-center justify-between gap-2 mb-2">
-            <StarRating rating={averageRating} size="sm" label="General Rating" />
+          {/* Rating bar & Accessibility Score */}
+          <div className="flex flex-wrap items-center justify-between gap-2 mb-2 min-w-0">
+            <div className="flex items-center gap-1.5">
+              <StarRating rating={averageRating} size="sm" label="General Rating" />
+              {totalReviews > 0 && (
+                <span className="text-[11px] text-slate-400">({totalReviews})</span>
+              )}
+            </div>
+            <div className="shrink-0">
+              <AccessibilityScoreBadge place={place} size="sm" />
+            </div>
+          </div>
 
-            {distanceKm !== undefined ? (
-              <span className="text-xs font-bold text-teal-700 bg-teal-50 px-2.5 py-0.5 rounded-full border border-teal-200">
+          {distanceKm !== undefined && (
+            <div className="mb-2">
+              <span className="text-[11px] font-bold text-teal-700 bg-teal-50 px-2 py-0.5 rounded-full border border-teal-200 inline-flex items-center gap-1">
                 📍 {distanceKm} km away
               </span>
-            ) : (
-              <div
-                className="inline-flex items-center gap-1 text-[11px] font-bold px-2 py-0.5 rounded-md bg-teal-50 text-teal-800 border border-teal-200"
-                title="Accessibility Experience Score"
-              >
-                <span>Access: {averageAccessibilityRating ? averageAccessibilityRating.toFixed(1) : 'New'} / 5</span>
-              </div>
-            )}
-          </div>
+            </div>
+          )}
 
           {/* Title */}
           <h3
             id={`place-heading-${_id}`}
-            className="text-base font-bold text-slate-900 line-clamp-1 hover:text-teal-700 transition-colors"
+            className="text-base font-bold text-slate-900 line-clamp-2 hover:text-teal-700 transition-colors"
+            title={name}
           >
             <Link to={`/places/${_id}`} className="focus-visible:outline-none focus-visible:underline">
               {name}
@@ -151,7 +166,10 @@ const PlaceCard = ({ place, onBookmarkToggle = null }) => {
           </h3>
 
           {/* Location / Locality & District */}
-          <div className="flex items-center gap-1 text-xs text-slate-500 mt-1 mb-2.5">
+          <div
+            className="flex items-center gap-1 text-xs text-slate-500 mt-1 mb-2.5"
+            title={`${locality ? locality + ', ' : ''}${city}, ${district}`}
+          >
             <MapPin className="w-3.5 h-3.5 text-slate-400 shrink-0" aria-hidden="true" />
             <span className="truncate">
               {locality ? <strong className="text-slate-700">{locality}, </strong> : ''}
@@ -166,33 +184,23 @@ const PlaceCard = ({ place, onBookmarkToggle = null }) => {
 
           {/* Accessibility Facilities Chips */}
           <div className="border-t border-slate-100 pt-2.5">
-            <div className="flex flex-wrap gap-1">
-              <FacilityBadge
-                facilityKey="wheelchairRamp"
-                status={accessibilityProfile.ramp?.status || facilities.wheelchairRamp}
-                compact
-              />
-              <FacilityBadge
-                facilityKey="elevatorLift"
-                status={accessibilityProfile.lift?.status || facilities.elevatorLift}
-                compact
-              />
-              <FacilityBadge
-                facilityKey="accessibleToilet"
-                status={accessibilityProfile.accessibleToilet?.status || facilities.accessibleToilet}
-                compact
-              />
-              <FacilityBadge
-                facilityKey="accessibleParking"
-                status={accessibilityProfile.accessibleParking?.status || facilities.accessibleParking}
-                compact
-              />
-              <FacilityBadge
-                facilityKey="brailleSignage"
-                status={accessibilityProfile.brailleSignage?.status || facilities.brailleSignage}
-                compact
-              />
-            </div>
+            {knownFacilities.length === 0 ? (
+              <div className="flex items-center gap-1.5 py-1 text-xs text-slate-500 italic">
+                <CircleHelp className="w-3.5 h-3.5 text-slate-400 shrink-0" />
+                <span>Facility details not confirmed</span>
+              </div>
+            ) : (
+              <div className="flex flex-wrap gap-1">
+                {knownFacilities.map((f) => (
+                  <FacilityBadge
+                    key={f.key}
+                    facilityKey={f.key}
+                    status={f.status}
+                    compact
+                  />
+                ))}
+              </div>
+            )}
           </div>
         </div>
 
@@ -219,7 +227,7 @@ const PlaceCard = ({ place, onBookmarkToggle = null }) => {
               className="inline-flex items-center gap-1 px-3 py-1.5 bg-teal-600 hover:bg-teal-700 text-white text-xs font-bold rounded-lg shadow-xs transition-colors focus-visible:ring-2 focus-visible:ring-teal-600 focus-visible:outline-none"
               aria-label={`View full accessibility details for ${name}`}
             >
-              <span>{t('discover')}</span>
+              <span>{t('viewDetails') || 'View Details'}</span>
               <ArrowRight className="w-3.5 h-3.5" />
             </Link>
           </div>

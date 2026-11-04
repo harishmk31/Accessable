@@ -6,10 +6,28 @@ const Review = require('../models/Review');
 
 dotenv.config();
 
+function extractDatabaseName(uri) {
+  if (!uri || typeof uri !== 'string') return '';
+  const withoutProtocol = uri.replace(/^mongodb(\+srv)?:\/\//i, '');
+  const withoutAuth = withoutProtocol.includes('@') ? withoutProtocol.split('@')[1] : withoutProtocol;
+  const pathPart = withoutAuth.split('?')[0].split('/')[1] || '';
+  return pathPart.trim();
+}
+
 const seedDatabase = async () => {
+  const mongoUri =
+    process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/accessable_db';
+  const targetDbName = extractDatabaseName(mongoUri);
+  const isTestDb = targetDbName.toLowerCase().includes('test');
+  const hasConfirmFlag = process.argv.includes('--confirm-production');
+
+  if (!isTestDb && !hasConfirmFlag) {
+    console.error(`\n[ABORTED] Refusing to run destructive seed script against non-test database "${targetDbName}".`);
+    console.error(`Pass '--confirm-production' to execute intentionally.\n`);
+    process.exit(1);
+  }
+
   try {
-    const mongoUri =
-      process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/accessable_db';
     console.log(`[Seed Script] Connecting to database: ${mongoUri}`);
 
     await mongoose.connect(mongoUri);

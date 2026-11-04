@@ -2,19 +2,6 @@ import React from 'react';
 import { Filter, RotateCcw, MapPin, Navigation } from 'lucide-react';
 import { useTranslation } from '../context/LanguageContext';
 
-const COIMBATORE_LOCALITIES = [
-  'All',
-  'Gandhipuram',
-  'RS Puram',
-  'Peelamedu',
-  'Saibaba Colony',
-  'Town Hall',
-  'Race Course',
-  'Avinashi Road',
-  'Vadavalli',
-  'Saravanampatti'
-];
-
 const TAMIL_NADU_REGIONS = [
   'All',
   'Western Tamil Nadu',
@@ -25,32 +12,68 @@ const TAMIL_NADU_REGIONS = [
 
 const TAMIL_NADU_DISTRICTS = [
   'All',
-  'Coimbatore',
+  'Ariyalur',
+  'Chengalpattu',
   'Chennai',
-  'Madurai',
-  'Tiruchirappalli',
-  'Salem',
-  'Tiruppur',
-  'Erode',
-  'Nilgiris',
-  'Thanjavur',
-  'Kanyakumari',
-  'Tirunelveli',
-  'Thoothukudi',
+  'Coimbatore',
+  'Dharmapuri',
   'Dindigul',
-  'Vellore',
+  'Erode',
   'Kanchipuram',
-  'Cuddalore',
-  'Villupuram',
-  'Ramanathapuram',
-  'Theni',
-  'Virudhunagar',
-  'Sivaganga',
+  'Kanyakumari',
   'Karur',
-  'Namakkal',
-  'Pudukkottai',
+  'Madurai',
+  'Mayiladuthurai',
   'Nagapattinam',
-  'Mayiladuthurai'
+  'Namakkal',
+  'Nilgiris',
+  'Perambalur',
+  'Pudukkottai',
+  'Ramanathapuram',
+  'Salem',
+  'Tenkasi',
+  'Thanjavur',
+  'Thoothukudi',
+  'Tiruchirappalli',
+  'Tirunelveli',
+  'Tiruppur',
+  'Tiruvallur',
+  'Tiruvannamalai',
+  'Vellore',
+  'Villupuram',
+  'Virudhunagar'
+];
+
+const DISTRICT_LOCALITIES_MAP = {
+  Chengalpattu: ['GST Road', 'Mahabalipuram', 'Vandalur'],
+  Chennai: ['Adyar', 'Kotturpuram', 'Marina Beach', 'Mylapore', 'Park Town', 'Royapettah', 'Thousand Lights', 'Velachery'],
+  Coimbatore: ['Avinashi Road', 'Gandhipuram', 'Marudhamalai Road', 'Peelamedu', 'Pollachi Central', 'RS Puram', 'Race Course', 'Saibaba Colony', 'Saravanampatti', 'Town Hall', 'Vadavalli'],
+  Dindigul: ['Bryant Park', 'Fort Area', 'Lake Area'],
+  Erode: ['Brough Road', 'Central Erode', 'Vellode'],
+  Kanchipuram: ['Periya Kanchipuram', 'Vishnu Kanchi'],
+  Kanyakumari: ['Asaripallam', 'Coastal Terminal', 'Sunset Point'],
+  Karur: ['Gandhigramam', 'Karur Central'],
+  Madurai: ['Chithirai Street', 'Madurai Main', 'Mahal Area', 'Mattuthavani', 'Tamukkam', 'West Veli Street'],
+  Nilgiris: ['Botanical Gardens', 'Ooty Lake', 'Sims Park', 'Station Area'],
+  Salem: ['Fort', 'Kurumbapatti', 'Lake Area', 'Suramangalam'],
+  Thanjavur: ['Central Kumbakonam', 'Court Area', 'Thanjavur Central', 'Thanjavur Town'],
+  Thoothukudi: ['Kamraj Nagar', 'Port Area'],
+  Tiruchirappalli: ['Cantonment', 'Srirangam'],
+  Tirunelveli: ['Palayamkottai', 'Tirunelveli Junction'],
+  Tiruppur: ['Central Tiruppur', 'Dharapuram Road', 'Kumaran Memorial Area'],
+  Vellore: ['Fort Area', 'Katpadi', 'Vellore Central'],
+  Virudhunagar: ['Car Street', 'Madurai Road']
+};
+
+const DEFAULT_POPULAR_LOCALITIES = [
+  'Gandhipuram',
+  'RS Puram',
+  'Peelamedu',
+  'Mylapore',
+  'Adyar',
+  'Srirangam',
+  'Madurai Main',
+  'Ooty Lake'
 ];
 
 const CATEGORIES = [
@@ -193,19 +216,91 @@ const FilterDrawer = ({
         </div>
       </div>
 
-      {/* Coimbatore Localities Quick Chips */}
+      {/* Tamil Nadu Districts */}
       <div>
-        <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
-          {t('localityLabel')}
+        <label htmlFor="district-select" className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
+          {t('districtLabel')}
         </label>
+        
+        {/* Quick District Chips */}
+        <div className="flex flex-wrap gap-1.5 mb-2">
+          {['All', 'Coimbatore', 'Chennai', 'Madurai', 'Tiruchirappalli', 'Salem'].map((dst) => {
+            const isSelected = (!filters.district && dst === 'All') || filters.district === dst;
+            return (
+              <button
+                key={dst}
+                type="button"
+                onClick={() => {
+                  const newDistrict = dst === 'All' ? '' : dst;
+                  onChange('district', newDistrict);
+                  if (filters.locality && (!newDistrict || !DISTRICT_LOCALITIES_MAP[newDistrict]?.includes(filters.locality))) {
+                    onChange('locality', '');
+                  }
+                }}
+                className={`px-2.5 py-1 text-xs rounded-lg font-semibold transition-all ${
+                  isSelected
+                    ? 'bg-teal-700 text-white shadow-xs'
+                    : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+                }`}
+                aria-pressed={isSelected}
+              >
+                {dst}
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Full District Dropdown */}
+        <select
+          id="district-select"
+          value={filters.district || 'All'}
+          onChange={(e) => {
+            const newDistrict = e.target.value === 'All' ? '' : e.target.value;
+            onChange('district', newDistrict);
+            if (filters.locality && (!newDistrict || !DISTRICT_LOCALITIES_MAP[newDistrict]?.includes(filters.locality))) {
+              onChange('locality', '');
+            }
+          }}
+          className="w-full text-xs font-semibold text-slate-800 bg-slate-50 border border-slate-300 rounded-xl p-2 focus:border-teal-500 focus:outline-none"
+        >
+          {TAMIL_NADU_DISTRICTS.map((dst) => (
+            <option key={dst} value={dst}>
+              {dst === 'All' ? 'All 30 Districts' : dst}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      {/* Dynamic Locality Filter derived from District & Real Data */}
+      <div>
+        <div className="flex items-center justify-between mb-2">
+          <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider">
+            {t('localityLabel')}
+          </label>
+          <span className="text-[10px] text-slate-400">
+            {filters.district ? `in ${filters.district}` : 'Popular Hubs'}
+          </span>
+        </div>
         <div className="flex flex-wrap gap-1.5">
-          {COIMBATORE_LOCALITIES.map((loc) => {
-            const isSelected = (!filters.locality && loc === 'All') || filters.locality === loc;
+          <button
+            type="button"
+            onClick={() => onChange('locality', '')}
+            className={`px-2.5 py-1 text-xs rounded-lg font-semibold transition-all ${
+              !filters.locality
+                ? 'bg-slate-900 text-white shadow-xs'
+                : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+            }`}
+            aria-pressed={!filters.locality}
+          >
+            All
+          </button>
+          {((filters.district && DISTRICT_LOCALITIES_MAP[filters.district]) || DEFAULT_POPULAR_LOCALITIES).map((loc) => {
+            const isSelected = filters.locality === loc;
             return (
               <button
                 key={loc}
                 type="button"
-                onClick={() => onChange('locality', loc === 'All' ? '' : loc)}
+                onClick={() => onChange('locality', loc)}
                 className={`px-2.5 py-1 text-xs rounded-lg font-semibold transition-all ${
                   isSelected
                     ? 'bg-slate-900 text-white shadow-xs'
@@ -241,33 +336,6 @@ const FilterDrawer = ({
                 aria-pressed={isSelected}
               >
                 {reg === 'All' ? (t('allRegions') || 'All Regions') : reg}
-              </button>
-            );
-          })}
-        </div>
-      </div>
-
-      {/* Tamil Nadu Districts */}
-      <div>
-        <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
-          {t('districtLabel')}
-        </label>
-        <div className="flex flex-wrap gap-1.5">
-          {TAMIL_NADU_DISTRICTS.map((dst) => {
-            const isSelected = (!filters.district && dst === 'All') || filters.district === dst;
-            return (
-              <button
-                key={dst}
-                type="button"
-                onClick={() => onChange('district', dst === 'All' ? '' : dst)}
-                className={`px-2.5 py-1 text-xs rounded-lg font-semibold transition-all ${
-                  isSelected
-                    ? 'bg-teal-700 text-white shadow-xs'
-                    : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
-                }`}
-                aria-pressed={isSelected}
-              >
-                {dst}
               </button>
             );
           })}
@@ -320,6 +388,38 @@ const FilterDrawer = ({
                 className={`py-1.5 px-2 rounded-lg text-center font-bold text-[11px] transition-all ${
                   isSelected
                     ? 'bg-teal-700 text-white shadow-2xs'
+                    : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+                }`}
+                aria-pressed={isSelected}
+              >
+                {label}
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Accessibility Score Filter */}
+      <div className="pt-3 border-t border-slate-100">
+        <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+          Minimum Accessibility Score
+        </label>
+        <div className="grid grid-cols-4 gap-1 text-xs">
+          {[
+            { value: '', label: 'Any' },
+            { value: '40', label: '40+' },
+            { value: '60', label: '60+' },
+            { value: '80', label: '80+' }
+          ].map(({ value, label }) => {
+            const isSelected = (filters.minAccessibilityScore || '') === value;
+            return (
+              <button
+                key={value}
+                type="button"
+                onClick={() => onChange('minAccessibilityScore', value)}
+                className={`py-1.5 px-2 rounded-lg text-center font-bold text-[11px] transition-all ${
+                  isSelected
+                    ? 'bg-primary-600 text-white shadow-2xs'
                     : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
                 }`}
                 aria-pressed={isSelected}

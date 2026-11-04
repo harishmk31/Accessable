@@ -44,6 +44,7 @@ export const authService = {
 // Place endpoints with geospatial and Tamil Nadu regional queries
 export const placeService = {
   getPlaces: (params = {}) => api.get('/places', { params }),
+  getMapPlaces: (params = {}) => api.get('/places/map', { params }),
   getNearbyPlaces: (params = {}) => api.get('/places/nearby', { params }),
   searchPlaces: (q) => api.get('/places/search', { params: { q } }),
   getCategories: () => api.get('/places/categories'),
@@ -65,12 +66,27 @@ export const placeService = {
   // Report inaccuracy
   submitReport: (placeId, reportData) => api.post(`/places/${placeId}/reports`, reportData),
   getAdminReports: () => api.get('/places/admin/reports'),
-  updateReportStatus: (id, payload) => api.patch(`/places/admin/reports/${id}`, payload)
+  updateReportStatus: (id, payload) => api.patch(`/places/admin/reports/${id}`, payload),
+
+  // Advanced AI, Computer Vision & Photo Uploads
+  checkDuplicate: (name, city) => api.post('/places/check-duplicate', { name, city }),
+  uploadPhoto: (formData) =>
+    api.post('/places/upload-photo', formData, {
+      headers: { 'Content-Type': 'multipart/form-data' }
+    }),
+  getAIAssessment: (placeId) => api.post(`/places/${placeId}/ai-assessment`),
+  analyzeImage: (payload) =>
+    api.post(
+      '/places/analyze-image',
+      payload,
+      payload instanceof FormData ? { headers: { 'Content-Type': 'multipart/form-data' } } : {}
+    ),
+  getAdminDuplicates: () => api.get('/places/admin/duplicates')
 };
 
 // Review endpoints
 export const reviewService = {
-  getRecentReviews: () => api.get('/reviews/recent'),
+  getRecentReviews: (params = {}) => api.get('/reviews/recent', { params }),
   getPlaceReviews: (placeId) => api.get(`/reviews/place/${placeId}`),
   addReview: (placeId, reviewData) => api.post(`/reviews/place/${placeId}`, reviewData),
   deleteReview: (id) => api.delete(`/reviews/${id}`),

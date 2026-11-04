@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
-import { Edit, AlertCircle, ShieldAlert, ArrowLeft } from 'lucide-react';
+import { Edit, AlertCircle, ShieldAlert, ArrowLeft, Camera, Loader2 } from 'lucide-react';
 import { placeService } from '../services/api';
 import { useAuth } from '../context/AuthContext';
 import LoadingSpinner from '../components/LoadingSpinner';
+import CoordinatePickerMap from '../components/CoordinatePickerMap';
 
 const CATEGORIES = [
   'Hospital',
@@ -445,6 +446,17 @@ const EditPlacePage = () => {
                     className="w-full p-3 bg-slate-50 border border-slate-300 rounded-xl text-sm text-slate-900"
                   />
                 </div>
+              </div>
+
+              {/* Interactive Coordinate Picker Map */}
+              <div className="pt-2">
+                <CoordinatePickerMap
+                  latitude={formData.latitude || 11.0168}
+                  longitude={formData.longitude || 76.9558}
+                  onChange={(lat, lng) =>
+                    setFormData((prev) => ({ ...prev, latitude: lat, longitude: lng }))
+                  }
+                />
               </div>
             </div>
 
